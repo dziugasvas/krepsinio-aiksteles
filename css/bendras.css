@@ -1,0 +1,282 @@
+/* ==========================================================
+   Krepšinis Visur – bendri stiliai (naudojami visuose ekranuose)
+   ========================================================== */
+
+/* ---------- Spalvos ir dydžiai (CSS kintamieji) ---------- */
+:root {
+  --oranzine: #f57c1f;          /* pagrindinė (krepšinio kamuolio) spalva */
+  --oranzine-tamsi: #d9650c;    /* paspaustas mygtukas */
+  --oranzine-sviesi: rgba(245, 124, 31, 0.15);
+
+  --fonas: #121212;             /* puslapio fonas */
+  --pavirsius: #1e1e1e;         /* kortelės, juostos */
+  --pavirsius-2: #2a2a2a;       /* įvesties laukai, žymos */
+  --linija: #333333;
+
+  --tekstas: #f5f5f5;
+  --tekstas-blankus: #a0a0a0;
+
+  --zalia: #3ecf6e;             /* sėkmė, „laisva vieta“ */
+  --raudona: #ff5a5a;           /* klaida, atšaukimas */
+  --geltona: #ffc94d;           /* įspėjimas */
+
+  --apvalinimas: 14px;
+  --navigacijos-aukstis: 64px;
+}
+
+/* ---------- Bazė ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--fonas);
+  color: var(--tekstas);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Programėlė visada telefono pločio, kompiuteryje – per vidurį */
+.programele {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: calc(var(--navigacijos-aukstis) + 16px);
+  background: var(--fonas);
+}
+
+a {
+  color: var(--oranzine);
+  text-decoration: none;
+}
+
+/* ---------- Viršutinė juosta ---------- */
+.virsus {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--fonas);
+  border-bottom: 1px solid var(--linija);
+}
+
+.virsus h1 {
+  font-size: 20px;
+  font-weight: 700;
+  flex: 1;
+}
+
+.virsus h1 .akcentas {
+  color: var(--oranzine);
+}
+
+/* Mygtukas „Atgal“ – visada su tekstu, ne tik rodykle */
+.atgal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  color: var(--tekstas);
+  background: var(--pavirsius-2);
+  font-size: 15px;
+}
+
+/* ---------- Turinys ---------- */
+.turinys {
+  padding: 16px;
+}
+
+.skyriaus-pavadinimas {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tekstas-blankus);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 20px 0 10px;
+}
+
+.blankus {
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+}
+
+/* ---------- Kortelės ---------- */
+.kortele {
+  display: block;
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  border-radius: var(--apvalinimas);
+  padding: 14px;
+  margin-bottom: 12px;
+  color: var(--tekstas);
+}
+
+a.kortele:active {
+  border-color: var(--oranzine);
+}
+
+/* ---------- Mygtukai (dideli – patogu spausti viena ranka) ---------- */
+.mygtukas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--oranzine);
+  color: #ffffff;
+}
+
+.mygtukas:active {
+  background: var(--oranzine-tamsi);
+}
+
+.mygtukas.platus {
+  width: 100%;
+}
+
+.mygtukas.antrinis {
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  border: 1px solid var(--linija);
+}
+
+.mygtukas.pavojingas {
+  background: transparent;
+  color: var(--raudona);
+  border: 1px solid var(--raudona);
+}
+
+.mygtukas:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- Žymos (lygis, „Šeimoms“, danga ir pan.) ---------- */
+.zyma {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  margin: 2px 4px 2px 0;
+}
+
+.zyma.oranzine {
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+}
+
+.zyma.zalia {
+  background: rgba(62, 207, 110, 0.15);
+  color: var(--zalia);
+}
+
+/* ---------- Apatinė navigacija ---------- */
+.apatine-navigacija {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--navigacijos-aukstis);
+  display: flex;
+  background: var(--pavirsius);
+  border-top: 1px solid var(--linija);
+  z-index: 20;
+}
+
+.apatine-navigacija a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--tekstas-blankus);
+  font-size: 12px;
+}
+
+.apatine-navigacija a .ikona {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Aktyvus skirtukas – oranžinis, kad naudotojas žinotų, kur yra */
+.apatine-navigacija a.aktyvus {
+  color: var(--oranzine);
+  font-weight: 600;
+}
+
+/* ---------- Pranešimas ekrano apačioje (toast) ---------- */
+.pranesimas {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--navigacijos-aukstis) + 16px);
+  transform: translateX(-50%) translateY(20px);
+  width: calc(100% - 32px);
+  max-width: 448px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #2f2f2f;
+  border-left: 4px solid var(--zalia);
+  color: var(--tekstas);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 30;
+}
+
+.pranesimas.matomas {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.pranesimas.klaida {
+  border-left-color: var(--raudona);
+}
+
+.pranesimas .tekstas {
+  flex: 1;
+}
+
+.pranesimas button {
+  background: none;
+  border: none;
+  color: var(--oranzine);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* ---------- Tuščia būsena ---------- */
+.tuscia {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--tekstas-blankus);
+}
+
+.tuscia .ikona {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
