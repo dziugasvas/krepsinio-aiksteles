@@ -1,7 +1,3 @@
-if (!gautiNaudotoja() && !arPradziaMatyta()) {
-  window.location.replace("pradzia.html");
-}
-
 function miestoRungtynes() {
   return visosRungtynes().filter((r) => r.aikstele.miestas === dabartinisMiestas());
 }
