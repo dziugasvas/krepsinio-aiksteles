@@ -77,3 +77,76 @@
   gap: 8px;
   margin-top: 20px;
 }
+
+/* Vardo redagavimas */
+.vardo-eilute {
+  display: flex;
+  gap: 8px;
+}
+
+.vardo-eilute input {
+  flex: 1;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 16px;
+}
+
+.vardo-eilute input:focus {
+  outline: none;
+  border-color: var(--oranzine);
+}
+
+.klaidos-tekstas {
+  color: var(--raudona);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Jungiklis (įjungta / išjungta) */
+.jungiklis-eilute {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  border-radius: var(--apvalinimas);
+  padding: 14px;
+  cursor: pointer;
+}
+
+.jungiklis {
+  appearance: none;
+  width: 50px;
+  height: 30px;
+  border-radius: 999px;
+  background: #555555;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.jungiklis::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: left 0.2s;
+}
+
+.jungiklis:checked {
+  background: var(--oranzine);
+}
+
+.jungiklis:checked::after {
+  left: 23px;
+}

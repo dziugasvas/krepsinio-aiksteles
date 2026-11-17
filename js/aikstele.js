@@ -42,6 +42,11 @@ function piestiAikstele() {
       <span class="blankus">(${a.atsiliepimai} įvertinimai)</span>
     </div>
 
+    <div class="uzimtumo-kortele ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">
+      <div>👥 <strong>${uzimtumoTekstas(a)}</strong></div>
+      ${buvimoMygtukas(a)}
+    </div>
+
     <div class="info-tinklelis">
       ${langelis("Danga", a.danga)}
       ${langelis("Būklė", a.bukle, a.bukle === "Puiki" || a.bukle === "Gera" ? "gera" : "vidutine")}
@@ -146,4 +151,41 @@ function ivertinti(n) {
   } catch (klaida) {}
   piestiAikstele();
   rodytiPranesima(`✓ Ačiū! Įvertinote ${n} iš 5`);
+}
+
+/* ---------- „Esu aikštelėje“ (FR10) – kiti mato, kad aikštelėje žaidžiama ---------- */
+function buvimoMygtukas(a) {
+  if (gautiBuvimaAiksteleje() === a.id) {
+    return `<div class="blankus" style="margin-top: 6px">✓ Pažymėjote, kad esate čia (galioja 2 val.)</div>
+      <button class="mygtukas antrinis platus" style="margin-top: 8px" onclick="iseiti()">Išeinu iš aikštelės</button>`;
+  }
+  return `<button class="mygtukas antrinis platus" style="margin-top: 8px" onclick="esuCia()">📍 Esu aikštelėje</button>`;
+}
+
+function esuCia() {
+  if (!gautiNaudotoja()) {
+    const atgal = encodeURIComponent(`aikstele.html?id=${aiksteleId}`);
+    rodytiPranesima("Norėdami pažymėti, prisijunkite", {
+      mygtukas: "Prisijungti",
+      veiksmas: () => (window.location.href = `prisijungimas.html?atgal=${atgal}`),
+    });
+    return;
+  }
+  const buvusi = gautiBuvimaAiksteleje();
+  pazymetiAiksteleje(aiksteleId);
+  piestiAikstele();
+  rodytiPranesima("✓ Pažymėta: esate šioje aikštelėje", {
+    mygtukas: "Atšaukti",
+    veiksmas: () => {
+      if (buvusi) pazymetiAiksteleje(buvusi);
+      else atsauktiBuvimaAiksteleje();
+      piestiAikstele();
+    },
+  });
+}
+
+function iseiti() {
+  atsauktiBuvimaAiksteleje();
+  piestiAikstele();
+  rodytiPranesima("Pažymėjimas pašalintas");
 }

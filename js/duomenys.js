@@ -23,6 +23,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
     ivertinimas: 4.7, atsiliepimai: 38,
     nuotrauka: "🏟️",
+    dabar: 4, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a2",
@@ -32,6 +33,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 2,
     ivertinimas: 3.4, atsiliepimai: 12,
     nuotrauka: "🏀",
+    dabar: 6, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a3",
@@ -41,6 +43,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.2, atsiliepimai: 21,
     nuotrauka: "🏀",
+    dabar: 2, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a4",
@@ -50,6 +53,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
     ivertinimas: 4.8, atsiliepimai: 54,
     nuotrauka: "🏟️",
+    dabar: 7, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a5",
@@ -59,6 +63,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.1, atsiliepimai: 17,
     nuotrauka: "🏀",
+    dabar: 0, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a6",
@@ -68,6 +73,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 1,
     ivertinimas: 3.6, atsiliepimai: 9,
     nuotrauka: "🏀",
+    dabar: 0, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a7",
@@ -77,6 +83,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.0, atsiliepimai: 15,
     nuotrauka: "🏀",
+    dabar: 3, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
   {
     id: "a8",
@@ -86,27 +93,28 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: false, lankai: 2,
     ivertinimas: 3.9, atsiliepimai: 11,
     nuotrauka: "🏀",
+    dabar: 1, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
 ];
 
 /* ---------- Žaidėjai ---------- */
 const ZAIDEJAI = [
-  { id: "z1", vardas: "Tadas", amzius: 19, lygis: "vidutinis", pozicija: "Gynėjas" },
-  { id: "z2", vardas: "Lukas", amzius: 17, lygis: "vidutinis", pozicija: "Puolėjas" },
-  { id: "z3", vardas: "Matas", amzius: 22, lygis: "pradedantysis", pozicija: "Gynėjas" },
-  { id: "z4", vardas: "Rokas", amzius: 18, lygis: "vidutinis", pozicija: "Centras" },
-  { id: "z5", vardas: "Domas", amzius: 31, lygis: "aukštas", pozicija: "Gynėjas" },
-  { id: "z6", vardas: "Paulius", amzius: 27, lygis: "aukštas", pozicija: "Puolėjas" },
-  { id: "z7", vardas: "Andrius", amzius: 34, lygis: "aukštas", pozicija: "Centras" },
-  { id: "z8", vardas: "Ignas", amzius: 25, lygis: "aukštas", pozicija: "Puolėjas" },
-  { id: "z9", vardas: "Mantas", amzius: 29, lygis: "aukštas", pozicija: "Gynėjas" },
-  { id: "z10", vardas: "Giedrius", amzius: 44, lygis: "vidutinis", pozicija: "Puolėjas" },
-  { id: "z11", vardas: "Jonas (12 m.)", amzius: 12, lygis: "pradedantysis", pozicija: "Gynėjas" },
-  { id: "z12", vardas: "Rasa", amzius: 41, lygis: "vidutinis", pozicija: "Gynėja" },
-  { id: "z13", vardas: "Emilija (11 m.)", amzius: 11, lygis: "pradedantysis", pozicija: "Puolėja" },
-  { id: "z14", vardas: "Karolis", amzius: 20, lygis: "pradedantysis", pozicija: "Centras" },
-  { id: "z15", vardas: "Simas", amzius: 23, lygis: "vidutinis", pozicija: "Gynėjas" },
-  { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras" },
+  { id: "z1", vardas: "Tadas", amzius: 19, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "fabijoniskes" },
+  { id: "z2", vardas: "Lukas", amzius: 17, lygis: "vidutinis", pozicija: "Puolėjas", rajonas: "fabijoniskes" },
+  { id: "z3", vardas: "Matas", amzius: 22, lygis: "pradedantysis", pozicija: "Gynėjas", rajonas: "fabijoniskes" },
+  { id: "z4", vardas: "Rokas", amzius: 18, lygis: "vidutinis", pozicija: "Centras", rajonas: "zirmunai" },
+  { id: "z5", vardas: "Domas", amzius: 31, lygis: "aukštas", pozicija: "Gynėjas", rajonas: "zirmunai" },
+  { id: "z6", vardas: "Paulius", amzius: 27, lygis: "aukštas", pozicija: "Puolėjas", rajonas: "senamiestis" },
+  { id: "z7", vardas: "Andrius", amzius: 34, lygis: "aukštas", pozicija: "Centras", rajonas: "zirmunai" },
+  { id: "z8", vardas: "Ignas", amzius: 25, lygis: "aukštas", pozicija: "Puolėjas", rajonas: "senamiestis" },
+  { id: "z9", vardas: "Mantas", amzius: 29, lygis: "aukštas", pozicija: "Gynėjas", rajonas: "zirmunai" },
+  { id: "z10", vardas: "Giedrius", amzius: 44, lygis: "vidutinis", pozicija: "Puolėjas", rajonas: "senamiestis" },
+  { id: "z11", vardas: "Jonas (12 m.)", amzius: 12, lygis: "pradedantysis", pozicija: "Gynėjas", rajonas: "senamiestis" },
+  { id: "z12", vardas: "Rasa", amzius: 41, lygis: "vidutinis", pozicija: "Gynėja", rajonas: "senamiestis" },
+  { id: "z13", vardas: "Emilija (11 m.)", amzius: 11, lygis: "pradedantysis", pozicija: "Puolėja", rajonas: "senamiestis" },
+  { id: "z14", vardas: "Karolis", amzius: 20, lygis: "pradedantysis", pozicija: "Centras", rajonas: "fabijoniskes" },
+  { id: "z15", vardas: "Simas", amzius: 23, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "zirmunai" },
+  { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras", rajonas: "fabijoniskes" },
 ];
 
 /* ---------- Rungtynės ----------

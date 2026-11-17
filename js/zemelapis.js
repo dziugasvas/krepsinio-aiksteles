@@ -96,6 +96,7 @@ function piestiAiksteleskortele(a) {
         <button class="uzdaryti" onclick="uzdarytiKortele()" aria-label="Uždaryti">✕ Uždaryti</button>
       </div>
       <div class="atstumo-eilute">📍 ${formatuotiAtstuma(km)} · 🚶 ${laikasPesciomis(km)}</div>
+      <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">👥 ${uzimtumoTekstas(a)}</div>
       <div>
         <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
         <span class="zyma">Danga: ${a.danga}</span>
@@ -108,4 +109,81 @@ function piestiAiksteleskortele(a) {
         <a class="mygtukas antrinis platus" href="aikstele.html?id=${a.id}">Visa aikštelės informacija</a>
       </div>
     </div>`;
+}
+
+/* ==========================================================
+   Aikštelių sąrašas su filtrais (FR7)
+   ========================================================== */
+
+const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi" };
+
+function rodytiVaizda(vaizdas) {
+  const sarasas = vaizdas === "sarasas";
+  document.getElementById("aiksteliu-sarasas").hidden = !sarasas;
+  document.getElementById("zemelapio-vaizdas").hidden = sarasas;
+  document.getElementById("rodyti-sarasa").classList.toggle("pasirinktas", sarasas);
+  document.getElementById("rodyti-zemelapi").classList.toggle("pasirinktas", !sarasas);
+  uzdarytiKortele();
+  if (sarasas) piestiAiksteliuSarasa();
+  else zemelapis.invalidateSize();
+}
+
+function filtroMygtukas(tekstas, pasirinkta, veiksmas) {
+  return `<button class="filtro-parinktis ${pasirinkta ? "pasirinkta" : ""}" onclick="${veiksmas}; piestiAiksteliuSarasa()">${tekstas}</button>`;
+}
+
+function piestiAiksteliuSarasa() {
+  const f = aiksteliuFiltrai;
+  const aiksteles = AIKSTELES.filter((a) => {
+    if (f.danga !== "visos" && a.danga !== f.danga) return false;
+    if (f.apsviesta && !a.apsvietimas) return false;
+    if (f.atstumas !== "visi" && atstumasKm(a) > Number(f.atstumas)) return false;
+    return true;
+  }).sort((a, b) => atstumasKm(a) - atstumasKm(b));
+
+  const visos = visosRungtynes();
+
+  let html = `
+    <div class="saraso-filtrai">
+      <span class="etikete">Danga</span>
+      ${filtroMygtukas("Visos", f.danga === "visos", "aiksteliuFiltrai.danga = 'visos'")}
+      ${filtroMygtukas("Guminė", f.danga === "Guminė", "aiksteliuFiltrai.danga = 'Guminė'")}
+      ${filtroMygtukas("Asfaltas", f.danga === "Asfaltas", "aiksteliuFiltrai.danga = 'Asfaltas'")}
+      <span class="etikete">Atstumas</span>
+      ${filtroMygtukas("Bet koks", f.atstumas === "visi", "aiksteliuFiltrai.atstumas = 'visi'")}
+      ${filtroMygtukas("Iki 1 km", f.atstumas === "1", "aiksteliuFiltrai.atstumas = '1'")}
+      ${filtroMygtukas("Iki 3 km", f.atstumas === "3", "aiksteliuFiltrai.atstumas = '3'")}
+      ${filtroMygtukas("Iki 5 km", f.atstumas === "5", "aiksteliuFiltrai.atstumas = '5'")}
+      <span class="etikete">Kita</span>
+      ${filtroMygtukas("💡 Tik apšviestos", f.apsviesta, "aiksteliuFiltrai.apsviesta = !aiksteliuFiltrai.apsviesta")}
+    </div>
+    <p class="blankus" style="margin-bottom: 8px">Rasta aikštelių: ${aiksteles.length}</p>`;
+
+  if (aiksteles.length === 0) {
+    html += `<div class="tuscia"><div class="ikona">🔍</div><p>Pagal pasirinktus filtrus aikštelių nerasta.</p></div>`;
+  }
+
+  html += aiksteles
+    .map((a) => {
+      const km = atstumasKm(a);
+      const rungtyniu = visos.filter((r) => r.aiksteleId === a.id).length;
+      return `
+      <a class="kortele aiksteles-eilute" href="aikstele.html?id=${a.id}">
+        <div class="virsus-eilute">
+          <span class="pavadinimas">${a.pavadinimas}</span>
+          <span class="atstumas">📍 ${formatuotiAtstuma(km)}</span>
+        </div>
+        <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">👥 ${uzimtumoTekstas(a)}</div>
+        <div>
+          <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
+          <span class="zyma">${a.danga}</span>
+          <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">${a.bukle}</span>
+          ${a.apsvietimas ? `<span class="zyma">💡 Apšviesta</span>` : ""}
+          ${rungtyniu ? `<span class="zyma oranzine">Rungtynių: ${rungtyniu}</span>` : ""}
+        </div>
+      </a>`;
+    })
+    .join("");
+
+  document.getElementById("aiksteliu-sarasas").innerHTML = html;
 }

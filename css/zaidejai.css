@@ -1,0 +1,103 @@
+/* ==========================================================
+   Žaidėjų paieška (FR19)
+   ========================================================== */
+
+.paieskos-laukas {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.paieskos-laukas:focus {
+  outline: none;
+  border-color: var(--oranzine);
+}
+
+.filtru-eile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.filtru-eile .etikete {
+  width: 100%;
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+}
+
+.filtro-parinktis {
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtro-parinktis.pasirinkta {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+/* Žaidėjo kortelė */
+.zaidejo-kortele {
+  cursor: pointer;
+}
+
+.zaidejo-virsus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zaidejo-avataras {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pavirsius-2);
+  color: var(--oranzine);
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.zaidejo-vardas {
+  font-weight: 700;
+}
+
+.zaidejo-detales {
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+}
+
+.rodykle {
+  margin-left: auto;
+  color: var(--tekstas-blankus);
+}
+
+/* Išskleistas profilis */
+.zaidejo-profilis {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--linija);
+  font-size: 14px;
+}
+
+.zaidejo-profilis a {
+  display: block;
+  padding: 6px 0;
+}

@@ -122,6 +122,38 @@ function issaugotiFiltrus(filtrai) {
   rasytiSaugykla(d);
 }
 
+/* ---------- „Esu aikštelėje“ (FR10) – galioja 2 valandas ---------- */
+
+function pazymetiAiksteleje(aiksteleId) {
+  const d = skaitytiSaugykla();
+  d.aiksteleje = { aiksteleId: aiksteleId, iki: Date.now() + 2 * 60 * 60000 };
+  rasytiSaugykla(d);
+}
+
+/* Grąžina aikštelės id, kurioje naudotojas pažymėjo esantis (arba null) */
+function gautiBuvimaAiksteleje() {
+  const b = skaitytiSaugykla().aiksteleje;
+  return b && b.iki > Date.now() ? b.aiksteleId : null;
+}
+
+function atsauktiBuvimaAiksteleje() {
+  const d = skaitytiSaugykla();
+  delete d.aiksteleje;
+  rasytiSaugykla(d);
+}
+
+/* ---------- Pranešimai apie netoliese ieškomus žaidėjus (FR21) ---------- */
+
+function gautiPranesimuNustatyma() {
+  return skaitytiSaugykla().pranesimai !== false; // numatyta – įjungta
+}
+
+function nustatytiPranesimus(ijungta) {
+  const d = skaitytiSaugykla();
+  d.pranesimai = ijungta;
+  rasytiSaugykla(d);
+}
+
 /* ---------- Visko išvalymas (naudinga testuojant) ---------- */
 function isvalytiViska() {
   try {

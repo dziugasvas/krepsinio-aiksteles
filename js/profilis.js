@@ -20,6 +20,13 @@ function piestiProfili() {
         </div>
       </div>
 
+      <h2 class="skyriaus-pavadinimas">Vardas</h2>
+      <div class="vardo-eilute">
+        <input id="vardo-laukas" type="text" value="${naudotojas.vardas}" maxlength="20" aria-label="Vardas">
+        <button class="mygtukas antrinis" onclick="issaugotiVarda()">Išsaugoti</button>
+      </div>
+      <div class="klaidos-tekstas" id="vardo-klaida"></div>
+
       <h2 class="skyriaus-pavadinimas">Mano žaidimo lygis</h2>
       <div class="parinkciu-eile">
         ${Object.entries(LYGIAI)
@@ -29,6 +36,24 @@ function piestiProfili() {
           )
           .join("")}
       </div>
+
+      <h2 class="skyriaus-pavadinimas">Pozicija</h2>
+      <div class="parinkciu-eile">
+        ${["Gynėjas", "Puolėjas", "Centras", "Nesvarbu"]
+          .map(
+            (p) =>
+              `<button class="parinktis ${(naudotojas.pozicija || "Nesvarbu") === p ? "pasirinkta" : ""}" onclick="keistiPozicija('${p}')">${p}</button>`
+          )
+          .join("")}
+      </div>
+
+      ${buvimoInformacija()}
+
+      <h2 class="skyriaus-pavadinimas">Pranešimai</h2>
+      <label class="jungiklis-eilute">
+        <span>📣 Pranešti, kai netoliese ieškoma žaidėjų<br><span class="blankus">Pranešimą galite išjungti bet kada</span></span>
+        <input type="checkbox" class="jungiklis" ${gautiPranesimuNustatyma() ? "checked" : ""} onchange="keistiPranesimus(this.checked)">
+      </label>
 
       <h2 class="skyriaus-pavadinimas">Mano rungtynės</h2>
       <div class="kortele">${manoRungtynes()}</div>`;
@@ -116,4 +141,38 @@ function isvalytiPrototipa() {
   } catch (klaida) {}
   piestiProfili();
   rodytiPranesima("Prototipo duomenys išvalyti");
+}
+
+/* ---------- Vardas ir pozicija (FR5) ---------- */
+function issaugotiVarda() {
+  const vardas = document.getElementById("vardo-laukas").value.trim();
+  if (vardas.length < 2) {
+    document.getElementById("vardo-klaida").textContent = "Vardas turi būti bent 2 raidžių.";
+    return;
+  }
+  atnaujintiNaudotoja({ vardas: vardas });
+  piestiProfili();
+  rodytiPranesima("✓ Vardas išsaugotas");
+}
+
+function keistiPozicija(pozicija) {
+  atnaujintiNaudotoja({ pozicija: pozicija });
+  piestiProfili();
+  rodytiPranesima(`✓ Pozicija: ${pozicija}`);
+}
+
+/* ---------- Pranešimai (FR21) ---------- */
+function keistiPranesimus(ijungta) {
+  nustatytiPranesimus(ijungta);
+  rodytiPranesima(ijungta ? "🔔 Pranešimai įjungti" : "🔕 Pranešimai išjungti");
+}
+
+/* ---------- Kur naudotojas pažymėjo esantis (FR10) ---------- */
+function buvimoInformacija() {
+  const id = gautiBuvimaAiksteleje();
+  if (!id) return "";
+  const a = gautiAikstele(id);
+  return `
+    <h2 class="skyriaus-pavadinimas">Šiuo metu</h2>
+    <a class="kortele" href="aikstele.html?id=${a.id}">📍 Esate: <strong>${a.pavadinimas}</strong> ›</a>`;
 }

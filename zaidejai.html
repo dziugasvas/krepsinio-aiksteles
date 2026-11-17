@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <title>Krepšinis Visur – Žaidėjai</title>
+  <link rel="stylesheet" href="css/bendras.css">
+  <link rel="stylesheet" href="css/zaidejai.css">
+</head>
+<body>
+  <div class="programele">
+    <header class="virsus">
+      <h1>Žaidėjai</h1>
+    </header>
+
+    <main class="turinys">
+      <!-- Paieška pagal vardą -->
+      <input id="paieska" class="paieskos-laukas" type="search" placeholder="🔍 Ieškoti pagal vardą" oninput="piestiZaidejus()" aria-label="Ieškoti žaidėjų pagal vardą">
+
+      <!-- Filtrai: lygis ir rajonas (FR19) -->
+      <div id="zaideju-filtrai"></div>
+
+      <div id="zaideju-sarasas"></div>
+    </main>
+
+    <nav id="navigacija"></nav>
+  </div>
+
+  <script src="js/duomenys.js"></script>
+  <script src="js/saugykla.js"></script>
+  <script src="js/bendras.js"></script>
+  <script src="js/zaidejai.js"></script>
+</body>
+</html>

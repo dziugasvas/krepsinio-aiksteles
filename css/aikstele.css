@@ -143,3 +143,19 @@
   color: var(--tekstas-blankus);
   margin-top: 2px;
 }
+
+/* Užimtumas ir „Esu aikštelėje“ (FR9, FR10) */
+.uzimtumo-kortele {
+  background: rgba(62, 207, 110, 0.1);
+  border: 1px solid rgba(62, 207, 110, 0.35);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 4px;
+  color: var(--zalia);
+}
+
+.uzimtumo-kortele.laisva {
+  background: var(--pavirsius);
+  border-color: var(--linija);
+  color: var(--tekstas);
+}

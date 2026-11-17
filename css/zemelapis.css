@@ -7,7 +7,7 @@
 }
 
 #zemelapis {
-  height: calc(100vh - 60px - var(--navigacijos-aukstis) - 40px);
+  height: calc(100vh - 60px - var(--navigacijos-aukstis) - 40px - 56px);
   width: 100%;
 }
 
@@ -138,4 +138,94 @@
 
 .kortele-mygtukai {
   margin-top: 12px;
+}
+
+/* ---------- Perjungiklis Žemėlapis / Sąrašas ---------- */
+.perjungiklis {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--fonas);
+}
+
+.perjungiklis button {
+  flex: 1;
+  min-height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius);
+  color: var(--tekstas);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.perjungiklis button.pasirinktas {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+/* ---------- Aikštelių sąrašas ---------- */
+#aiksteliu-sarasas {
+  padding-bottom: calc(var(--navigacijos-aukstis) + 16px);
+}
+
+.saraso-filtrai {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.saraso-filtrai .etikete {
+  width: 100%;
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+  margin-top: 4px;
+}
+
+.filtro-parinktis {
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtro-parinktis.pasirinkta {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+.aiksteles-eilute .virsus-eilute {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.aiksteles-eilute .pavadinimas {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.aiksteles-eilute .atstumas {
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.uzimtumas {
+  font-size: 14px;
+  color: var(--zalia);
+  margin: 4px 0 6px;
+}
+
+.uzimtumas.laisva {
+  color: var(--tekstas-blankus);
 }

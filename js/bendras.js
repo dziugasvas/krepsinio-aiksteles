@@ -11,6 +11,7 @@ function piestiNavigacija(aktyvus) {
   const punktai = [
     { id: "rungtynes", nuoroda: "index.html", ikona: "🏀", tekstas: "Rungtynės" },
     { id: "zemelapis", nuoroda: "zemelapis.html", ikona: "🗺️", tekstas: "Žemėlapis" },
+    { id: "zaidejai", nuoroda: "zaidejai.html", ikona: "👥", tekstas: "Žaidėjai" },
     { id: "profilis", nuoroda: "profilis.html", ikona: "👤", tekstas: "Profilis" },
   ];
   const nav = document.getElementById("navigacija");
@@ -67,6 +68,17 @@ function gautiAikstele(id) {
 
 function gautiZaideja(id) {
   return ZAIDEJAI.find((z) => z.id === id);
+}
+
+/* Kiek žaidėjų šiuo metu yra aikštelėje (FR9): kiti + naudotojas, jei pažymėjo „Esu aikštelėje“ */
+function zaidejuAiksteleje(aikstele) {
+  return aikstele.dabar + (gautiBuvimaAiksteleje() === aikstele.id ? 1 : 0);
+}
+
+function uzimtumoTekstas(aikstele) {
+  const n = zaidejuAiksteleje(aikstele);
+  if (n === 0) return "Šiuo metu laisva";
+  return `Dabar aikštelėje: ${n} ${n === 1 ? "žaidėjas" : n < 10 ? "žaidėjai" : "žaidėjų"}`;
 }
 
 /* Paima parametrą iš adreso, pvz. rungtynes.html?id=r3 → "r3" */

@@ -209,3 +209,33 @@
 #rungtyniu-sarasas {
   padding-bottom: 72px;
 }
+
+/* ---------- Priminimai ir pranešimai (FR20, FR21) ---------- */
+.priminimas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--oranzine-sviesi);
+  border: 1px solid var(--oranzine);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 8px 0;
+}
+
+.priminimas a {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--tekstas);
+  font-size: 14px;
+}
+
+.priminimas button {
+  background: none;
+  border: none;
+  color: var(--tekstas-blankus);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+}

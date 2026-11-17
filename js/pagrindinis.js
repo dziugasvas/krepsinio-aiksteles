@@ -106,13 +106,15 @@ function greitasPrisijungimas(ivykis, id) {
   const r = gautiRungtynes(id);
   registruotisRungtynems(id, 1);
   piestiRungtynes();
+  piestiPriminimus();
 
   // Aiškus patvirtinimas + galimybė atšaukti
-  rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas}, ${pirmaMaza(rungtyniuLaikas(r).replace("🔴 ", ""))}`, {
+  rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas} (${r.aikstele.adresas}), ${pirmaMaza(rungtyniuLaikas(r).replace("🔴 ", ""))}`, {
     mygtukas: "Atšaukti",
     veiksmas: () => {
       atsauktiDalyvavima(id);
       piestiRungtynes();
+      piestiPriminimus();
       rodytiPranesima("Dalyvavimas atšauktas");
     },
     trukme: 6000,
@@ -238,8 +240,69 @@ function piestiAktyviusFiltrus() {
     : "";
 }
 
+/* ==========================================================
+   Priminimai (FR20) ir pranešimai apie netoliese ieškomus žaidėjus (FR21)
+   ========================================================== */
+
+let uzdarytiPriminimai = [];
+try {
+  uzdarytiPriminimai = JSON.parse(sessionStorage.getItem("uzdarytiPriminimai")) || [];
+} catch (klaida) {}
+
+function piestiPriminimus() {
+  const el = document.getElementById("priminimai");
+  if (!gautiNaudotoja()) {
+    el.innerHTML = "";
+    return;
+  }
+  const visos = visosRungtynes();
+  let html = "";
+
+  // FR20: rungtynės, prie kurių prisijungta ir kurios prasideda per artimiausią valandą
+  const artimos = visos.filter((r) => r.manoKiekis > 0 && r.pradziaPoMin <= 60 && r.pradziaPoMin > -r.trukmeMin);
+  for (const r of artimos) {
+    const raktas = "p-" + r.id;
+    if (uzdarytiPriminimai.includes(raktas)) continue;
+    const kada = r.vyksta ? "jau vyksta" : `prasideda po ${r.pradziaPoMin} min.`;
+    html += priminimas(raktas, "🔔", `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, `rungtynes.html?id=${r.id}`);
+  }
+
+  // FR21: netoliese (iki 1,5 km) ieškoma žaidėjų, o naudotojas dar nedalyvauja
+  if (gautiPranesimuNustatyma()) {
+    const ieskoma = visos
+      .filter((r) => r.manoKiekis === 0 && r.laisvu > 0 && r.atstumas <= 1.5 && r.pradziaPoMin <= 120)
+      .sort((a, b) => a.atstumas - b.atstumas)[0];
+    if (ieskoma && !uzdarytiPriminimai.includes("i-" + ieskoma.id)) {
+      html += priminimas(
+        "i-" + ieskoma.id,
+        "📣",
+        `Netoliese ieškoma žaidėjų: <strong>${ieskoma.aikstele.pavadinimas}</strong> (${formatuotiAtstuma(ieskoma.atstumas)}) – trūksta ${ieskoma.laisvu}`,
+        `rungtynes.html?id=${ieskoma.id}`
+      );
+    }
+  }
+  el.innerHTML = html;
+}
+
+function priminimas(raktas, ikona, tekstas, nuoroda) {
+  return `
+    <div class="priminimas">
+      <a href="${nuoroda}"><span class="ikona">${ikona}</span><span>${tekstas}</span></a>
+      <button onclick="uzdarytiPriminima('${raktas}')" aria-label="Uždaryti priminimą">✕</button>
+    </div>`;
+}
+
+function uzdarytiPriminima(raktas) {
+  uzdarytiPriminimai.push(raktas);
+  try {
+    sessionStorage.setItem("uzdarytiPriminimai", JSON.stringify(uzdarytiPriminimai));
+  } catch (klaida) {}
+  piestiPriminimus();
+}
+
 /* ---------- Puslapio paleidimas ---------- */
 piestiNavigacija("rungtynes");
 piestiVieta();
+piestiPriminimus();
 piestiAktyviusFiltrus();
 piestiRungtynes();
