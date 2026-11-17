@@ -1,0 +1,79 @@
+/* ==========================================================
+   Profilio puslapis
+   ========================================================== */
+
+.profilio-virsus {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.didelis-avataras {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--oranzine);
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.didelis-avataras.svecias {
+  background: var(--pavirsius-2);
+  color: var(--tekstas-blankus);
+}
+
+.profilio-vardas {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Pasirinkimai mygtukais (lygis, vieta) */
+.parinkciu-eile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.parinktis {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.parinktis.pasirinkta {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+.mano-rungtynes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linija);
+  color: var(--tekstas);
+}
+
+.mano-rungtynes:last-child {
+  border-bottom: none;
+}
+
+.apacios-mygtukai {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}

@@ -1,0 +1,145 @@
+/* ==========================================================
+   Aikštelės profilis
+   ========================================================== */
+
+.virselis {
+  height: 150px;
+  border-radius: var(--apvalinimas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  background: linear-gradient(135deg, #f57c1f 0%, #8a3b00 100%);
+  margin-bottom: 14px;
+}
+
+.aiksteles-vardas {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.adresas {
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+  margin: 2px 0 8px;
+}
+
+.ivertinimo-eilute {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.ivertinimo-eilute .zvaigzdes {
+  color: var(--geltona);
+}
+
+/* Informacijos tinklelis: danga, būklė, apšvietimas, lankai */
+.info-tinklelis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.info-langelis {
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.info-langelis .etikete {
+  font-size: 12px;
+  color: var(--tekstas-blankus);
+}
+
+.info-langelis .reiksme {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.reiksme.gera {
+  color: var(--zalia);
+}
+
+.reiksme.vidutine {
+  color: var(--geltona);
+}
+
+.mygtuku-eile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+/* Rungtynės šioje aikštelėje */
+.mini-rungtynes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  color: var(--tekstas);
+}
+
+.mini-rungtynes .laisva {
+  color: var(--zalia);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Įvertinimas žvaigždutėmis */
+.vertinimas {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 4px;
+}
+
+.vertinimas button {
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: #555555;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.vertinimas button.uzpildyta {
+  color: var(--geltona);
+}
+
+/* Atsiliepimai */
+.atsiliepimas {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--linija);
+}
+
+.atsiliepimas:last-child {
+  border-bottom: none;
+}
+
+.atsiliepimas .autorius {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.atsiliepimas .zvaigzdes {
+  color: var(--geltona);
+  font-size: 13px;
+}
+
+.atsiliepimas p {
+  font-size: 14px;
+  color: var(--tekstas-blankus);
+  margin-top: 2px;
+}
