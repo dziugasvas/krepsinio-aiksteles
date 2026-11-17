@@ -41,6 +41,7 @@ function prisijungti(vardas, budas) {
 function atsijungti() {
   const d = skaitytiSaugykla();
   delete d.naudotojas;
+  delete d.pradziaMatyta; // po atsijungimo vėl rodomas pradžios ekranas
   rasytiSaugykla(d);
 }
 
@@ -49,6 +50,19 @@ function atnaujintiNaudotoja(laukai) {
   const d = skaitytiSaugykla();
   if (!d.naudotojas) return;
   d.naudotojas = Object.assign(d.naudotojas, laukai);
+  rasytiSaugykla(d);
+}
+
+/* ---------- Pradžios ekranas ---------- */
+
+/* Ar naudotojas jau pasirinko „Tęsti be prisijungimo“ */
+function arPradziaMatyta() {
+  return !!skaitytiSaugykla().pradziaMatyta;
+}
+
+function pazymetiPradziaMatyta() {
+  const d = skaitytiSaugykla();
+  d.pradziaMatyta = true;
   rasytiSaugykla(d);
 }
 

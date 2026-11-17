@@ -2,6 +2,11 @@
    Pagrindinis ekranas – netoliese vykstančių rungtynių sąrašas
    ========================================================== */
 
+/* Pirmą kartą atidarius (neprisijungus) – rodomas pradžios ekranas */
+if (!gautiNaudotoja() && !arPradziaMatyta()) {
+  window.location.replace("pradzia.html");
+}
+
 /* Puslapio paleidimas – failo pabaigoje (kai visi kintamieji jau aprašyti) */
 
 /* Rodo, pagal kokią vietą skaičiuojami atstumai */
