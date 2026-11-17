@@ -1,13 +1,7 @@
-/* ==========================================================
-   Pradžia: pasirinktas miestas ir netoliese vykstančios rungtynės
-   ========================================================== */
-
-/* Pirmą kartą atidarius (neprisijungus) – rodomas pradžios ekranas */
 if (!gautiNaudotoja() && !arPradziaMatyta()) {
   window.location.replace("pradzia.html");
 }
 
-/* ---------- Miestas (viršuje, su nuotrauka) ---------- */
 function miestoRungtynes() {
   return visosRungtynes().filter((r) => r.aikstele.miestas === dabartinisMiestas());
 }
@@ -51,7 +45,6 @@ function keistiRajona(rajonas) {
   rodytiPranesima(`Vieta: ${RAJONAI[rajonas].pavadinimas}`);
 }
 
-/* Miestų pasirinkimas (iššoka iš apačios) */
 function atidarytiMiestuSarasa() {
   const dabartinis = dabartinisMiestas();
   const fonas = document.createElement("div");
@@ -73,7 +66,7 @@ function atidarytiMiestuSarasa() {
             return `
             <button class="miesto-plytele ${id === dabartinis ? "pasirinkta" : ""}" style="background-image: url('${m.nuotrauka}')" onclick="pasirinktiMiesta('${id}')">
               <span class="plyteles-pavadinimas">${m.pavadinimas}</span>
-              <span class="plyteles-info">${kiek} aikštelės${id === dabartinis ? " · ✓ dabar" : ""}</span>
+              <span class="plyteles-info">${daugiskaita(kiek, "aikštelė", "aikštelės", "aikštelių")}${id === dabartinis ? " · ✓ dabar" : ""}</span>
             </button>`;
           })
           .join("")}
@@ -104,7 +97,6 @@ function pasirinktiMiesta(miestas) {
   rodytiPranesima(`Miestas: ${MIESTAI[miestas].pavadinimas}`);
 }
 
-/* ---------- Rungtynių sąrašas ---------- */
 function piestiRungtynes() {
   const visos = miestoRungtynes().filter(atitinkaFiltrus);
 
@@ -117,7 +109,7 @@ function piestiRungtynes() {
   let html = "";
   for (const grupe of grupes) {
     if (grupe.rungtynes.length === 0) continue;
-    // Kiekvienoje grupėje – artimiausios viršuje
+
     grupe.rungtynes.sort((a, b) => a.atstumas - b.atstumas);
     html += `<h2 class="skyriaus-pavadinimas">${grupe.pavadinimas}</h2>`;
     html += grupe.rungtynes.map((r) => rungtyniuKorteleHtml(r, prisijungimoMygtukas(r))).join("");
@@ -144,7 +136,6 @@ function arSiandien(data) {
   return data.toDateString() === new Date().toDateString();
 }
 
-/* Mygtukas kortelėje: „Prisijungti“, „Dalyvaujate“ arba „Pilna“ */
 function prisijungimoMygtukas(r) {
   if (r.organizatorius === "jus") return `<span class="pill dalyvauja">✓ Organizuojate</span>`;
   if (r.manoKiekis > 0) {
@@ -155,13 +146,10 @@ function prisijungimoMygtukas(r) {
   return `<button class="pill oranzinis" onclick="greitasPrisijungimas(event, '${r.id}')">Prisijungti</button>`;
 }
 
-/* Prisijungimas prie rungtynių tiesiai iš sąrašo (1 užduotis – Kevinas) */
 function greitasPrisijungimas(ivykis, id) {
-  // Kad paspaudus mygtuką neatsidarytų rungtynių puslapis
   ivykis.preventDefault();
   ivykis.stopPropagation();
 
-  // Svečias – pasiūlome prisijungti, bet nieko neprarandame
   if (!gautiNaudotoja()) {
     rodytiPranesima("Norėdami dalyvauti, prisijunkite", {
       mygtukas: "Prisijungti",
@@ -174,7 +162,6 @@ function greitasPrisijungimas(ivykis, id) {
   registruotisRungtynems(id, 1);
   atnaujintiViska();
 
-  // Aiškus patvirtinimas + galimybė atšaukti
   rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas} (${r.aikstele.adresas}), ${pirmaMaza(rungtyniuLaikas(r).replace("● ", ""))}`, {
     mygtukas: "Atšaukti",
     veiksmas: () => {
@@ -186,15 +173,9 @@ function greitasPrisijungimas(ivykis, id) {
   });
 }
 
-/* „Vyksta dabar“ → „vyksta dabar“ (sakinio viduryje) */
 function pirmaMaza(tekstas) {
   return tekstas.charAt(0).toLowerCase() + tekstas.slice(1);
 }
-
-/* ==========================================================
-   Filtrai: lygis, laikas, atstumas, „Šeimoms“ (FR13)
-   Pasirinkimai išsaugomi – kitą kartą nereikės rinktis iš naujo.
-   ========================================================== */
 
 const FILTRU_PARINKTYS = {
   lygis: { pavadinimas: "Lygis", reiksmes: { visi: "Visi", pradedantysis: "Pradedantysis", vidutinis: "Vidutinis", "aukštas": "Aukštas" } },
@@ -204,7 +185,7 @@ const FILTRU_PARINKTYS = {
 };
 
 let filtrai = Object.assign({ lygis: "visi", laikas: "visi", atstumas: "visi", zyma: "visi" }, gautiFiltrus());
-let juodrastis = null; // filtrai, kol langas atidarytas (dar nepritaikyti)
+let juodrastis = null;
 
 function atitinkaFiltrus(r) {
   if (filtrai.lygis !== "visi" && r.lygis !== filtrai.lygis) return false;
@@ -224,7 +205,6 @@ function arYraFiltru() {
   return Object.values(filtrai).some((v) => v !== "visi");
 }
 
-/* Atidaromas filtrų langas */
 function atidarytiFiltrus() {
   juodrastis = Object.assign({}, filtrai);
   piestiFiltruLanga();
@@ -258,7 +238,6 @@ function piestiFiltruLanga() {
   document.getElementById("filtru-langas").innerHTML = html;
 }
 
-/* Patikrina rungtynes su laikinais (dar nepritaikytais) filtrais */
 function atitinkaFiltrusSu(r, laikini) {
   const tikri = filtrai;
   filtrai = laikini;
@@ -292,7 +271,6 @@ function isvalytiFiltrus() {
   piestiRungtynes();
 }
 
-/* Aktyvūs filtrai rodomi šalia mygtuko, kad naudotojas matytų, kas pritaikyta */
 function piestiAktyviusFiltrus() {
   const aktyvus = Object.entries(filtrai).filter(([, v]) => v !== "visi");
   const mygtukas = document.getElementById("filtru-mygtukas");
@@ -305,7 +283,6 @@ function piestiAktyviusFiltrus() {
     : "";
 }
 
-/* ---------- Puslapio paleidimas ---------- */
 function atnaujintiViska() {
   piestiVirsu("Pradžia", { nuoroda: "sukurti.html", tekstas: "Sukurti" });
   piestiMiesta();

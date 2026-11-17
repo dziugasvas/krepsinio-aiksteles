@@ -1,8 +1,3 @@
-/* ==========================================================
-   Pradžia – miestas ir netoliese vykstančios rungtynės
-   ========================================================== */
-
-/* ---------- Miesto viršelis ---------- */
 .miesto-virselis {
   position: relative;
   display: flex;
@@ -10,8 +5,8 @@
   justify-content: flex-end;
   align-items: flex-start;
   width: 100%;
-  height: 210px;
-  padding: 18px;
+  height: 128px;
+  padding: 14px 16px;
   border: none;
   border-radius: 22px;
   overflow: hidden;
@@ -42,7 +37,7 @@
 
 .miesto-pavadinimas {
   font-family: var(--antrastes-sriftas);
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1;
@@ -54,13 +49,12 @@
 }
 
 .miesto-sukis {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #ffd2bf;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
-/* ---------- Statistika ---------- */
 .miesto-statistika {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -71,37 +65,43 @@
 .miesto-statistika div {
   background: var(--pavirsius);
   border: 1px solid var(--linija);
-  border-radius: 16px;
-  padding: 12px 6px;
+  border-radius: 14px;
+  padding: 7px 6px;
   text-align: center;
 }
 
 .miesto-statistika strong {
   display: block;
   font-family: var(--antrastes-sriftas);
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.1;
 }
 
 .miesto-statistika span {
-  font-size: 11px;
+  display: block;
+  white-space: nowrap;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: var(--tekstas-blankus);
 }
 
-/* ---------- Rajonai (Vilniuje) ---------- */
 .rajonai {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+
+.rajonai::-webkit-scrollbar {
+  display: none;
 }
 
 .rajonas {
+  flex-shrink: 0;
   min-height: 34px;
   padding: 4px 14px;
   border-radius: 999px;
@@ -119,12 +119,11 @@
   color: #ffffff;
 }
 
-/* ---------- Sąrašo antraštė su filtrais ---------- */
 .saraso-antraste {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 24px 0 4px;
+  margin: 16px 0 0;
 }
 
 .saraso-antraste h2 {
@@ -147,7 +146,6 @@
   gap: 4px;
 }
 
-/* ---------- Miestų pasirinkimo lapas (iš apačios) ---------- */
 .lapas-fonas {
   position: fixed;
   inset: 0;
@@ -268,7 +266,6 @@
   opacity: 0.9;
 }
 
-/* Užpildymo juosta: kiek vietų užimta */
 .uzpildymas {
   margin: 10px 0 12px;
 }
@@ -299,7 +296,6 @@
   font-weight: 600;
 }
 
-/* Būsena „Jūs dalyvaujate“ */
 .dalyvaujate {
   display: flex;
   align-items: center;
@@ -312,7 +308,6 @@
   font-weight: 600;
 }
 
-/* ---------- Filtrai ---------- */
 .filtru-juosta {
   display: flex;
   align-items: center;
@@ -412,3 +407,10 @@
   margin-top: 16px;
 }
 
+#rungtyniu-sarasas .skyriaus-pavadinimas:first-child {
+  margin-top: 6px;
+}
+
+#rungtyniu-sarasas .skyriaus-pavadinimas {
+  margin-bottom: 8px;
+}

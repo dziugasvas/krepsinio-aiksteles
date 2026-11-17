@@ -1,8 +1,3 @@
-/* ==========================================================
-   Rungtynių puslapis
-   ========================================================== */
-
-/* Aikštelės nuotrauka arba tamsus fonas su krepšio siluetu */
 .virselis {
   height: 170px;
   border-radius: 22px;
@@ -84,7 +79,6 @@
   margin-top: 6px;
 }
 
-/* Dalyvių sąrašas */
 .dalyvis {
   display: flex;
   align-items: center;
@@ -124,7 +118,6 @@
   color: var(--tekstas-blankus);
 }
 
-/* Veiksmų sritis ekrano apačioje (virš navigacijos) */
 .veiksmai {
   position: sticky;
   bottom: calc(var(--navigacijos-aukstis) + 8px);
@@ -132,7 +125,6 @@
   padding: 12px 0 4px;
 }
 
-/* „Kas dalyvaus?“ – aš ir draugai (− / +) */
 .skaiciuokle {
   display: flex;
   align-items: center;

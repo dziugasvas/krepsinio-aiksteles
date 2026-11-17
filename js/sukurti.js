@@ -1,16 +1,11 @@
-/* ==========================================================
-   Rungtynių kūrimas (FR17) – Skirmanto poreikis organizuoti žaidimą
-   ========================================================== */
-
 piestiNavigacija("rungtynes");
 
-/* Numatytos reikšmės: artimiausia aikštelė, šiandien, kita pilna valanda */
 const kitaValanda = new Date();
 kitaValanda.setHours(kitaValanda.getHours() + 1, 0, 0, 0);
 
 const forma = {
   aiksteleId: gautiParametra("aikstele") || artimiausiaAikstele().id,
-  diena: kitaValanda.getDate() === new Date().getDate() ? 0 : 1, // 0 – šiandien, 1 – rytoj, 2 – poryt
+  diena: kitaValanda.getDate() === new Date().getDate() ? 0 : 1,
   laikas: `${String(kitaValanda.getHours()).padStart(2, "0")}:00`,
   trukme: 90,
   lygis: gautiNaudotoja() ? gautiNaudotoja().lygis : "vidutinis",
@@ -19,7 +14,33 @@ const forma = {
   aprasymas: "",
 };
 
+const pradineForma = JSON.stringify(forma);
+
 piestiForma();
+
+function arPakeista() {
+  return JSON.stringify(forma) !== pradineForma;
+}
+
+function arGalimaIseiti() {
+  if (!arPakeista()) return true;
+  return confirm("Išeiti neišsaugojus? Įvesti rungtynių duomenys bus prarasti.");
+}
+
+function atsauktiKurima() {
+  if (arGalimaIseiti()) window.location.href = "index.html";
+}
+
+function persidengiancios() {
+  const pradzia = pradziosData().getTime();
+  const pabaiga = pradzia + forma.trukme * 60000;
+  return visosRungtynes().filter((r) => {
+    if (r.aiksteleId !== forma.aiksteleId) return false;
+    const rPradzia = r.pradzia.getTime();
+    const rPabaiga = rPradzia + r.trukmeMin * 60000;
+    return rPradzia < pabaiga && pradzia < rPabaiga;
+  });
+}
 
 function artimiausiaAikstele() {
   return AIKSTELES.slice().sort((a, b) => atstumasKm(a) - atstumasKm(b))[0];
@@ -28,7 +49,6 @@ function artimiausiaAikstele() {
 function piestiForma(klaida = "") {
   const turinys = document.getElementById("kurimo-turinys");
 
-  // Kurti gali tik prisijungę naudotojai
   if (!gautiNaudotoja()) {
     turinys.innerHTML = `
       <div class="tuscia">
@@ -107,16 +127,32 @@ function piestiForma(klaida = "") {
       <div class="lauko-pagalba"><span id="simboliai">${forma.aprasymas.length}</span> / 120 simbolių</div>
     </div>
 
+    ${persidengimoIspejimas()}
+
     ${santrauka()}
 
-    <button class="mygtukas platus" onclick="sukurtiRungtynes()">Sukurti rungtynes</button>`;
+    <div class="kurimo-mygtukai">
+      <button class="mygtukas antrinis" onclick="atsauktiKurima()">Atšaukti</button>
+      <button class="mygtukas" onclick="sukurtiRungtynes()">Sukurti rungtynes</button>
+    </div>`;
+}
+
+function persidengimoIspejimas() {
+  const kitos = persidengiancios();
+  if (kitos.length === 0) return "";
+  const r = kitos[0];
+  return `
+    <div class="ispejimas" role="alert">
+      <strong>Šioje aikštelėje tuo metu jau yra rungtynės</strong>
+      <span>${rungtyniuLaikas(r).replace("● ", "")} · ${LYGIAI[r.lygis]} · ${r.laisvu > 0 ? `trūksta ${r.laisvu}` : "pilna"}</span>
+      <a href="rungtynes.html?id=${r.id}">Peržiūrėti ir prisijungti ›</a>
+    </div>`;
 }
 
 function parinktis(tekstas, pasirinkta, veiksmas) {
   return `<button type="button" class="parinktis ${pasirinkta ? "pasirinkta" : ""}" onclick="${veiksmas}; piestiForma()">${tekstas}</button>`;
 }
 
-/* Pasirinktos pradžios data ir laikas */
 function pradziosData() {
   const [h, m] = forma.laikas.split(":").map(Number);
   const data = new Date();
@@ -125,7 +161,6 @@ function pradziosData() {
   return data;
 }
 
-/* Santrauka – naudotojas mato, ką sukurs (prieš paspausdamas) */
 function santrauka() {
   const a = gautiAikstele(forma.aiksteleId);
   return `
@@ -140,7 +175,6 @@ function santrauka() {
 function sukurtiRungtynes() {
   const pradzia = pradziosData();
 
-  // Klaidų prevencija: negalima sukurti rungtynių praeityje
   if (pradzia.getTime() < Date.now() - 5 * 60000) {
     piestiForma("Šis laikas jau praėjo. Pasirinkite vėlesnį laiką arba kitą dieną.");
     document.getElementById("laikas").focus();
@@ -166,7 +200,6 @@ function sukurtiRungtynes() {
     aprasymas: forma.aprasymas.trim() || "Kviečiu prisijungti!",
   });
 
-  // Organizatorius automatiškai dalyvauja
   registruotisRungtynems(id, 1);
   window.location.href = `rungtynes.html?id=${id}&naujos=1`;
 }

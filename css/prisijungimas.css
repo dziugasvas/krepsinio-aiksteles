@@ -1,7 +1,3 @@
-/* ==========================================================
-   Prisijungimo / registracijos puslapis
-   ========================================================== */
-
 .prisijungimo-puslapis {
   padding-bottom: 32px;
   background: var(--pavirsius);
@@ -21,7 +17,7 @@
 
 .logotipas-tekstas.centre {
   display: block;
-  padding-left: 0.4em; /* kompensuoja raidžių tarpą gale */
+  padding-left: 0.4em;
   margin-top: 12px;
 }
 
@@ -40,7 +36,6 @@
   margin-bottom: 28px;
 }
 
-/* Formos laukai */
 .laukas {
   margin-bottom: 14px;
 }
@@ -123,7 +118,6 @@
   background: var(--linija);
 }
 
-/* Kontūriniai mygtukai („Tęsti su Google / Apple“) */
 .greiti-budai {
   display: grid;
   gap: 12px;

@@ -1,28 +1,22 @@
-/* ==========================================================
-   Krepšinis Visur – bendri stiliai (šviesus dizainas)
-   ========================================================== */
-
-/* Antraščių šriftas: siauras ir storas (palaiko lietuviškas raides) */
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap");
 
-/* ---------- Spalvos ir dydžiai ---------- */
 :root {
-  --oranzine: #f05a22;          /* pagrindinė spalva */
-  --oranzine-tamsi: #d4481a;    /* paspaustas mygtukas */
-  --oranzine-sviesi: #fff0ea;   /* švelnus oranžinis fonas */
+  --oranzine: #f05a22;
+  --oranzine-tamsi: #d4481a;
+  --oranzine-sviesi: #fff0ea;
 
-  --fonas: #f6f6f7;             /* puslapio fonas */
-  --pavirsius: #ffffff;         /* kortelės, juostos */
-  --pavirsius-2: #f1f1f3;       /* įvesties laukai, žymos */
+  --fonas: #f6f6f7;
+  --pavirsius: #ffffff;
+  --pavirsius-2: #f1f1f3;
   --linija: #e8e8ec;
 
   --tekstas: #111111;
   --tekstas-blankus: #6e6e73;
 
-  --zalia: #1a8a3a;             /* sėkmė, laikas, „laisva vieta“ */
+  --zalia: #1a8a3a;
   --zalia-sviesi: #e8f6ec;
-  --raudona: #e0352b;           /* klaida, atšaukimas */
-  --geltona: #f5a524;           /* žvaigždutės */
+  --raudona: #e0352b;
+  --geltona: #f5a524;
 
   --antrastes-sriftas: "Oswald", "Arial Narrow", sans-serif;
   --apvalinimas: 18px;
@@ -30,7 +24,6 @@
   --seselis: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-/* ---------- Bazė ---------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -66,7 +59,6 @@ button {
   font-family: inherit;
 }
 
-/* ---------- Logotipas „KREPŠINIS VISUR“ ---------- */
 .logotipas-tekstas {
   color: var(--oranzine);
   font-weight: 700;
@@ -75,7 +67,6 @@ button {
   text-transform: uppercase;
 }
 
-/* ---------- Viršutinė juosta: pagrindiniai ekranai (avataras + pavadinimas) ---------- */
 .virsus-pagrindinis {
   position: sticky;
   top: 0;
@@ -183,7 +174,6 @@ button {
   border: 2px solid var(--fonas);
 }
 
-/* ---------- Viršutinė juosta: vidiniai ekranai (su „Atgal“) ---------- */
 .virsus {
   position: sticky;
   top: 0;
@@ -209,7 +199,6 @@ button {
   color: var(--oranzine);
 }
 
-/* „Atgal“ – visada su tekstu */
 .atgal {
   display: inline-flex;
   align-items: center;
@@ -224,7 +213,6 @@ button {
   font-weight: 600;
 }
 
-/* ---------- Turinys ---------- */
 .turinys {
   padding: 8px 16px 16px;
 }
@@ -243,7 +231,6 @@ button {
   font-size: 14px;
 }
 
-/* ---------- Kortelės ---------- */
 .kortele {
   display: block;
   background: var(--pavirsius);
@@ -260,7 +247,6 @@ a.kortele:active {
   transform: scale(0.985);
 }
 
-/* ---------- Mygtukai (apvalūs) ---------- */
 .mygtukas {
   display: inline-flex;
   align-items: center;
@@ -309,7 +295,6 @@ a.kortele:active {
   transform: none;
 }
 
-/* Mažas apvalus mygtukas kortelėse („Prisijungti“) */
 .pill {
   display: inline-flex;
   align-items: center;
@@ -349,7 +334,6 @@ a.kortele:active {
   cursor: not-allowed;
 }
 
-/* ---------- Žymos ---------- */
 .zyma {
   display: inline-block;
   padding: 3px 10px;
@@ -371,7 +355,6 @@ a.kortele:active {
   color: var(--zalia);
 }
 
-/* ---------- Rungtynių kortelė (naudojama keliuose ekranuose) ---------- */
 .rungtyniu-kortele {
   padding: 14px;
 }
@@ -391,7 +374,6 @@ a.kortele:active {
   background-color: #1d1d1f;
 }
 
-/* Kai aikštelės nuotraukos nėra – tamsus fonas su krepšio siluetu */
 .miniatiura.be-nuotraukos {
   background-image: linear-gradient(160deg, #2b2b2e 0%, #0f0f10 100%);
   display: flex;
@@ -453,7 +435,6 @@ a.kortele:active {
   font-weight: 700;
 }
 
-/* ---------- Apatinė navigacija (tik ikonos) ---------- */
 .apatine-navigacija {
   position: fixed;
   bottom: 0;
@@ -494,7 +475,6 @@ a.kortele:active {
   stroke-linejoin: round;
 }
 
-/* Aktyvus skirtukas – juodas ir storesnis */
 .apatine-navigacija a.aktyvus {
   color: var(--tekstas);
 }
@@ -503,7 +483,6 @@ a.kortele:active {
   stroke-width: 2.4;
 }
 
-/* ---------- Šoninis meniu (paspaudus avatarą) ---------- */
 .meniu-fonas {
   position: fixed;
   inset: 0;
@@ -616,7 +595,6 @@ a.kortele:active {
   height: 22px;
 }
 
-/* Maža ikona teksto eilutėje */
 .mini-ikona {
   display: inline-flex;
   vertical-align: -2px;
@@ -636,7 +614,6 @@ a.kortele:active {
   color: var(--tekstas-blankus);
 }
 
-/* ---------- Pranešimų (varpelio) langas ---------- */
 .pranesimu-langas {
   position: fixed;
   top: 62px;
@@ -679,7 +656,6 @@ a.kortele:active {
   background: var(--pavirsius-2);
 }
 
-/* ---------- Pranešimas ekrano apačioje (toast) ---------- */
 .pranesimas {
   position: fixed;
   left: 50%;
@@ -725,7 +701,6 @@ a.kortele:active {
   cursor: pointer;
 }
 
-/* ---------- Tuščia būsena ---------- */
 .tuscia {
   text-align: center;
   padding: 40px 16px;
@@ -737,7 +712,6 @@ a.kortele:active {
   margin-bottom: 8px;
 }
 
-/* ---------- Animacijos ---------- */
 @keyframes puslapisIsryskeja {
   from {
     opacity: 0;

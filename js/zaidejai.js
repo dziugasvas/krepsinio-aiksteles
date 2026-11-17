@@ -1,12 +1,8 @@
-/* ==========================================================
-   Žaidėjų paieška pagal lygį ir rajoną, profilių peržiūra (FR19)
-   ========================================================== */
-
 piestiNavigacija("zaidejai");
 piestiVirsu("Žaidėjai");
 
 const zaidejuFiltrai = { lygis: "visi", miestas: dabartinisMiestas() };
-let isskleistas = null; // kurio žaidėjo profilis atidarytas
+let isskleistas = null;
 
 piestiFiltrus();
 piestiZaidejus();
@@ -77,7 +73,6 @@ function skleisti(id) {
   piestiZaidejus();
 }
 
-/* Žaidėjo profilis: kuriose rungtynėse jis dalyvauja */
 function zaidejoProfilis(z) {
   const rungtynes = visosRungtynes().filter((r) => r.dalyviai.includes(z.id));
   return `

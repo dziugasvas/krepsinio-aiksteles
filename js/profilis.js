@@ -1,7 +1,3 @@
-/* ==========================================================
-   Profilis: naudotojo lygis, mano rungtynės, vieta (vietoj GPS)
-   ========================================================== */
-
 piestiNavigacija("");
 piestiProfili();
 
@@ -69,7 +65,6 @@ function piestiProfili() {
       <a class="mygtukas platus" href="prisijungimas.html?atgal=profilis.html">Prisijungti</a>`;
   }
 
-  // Vieta – prieinama ir svečiui
   const rajonas = gautiRajona();
   html += `
     <h2 class="skyriaus-pavadinimas" id="vieta">Mano vieta</h2>
@@ -104,7 +99,6 @@ function piestiProfili() {
   turinys.innerHTML = html;
 }
 
-/* Rungtynės, prie kurių naudotojas prisijungęs */
 function manoRungtynes() {
   const dalyvavimai = gautiDalyvavimus();
   const sarasas = Object.keys(dalyvavimai)
@@ -151,7 +145,6 @@ function atsijungtiIsProfilio() {
   rodytiPranesima("Atsijungėte");
 }
 
-/* Testavimui: viskas grąžinama į pradinę būseną (su patvirtinimu – klaidų prevencija) */
 function isvalytiPrototipa() {
   if (!confirm("Ištrinti visus prototipo duomenis (prisijungimą, dalyvavimus, filtrus)?")) return;
   isvalytiViska();
@@ -162,7 +155,6 @@ function isvalytiPrototipa() {
   rodytiPranesima("Prototipo duomenys išvalyti");
 }
 
-/* ---------- Vardas ir pozicija (FR5) ---------- */
 function issaugotiVarda() {
   const vardas = document.getElementById("vardo-laukas").value.trim();
   if (vardas.length < 2) {
@@ -180,13 +172,11 @@ function keistiPozicija(pozicija) {
   rodytiPranesima(`✓ Pozicija: ${pozicija}`);
 }
 
-/* ---------- Pranešimai (FR21) ---------- */
 function keistiPranesimus(ijungta) {
   nustatytiPranesimus(ijungta);
   rodytiPranesima(ijungta ? "Pranešimai įjungti" : "Pranešimai išjungti");
 }
 
-/* ---------- Kur naudotojas pažymėjo esantis (FR10) ---------- */
 function buvimoInformacija() {
   const id = gautiBuvimaAiksteleje();
   if (!id) return "";
@@ -196,7 +186,6 @@ function buvimoInformacija() {
     <a class="kortele" href="aikstele.html?id=${a.id}">${ik("vieta")}Esate: <strong>${a.pavadinimas}</strong> ›</a>`;
 }
 
-/* Atėjus iš meniu (#vieta, #nustatymai) – nuslenkama prie reikiamos vietos */
 if (location.hash) {
   const tikslas = document.querySelector(location.hash);
   if (tikslas) setTimeout(() => tikslas.scrollIntoView({ behavior: "smooth", block: "start" }), 100);

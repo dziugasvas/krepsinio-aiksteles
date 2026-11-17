@@ -1,7 +1,3 @@
-/* ==========================================================
-   Mano rungtynės: rungtynės, prie kurių prisijungta arba kurias sukūrėte
-   ========================================================== */
-
 piestiNavigacija("mano");
 piestiVirsu("Mano rungtynės", { nuoroda: "sukurti.html", tekstas: "Sukurti" });
 
@@ -30,11 +26,8 @@ function piestiSarasa() {
     return;
   }
 
-  const mano = Object.keys(gautiDalyvavimus())
-    .map((id) => gautiRungtynes(id))
-    .filter((r) => r);
+  const mano = visosRungtynesSuPasibaigusiomis().filter((r) => r.manoKiekis > 0);
 
-  // Praėjusios – kurių pabaiga jau praėjo
   const praejusi = (r) => r.pradziaPoMin + r.trukmeMin < 0;
   const sarasas = mano
     .filter((r) => (skirtukas === "busimos" ? !praejusi(r) : praejusi(r)))

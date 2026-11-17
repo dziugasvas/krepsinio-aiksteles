@@ -1,17 +1,10 @@
-/* ==========================================================
-   Žemėlapio ekranas – aikštelės aplink naudotoją (3 užduotis – Vidas)
-   ========================================================== */
-
 piestiNavigacija("zemelapis");
 piestiVirsu("Aikštelės");
 
 const vieta = RAJONAI[gautiRajona()];
 
-/* Sukuriamas žemėlapis, centruotas į naudotojo vietą */
 const zemelapis = L.map("zemelapis", { zoomControl: false }).setView([vieta.lat, vieta.lng], 13);
 
-/* Žemėlapio fonas – OpenStreetMap (nemokamas, be API rakto).
-   Tamsią išvaizdą suteikia CSS filtras (css/zemelapis.css). */
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   maxZoom: 19,
@@ -19,14 +12,12 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 L.control.zoom({ position: "topright" }).addTo(zemelapis);
 
-/* Naudotojo vieta */
 L.marker([vieta.lat, vieta.lng], {
   icon: L.divIcon({ className: "", html: '<div class="mano-vieta"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }),
 })
   .addTo(zemelapis)
   .bindTooltip("Jūs esate čia");
 
-/* Aikštelių žymekliai: oranžinis – yra rungtynių, pilkas – nėra */
 const zymekliai = {};
 
 for (const aikstele of AIKSTELES) {
@@ -47,20 +38,18 @@ for (const aikstele of AIKSTELES) {
   zymekliai[aikstele.id] = zymeklis;
 }
 
-/* Paspaudus žymeklį – jis paryškinamas ir apačioje parodoma aikštelės kortelė */
 function pasirinktiAikstele(id) {
   document.querySelectorAll(".aiksteles-zymeklis").forEach((el) => {
     el.classList.toggle("pasirinktas", el.dataset.id === id);
   });
   const aikstele = gautiAikstele(id);
-  // Aikštelė perkeliama į viršutinę ekrano dalį, kad jos neuždengtų kortelė
+
   const taskas = zemelapis.latLngToContainerPoint([aikstele.lat, aikstele.lng]);
   const tikslas = L.point(zemelapis.getSize().x / 2, zemelapis.getSize().y * 0.25);
   zemelapis.panBy(taskas.subtract(tikslas));
   piestiAiksteleskortele(aikstele);
 }
 
-/* Paspaudus tuščią žemėlapio vietą – kortelė uždaroma */
 zemelapis.on("click", uzdarytiKortele);
 
 function uzdarytiKortele() {
@@ -68,7 +57,6 @@ function uzdarytiKortele() {
   document.querySelectorAll(".aiksteles-zymeklis").forEach((el) => el.classList.remove("pasirinktas"));
 }
 
-/* Aikštelės kortelė: atstumas, būklė ir rungtynės šioje aikštelėje */
 function piestiAiksteleskortele(a) {
   const km = atstumasKm(a);
   const rungtynes = visosRungtynes()
@@ -111,10 +99,6 @@ function piestiAiksteleskortele(a) {
       </div>
     </div>`;
 }
-
-/* ==========================================================
-   Aikštelių sąrašas su filtrais (FR7)
-   ========================================================== */
 
 const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi", uzimtumas: "visi" };
 
@@ -165,7 +149,7 @@ function piestiAiksteliuSarasa() {
       <span class="etikete">Kita</span>
       ${filtroMygtukas("Tik apšviestos", f.apsviesta, "aiksteliuFiltrai.apsviesta = !aiksteliuFiltrai.apsviesta")}
     </div>
-    <p class="blankus" style="margin-bottom: 8px">Rasta aikštelių: ${aiksteles.length}</p>`;
+    <p class="blankus" style="margin-bottom: 8px">${MIESTAI[dabartinisMiestas()].pavadinimas} · rasta aikštelių: ${aiksteles.length}</p>`;
 
   if (aiksteles.length === 0) {
     html += `<div class="tuscia"><div class="ikona">🔍</div><p>Pagal pasirinktus filtrus aikštelių nerasta.</p></div>`;

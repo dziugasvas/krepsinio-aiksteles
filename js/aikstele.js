@@ -1,11 +1,7 @@
-/* ==========================================================
-   Aikštelės profilis: danga, būklė, įvertinimai, rungtynės (FR8, FR11)
-   ========================================================== */
-
 piestiNavigacija("zemelapis");
 
 const aiksteleId = gautiParametra("id");
-const VERTINIMU_RAKTAS = "krepsinisVisurVertinimai"; // atskiras raktas, kad nekeistume bendros saugyklos
+const VERTINIMU_RAKTAS = "krepsinisVisurVertinimai";
 
 piestiAikstele();
 
@@ -39,7 +35,7 @@ function piestiAikstele() {
     <div class="ivertinimo-eilute">
       <span class="zvaigzdes">${zvaigzdes(a.ivertinimas)}</span>
       <strong>${String(a.ivertinimas).replace(".", ",")}</strong>
-      <span class="blankus">(${a.atsiliepimai} įvertinimai)</span>
+      <span class="blankus">(${daugiskaita(a.atsiliepimai, "įvertinimas", "įvertinimai", "įvertinimų")})</span>
     </div>
 
     <div class="uzimtumo-kortele ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">
@@ -103,7 +99,6 @@ function zvaigzdes(ivertinimas) {
   return "★".repeat(pilnos) + "☆".repeat(5 - pilnos);
 }
 
-/* Pavyzdiniai atsiliepimai pagal aikštelės būklę */
 function atsiliepimai(a) {
   const geri = [
     { autorius: "Domas", zvaigzdes: 5, tekstas: "Puiki guminė danga, nauji lankai. Vakarais apšviesta." },
@@ -126,7 +121,6 @@ function atsiliepimai(a) {
     .join("");
 }
 
-/* ---------- Naudotojo įvertinimas (FR11) ---------- */
 function gautiManoIvertinima(id) {
   try {
     return (JSON.parse(localStorage.getItem(VERTINIMU_RAKTAS)) || {})[id] || 0;
@@ -153,7 +147,6 @@ function ivertinti(n) {
   rodytiPranesima(`✓ Ačiū! Įvertinote ${n} iš 5`);
 }
 
-/* ---------- „Esu aikštelėje“ (FR10) – kiti mato, kad aikštelėje žaidžiama ---------- */
 function buvimoMygtukas(a) {
   if (gautiBuvimaAiksteleje() === a.id) {
     return `<div class="blankus" style="margin-top: 6px">✓ Pažymėjote, kad esate čia (galioja 2 val.)</div>

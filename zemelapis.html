@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f6f6f7">
   <title>Krepšinis Visur – Žemėlapis</title>
-  <!-- Leaflet – nemokama žemėlapių biblioteka -->
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/bendras.css">
   <link rel="stylesheet" href="css/zemelapis.css">
@@ -14,20 +14,16 @@
   <div class="programele zemelapio-puslapis">
     <header id="virsus"></header>
 
-    <!-- Perjungimas: žemėlapis arba aikštelių sąrašas (FR7) -->
     <div class="perjungiklis">
       <button id="rodyti-zemelapi" class="pasirinktas" onclick="rodytiVaizda('zemelapis')">Žemėlapis</button>
       <button id="rodyti-sarasa" onclick="rodytiVaizda('sarasas')">Sąrašas</button>
     </div>
 
-    <!-- Aikštelių sąrašas su filtrais (paslėptas, kol nepasirinktas) -->
     <div id="aiksteliu-sarasas" class="turinys" hidden></div>
 
-    <!-- Žemėlapis -->
     <div id="zemelapio-vaizdas">
     <div id="zemelapis"></div>
 
-    <!-- Paaiškinimas, ką reiškia žymekliai -->
     <div class="legenda">
       <span><i class="taskas oranzinis"></i> Yra rungtynių</span>
       <span><i class="taskas pilkas"></i> Rungtynių nėra</span>
@@ -35,7 +31,6 @@
     </div>
     </div>
 
-    <!-- Paspaudus aikštelę – čia atsiranda jos kortelė -->
     <div id="aiksteles-kortele"></div>
 
     <nav id="navigacija"></nav>

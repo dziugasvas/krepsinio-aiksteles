@@ -1,12 +1,5 @@
-/* ==========================================================
-   Krepšinis Visur – duomenų saugykla naršyklėje (localStorage)
-   Backendo nėra, todėl naudotojo veiksmai (prisijungimas,
-   dalyvavimas rungtynėse, nustatymai) saugomi naršyklėje.
-   ========================================================== */
-
 const RAKTAS = "krepsinisVisur";
 
-/* Nuskaito visus išsaugotus duomenis (arba tuščią objektą) */
 function skaitytiSaugykla() {
   try {
     return JSON.parse(localStorage.getItem(RAKTAS)) || {};
@@ -15,7 +8,6 @@ function skaitytiSaugykla() {
   }
 }
 
-/* Įrašo visus duomenis atgal */
 function rasytiSaugykla(duomenys) {
   try {
     localStorage.setItem(RAKTAS, JSON.stringify(duomenys));
@@ -24,14 +16,10 @@ function rasytiSaugykla(duomenys) {
   }
 }
 
-/* ---------- Naudotojas ---------- */
-
-/* Grąžina prisijungusį naudotoją arba null (svečias) */
 function gautiNaudotoja() {
   return skaitytiSaugykla().naudotojas || null;
 }
 
-/* Imituoja prisijungimą (tikros paskyros nėra) */
 function prisijungti(vardas, budas) {
   const d = skaitytiSaugykla();
   d.naudotojas = { vardas: vardas, budas: budas, lygis: "vidutinis" };
@@ -41,11 +29,12 @@ function prisijungti(vardas, budas) {
 function atsijungti() {
   const d = skaitytiSaugykla();
   delete d.naudotojas;
-  delete d.pradziaMatyta; // po atsijungimo vėl rodomas pradžios ekranas
+  try {
+    sessionStorage.removeItem("pradziaMatyta");
+  } catch (klaida) {}
   rasytiSaugykla(d);
 }
 
-/* Profilio laukų atnaujinimas, pvz. atnaujintiNaudotoja({ lygis: "aukštas" }) */
 function atnaujintiNaudotoja(laukai) {
   const d = skaitytiSaugykla();
   if (!d.naudotojas) return;
@@ -53,27 +42,25 @@ function atnaujintiNaudotoja(laukai) {
   rasytiSaugykla(d);
 }
 
-/* ---------- Pradžios ekranas ---------- */
-
-/* Ar naudotojas jau pasirinko „Tęsti be prisijungimo“ */
 function arPradziaMatyta() {
-  return !!skaitytiSaugykla().pradziaMatyta;
+  try {
+    return sessionStorage.getItem("pradziaMatyta") === "taip";
+  } catch (klaida) {
+    return true;
+  }
 }
 
 function pazymetiPradziaMatyta() {
-  const d = skaitytiSaugykla();
-  d.pradziaMatyta = true;
-  rasytiSaugykla(d);
+  try {
+    sessionStorage.setItem("pradziaMatyta", "taip");
+  } catch (klaida) {}
 }
-
-/* ---------- Vieta (rajonas vietoje GPS) ---------- */
 
 function gautiRajona() {
   const r = skaitytiSaugykla().rajonas;
   return RAJONAI[r] ? r : "fabijoniskes";
 }
 
-/* Miesto pakeitimas: jei dabartinis rajonas kitame mieste – parenkamas miesto numatytasis */
 function nustatytiMiesta(miestas) {
   if (RAJONAI[gautiRajona()].miestas !== miestas) nustatytiRajona(MIESTAI[miestas].numatytasRajonas);
 }
@@ -84,19 +71,14 @@ function nustatytiRajona(rajonas) {
   rasytiSaugykla(d);
 }
 
-/* ---------- Dalyvavimas rungtynėse ----------
-   Saugoma kaip { rungtyniuId: kiekZmoniu }, pvz. { r3: 1, r5: 2 } */
-
 function gautiDalyvavimus() {
   return skaitytiSaugykla().dalyvavimai || {};
 }
 
-/* Kiek žmonių naudotojas užregistravo (0 – nedalyvauja) */
 function kiekRegistruota(rungtyniuId) {
   return gautiDalyvavimus()[rungtyniuId] || 0;
 }
 
-/* kiekis: 1 – „Tik aš“, 2 – „Aš + 1“ ir t. t. */
 function registruotisRungtynems(rungtyniuId, kiekis) {
   const d = skaitytiSaugykla();
   d.dalyvavimai = d.dalyvavimai || {};
@@ -109,8 +91,6 @@ function atsauktiDalyvavima(rungtyniuId) {
   if (d.dalyvavimai) delete d.dalyvavimai[rungtyniuId];
   rasytiSaugykla(d);
 }
-
-/* ---------- Naudotojo sukurtos rungtynės (FR17) ---------- */
 
 function gautiSukurtasRungtynes() {
   return skaitytiSaugykla().sukurtos || [];
@@ -130,8 +110,6 @@ function istrintiSukurtasRungtynes(id) {
   rasytiSaugykla(d);
 }
 
-/* ---------- Filtrai (kad nereikėtų kaskart rinktis iš naujo) ---------- */
-
 function gautiFiltrus() {
   return skaitytiSaugykla().filtrai || { lygis: "visi", laikas: "visi", atstumas: "visi" };
 }
@@ -142,15 +120,12 @@ function issaugotiFiltrus(filtrai) {
   rasytiSaugykla(d);
 }
 
-/* ---------- „Esu aikštelėje“ (FR10) – galioja 2 valandas ---------- */
-
 function pazymetiAiksteleje(aiksteleId) {
   const d = skaitytiSaugykla();
   d.aiksteleje = { aiksteleId: aiksteleId, iki: Date.now() + 2 * 60 * 60000 };
   rasytiSaugykla(d);
 }
 
-/* Grąžina aikštelės id, kurioje naudotojas pažymėjo esantis (arba null) */
 function gautiBuvimaAiksteleje() {
   const b = skaitytiSaugykla().aiksteleje;
   return b && b.iki > Date.now() ? b.aiksteleId : null;
@@ -162,10 +137,8 @@ function atsauktiBuvimaAiksteleje() {
   rasytiSaugykla(d);
 }
 
-/* ---------- Pranešimai apie netoliese ieškomus žaidėjus (FR21) ---------- */
-
 function gautiPranesimuNustatyma() {
-  return skaitytiSaugykla().pranesimai !== false; // numatyta – įjungta
+  return skaitytiSaugykla().pranesimai !== false;
 }
 
 function nustatytiPranesimus(ijungta) {
@@ -174,7 +147,6 @@ function nustatytiPranesimus(ijungta) {
   rasytiSaugykla(d);
 }
 
-/* ---------- Visko išvalymas (naudinga testuojant) ---------- */
 function isvalytiViska() {
   try {
     localStorage.removeItem(RAKTAS);

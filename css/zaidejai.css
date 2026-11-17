@@ -1,7 +1,3 @@
-/* ==========================================================
-   Žaidėjų paieška (FR19)
-   ========================================================== */
-
 .paieskos-laukas {
   width: 100%;
   min-height: 48px;
@@ -50,7 +46,6 @@
   font-weight: 700;
 }
 
-/* Žaidėjo kortelė */
 .zaidejo-kortele {
   cursor: pointer;
 }
@@ -89,7 +84,6 @@
   color: var(--tekstas-blankus);
 }
 
-/* Išskleistas profilis */
 .zaidejo-profilis {
   margin-top: 12px;
   padding-top: 12px;

@@ -1,26 +1,18 @@
-/* ==========================================================
-   Prisijungimas / registracija (imitacija – tikros paskyros nėra)
-   Po prisijungimo naudotojas grąžinamas ten, iš kur atėjo (?atgal=...)
-   ========================================================== */
-
 const atgal = gautiParametra("atgal") || "index.html";
-let registracija = false; // false – prisijungimas, true – registracija
+let registracija = false;
 
 document.getElementById("atgal").href = atgal;
 document.getElementById("be-prisijungimo").href = atgal;
 
-/* Jei jau prisijungęs – nėra ką čia veikti */
 if (gautiNaudotoja()) {
   window.location.replace(atgal);
 }
 
-/* „Tęsti su Google / Apple“ – vienu paspaudimu (FR2) */
 function prisijungtiPer(budas) {
   prisijungti(budas === "Google" ? "Kevinas" : "Skirmantas", budas);
   grizti();
 }
 
-/* Prisijungimo / registracijos forma su klaidų tikrinimu */
 function pateiktiForma(ivykis) {
   ivykis.preventDefault();
   isvalytiKlaidas();
@@ -44,7 +36,6 @@ function pateiktiForma(ivykis) {
   }
   if (!geras) return;
 
-  // Vardas iš el. pašto, jei prisijungiama (ne registruojamasi)
   const rodomasVardas = registracija ? vardas : pastas.split("@")[0];
   prisijungti(rodomasVardas.charAt(0).toUpperCase() + rodomasVardas.slice(1), "El. paštas");
   grizti();
@@ -54,7 +45,6 @@ function grizti() {
   window.location.href = atgal;
 }
 
-/* Perjungimas tarp „Prisijungti“ ir „Registruotis“ */
 function perjungtiRezima() {
   registracija = !registracija;
   isvalytiKlaidas();
@@ -67,7 +57,6 @@ function perjungtiRezima() {
   document.getElementById("slaptazodis").autocomplete = registracija ? "new-password" : "current-password";
 }
 
-/* Slaptažodžio priminimas (FR3) */
 function atkurtiSlaptazodi() {
   isvalytiKlaidas();
   const pastas = document.getElementById("pastas").value.trim();
@@ -86,7 +75,6 @@ function rodytiSlaptazodi() {
   document.getElementById("rodyti-mygtukas").textContent = rodo ? "Rodyti" : "Slėpti";
 }
 
-/* ---------- Klaidų rodymas prie laukų ---------- */
 function rodytiKlaida(lauko, tekstas) {
   document.getElementById(`${lauko}-klaida`).textContent = tekstas;
   document.getElementById(lauko).closest(".laukas").classList.add("su-klaida");

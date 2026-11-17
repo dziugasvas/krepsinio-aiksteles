@@ -1,7 +1,3 @@
-/* ==========================================================
-   Žemėlapio ekranas
-   ========================================================== */
-
 .zemelapio-puslapis {
   padding-bottom: 0;
 }
@@ -11,7 +7,6 @@
   width: 100%;
 }
 
-/* Legenda po žemėlapiu */
 .legenda {
   display: flex;
   gap: 16px;
@@ -35,7 +30,6 @@
 .taskas.pilkas { background: #8e8e93; }
 .taskas.jus { background: #1e7cf2; }
 
-/* Aikštelės žymeklis žemėlapyje */
 .aiksteles-zymeklis {
   display: flex;
   align-items: center;
@@ -64,7 +58,6 @@
   border-color: var(--oranzine);
 }
 
-/* Naudotojo vieta */
 .mano-vieta {
   width: 22px;
   height: 22px;
@@ -74,15 +67,11 @@
   box-shadow: 0 0 0 6px rgba(30, 124, 242, 0.2), 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Šviesų OpenStreetMap žemėlapį paverčiame tamsiu (žymekliai nekeičiami) */
-
-/* Leaflet tamsiam dizainui */
 .leaflet-container {
   background: #e9e9ec;
   font-family: inherit;
 }
 
-/* ---------- Aikštelės kortelė (iššoka apačioje paspaudus žymeklį) ---------- */
 #aiksteles-kortele {
   position: fixed;
   left: 50%;
@@ -92,7 +81,7 @@
   max-width: 464px;
   max-height: 60vh;
   overflow-y: auto;
-  z-index: 1000; /* virš žemėlapio */
+  z-index: 1000;
 }
 
 #aiksteles-kortele .kortele {
@@ -149,7 +138,6 @@
   margin-top: 12px;
 }
 
-/* ---------- Perjungiklis Žemėlapis / Sąrašas (segmentuotas) ---------- */
 .perjungiklis {
   display: flex;
   gap: 4px;
@@ -178,7 +166,6 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
-/* ---------- Aikštelių sąrašas ---------- */
 #aiksteliu-sarasas {
   padding-bottom: calc(var(--navigacijos-aukstis) + 16px);
 }

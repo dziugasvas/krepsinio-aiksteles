@@ -1,13 +1,3 @@
-/* ==========================================================
-   Krepšinis Visur – bendros funkcijos visiems ekranams
-   (navigacija, pranešimai, atstumai, laiko formatavimas)
-   Reikia įtraukti PO duomenys.js ir saugykla.js.
-   ========================================================== */
-
-/* ---------- Apatinė navigacija (4 ikonos) ----------
-   Kiekviename HTML faile turi būti <nav id="navigacija"></nav>,
-   o puslapio JS iškviečia: piestiNavigacija("rungtynes")
-   Pavadinimas nerašomas po ikona – jis rodomas viršuje (piestiVirsu). */
 const IKONOS = {
   namai: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>',
   vieta: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
@@ -32,7 +22,6 @@ function svg(ikona, papildoma = "") {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${papildoma}>${IKONOS[ikona]}</svg>`;
 }
 
-/* Maža ikona teksto eilutėje */
 function ik(ikona) {
   return `<span class="mini-ikona">${svg(ikona)}</span>`;
 }
@@ -57,10 +46,6 @@ function piestiNavigacija(aktyvus) {
     .join("");
 }
 
-/* ---------- Viršutinė juosta pagrindiniuose ekranuose ----------
-   piestiVirsu("Pradžia", { nuoroda: "sukurti.html", tekstas: "Sukurti" })
-   Kairėje – avataras (atidaro meniu), šalia – ekrano pavadinimas,
-   dešinėje – papildomas veiksmas ir varpelis (priminimai). */
 function piestiVirsu(pavadinimas, veiksmas = null) {
   const el = document.getElementById("virsus");
   if (!el) return;
@@ -78,7 +63,6 @@ function piestiVirsu(pavadinimas, veiksmas = null) {
     </div>`;
 }
 
-/* Avataras: vardo raidė (prisijungus) arba siluetas (svečias) */
 function avatarasHtml(klase, atributai = "") {
   const n = gautiNaudotoja();
   const turinys = n
@@ -87,7 +71,6 @@ function avatarasHtml(klase, atributai = "") {
   return `<button class="${klase} ${n ? "prisijunges" : ""}" ${atributai}>${turinys}</button>`;
 }
 
-/* ---------- Šoninis meniu ---------- */
 function atidarytiMeniu() {
   const n = gautiNaudotoja();
   const rajonas = RAJONAI[gautiRajona()];
@@ -120,7 +103,7 @@ function atidarytiMeniu() {
     }
     ${n ? `<a class="meniu-punktas" href="profilis.html"><span class="ikona">${svg("piestukas")}</span>Redaguoti profilį</a>` : ""}
     <a class="meniu-punktas" href="profilis.html#vieta"><span class="ikona">${svg("vieta")}</span>Mano vieta · ${MIESTAI[rajonas.miestas].pavadinimas}</a>
-    <a class="meniu-punktas" href="profilis.html#nustatymai"><span class="ikona">${svg("nustatymai")}</span>Nustatymai</a>
+    ${n ? `<a class="meniu-punktas" href="profilis.html#nustatymai"><span class="ikona">${svg("nustatymai")}</span>Nustatymai</a>` : ""}
     <a class="meniu-punktas" href="pagalba.html"><span class="ikona">${svg("klaustukas")}</span>Pagalba</a>
     ${n ? `<button class="meniu-punktas" onclick="atsijungtiIsMeniu()"><span class="ikona">${svg("iseiti")}</span>Atsijungti</button>` : ""}
     <div class="meniu-apacia">Krepšinis Visur · prototipas v1.0</div>`;
@@ -155,19 +138,16 @@ function atsijungtiIsMeniu() {
   window.location.href = "pradzia.html";
 }
 
-/* ---------- Priminimai (FR20) ir pranešimai apie netoliese ieškomus žaidėjus (FR21) ---------- */
 function gautiPriminimus() {
   if (!gautiNaudotoja()) return [];
   const visos = visosRungtynes();
   const sarasas = [];
 
-  // FR20: rungtynės, prie kurių prisijungta ir kurios prasideda per artimiausią valandą
   for (const r of visos.filter((r) => r.manoKiekis > 0 && r.pradziaPoMin <= 60 && r.pradziaPoMin > -r.trukmeMin)) {
     const kada = r.vyksta ? "jau vyksta" : `prasideda po ${r.pradziaPoMin} min.`;
     sarasas.push({ raktas: "p-" + r.id, ikona: svg("laikas"), tekstas: `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, nuoroda: `rungtynes.html?id=${r.id}` });
   }
 
-  // FR21: netoliese (iki 1,5 km) ieškoma žaidėjų, o naudotojas dar nedalyvauja
   if (gautiPranesimuNustatyma()) {
     const ieskoma = visos
       .filter((r) => r.manoKiekis === 0 && r.laisvu > 0 && r.atstumas <= 1.5 && r.pradziaPoMin <= 120)
@@ -202,7 +182,7 @@ function perjungtiPranesimuLanga() {
         : `<p class="blankus" style="padding: 6px 10px 12px">${gautiNaudotoja() ? "Naujų pranešimų nėra." : "Prisijunkite, kad gautumėte priminimus."}</p>`
     }`;
   document.body.appendChild(langas);
-  // Paspaudus kitur – langas užsidaro
+
   setTimeout(() => document.addEventListener("click", uzdarytiPranesimuLanga), 0);
 }
 
@@ -214,7 +194,6 @@ function uzdarytiPranesimuLanga(e) {
   }
 }
 
-/* ---------- Aikštelės miniatiūra (nuotrauka arba krepšio siluetas) ---------- */
 function miniatiuraHtml(aikstele, klase = "miniatiura") {
   if (aikstele.foto) {
     return `<div class="${klase}" style="background-image: url('${aikstele.foto}')" role="img" aria-label="${aikstele.pavadinimas}"></div>`;
@@ -222,10 +201,9 @@ function miniatiuraHtml(aikstele, klase = "miniatiura") {
   return `<div class="${klase} be-nuotraukos" aria-hidden="true">${svg("krepsys")}</div>`;
 }
 
-/* ---------- Rungtynių kortelė (Pradžia, Mano rungtynės) ---------- */
 function rungtyniuKorteleHtml(r, mygtukas = "") {
   const org = r.organizatorius === "jus" ? `${r.organizatoriusVardas} (jūs)` : gautiZaideja(r.organizatorius).vardas;
-  const laikas = r.vyksta ? "Vyksta dabar" : formatuotiLaika(r.pradzia).replace(" ", " · ");
+  const laikas = r.vyksta ? "Vyksta dabar" : r.pradziaPoMin < 60 ? `Po ${r.pradziaPoMin} min.` : formatuotiLaika(r.pradzia).replace(" ", " · ");
   return `
     <a class="kortele rungtyniu-kortele" href="rungtynes.html?id=${r.id}">
       <div class="kortele-virsus">
@@ -245,10 +223,6 @@ function rungtyniuKorteleHtml(r, mygtukas = "") {
     </a>`;
 }
 
-/* ---------- Pranešimas ekrano apačioje ----------
-   rodytiPranesima("Prisijungėte!")
-   rodytiPranesima("Dalyvavimas atšauktas", { mygtukas: "Grąžinti", veiksmas: () => {...} })
-   rodytiPranesima("Klaida...", { klaida: true }) */
 let pranesimoLaikmatis = null;
 
 function rodytiPranesima(tekstas, nustatymai = {}) {
@@ -278,7 +252,6 @@ function rodytiPranesima(tekstas, nustatymai = {}) {
   pranesimoLaikmatis = setTimeout(() => el.classList.remove("matomas"), nustatymai.trukme || 4000);
 }
 
-/* ---------- Paieška duomenyse ---------- */
 function gautiAikstele(id) {
   return AIKSTELES.find((a) => a.id === id);
 }
@@ -287,34 +260,41 @@ function gautiZaideja(id) {
   return ZAIDEJAI.find((z) => z.id === id);
 }
 
-/* Kiek žaidėjų šiuo metu yra aikštelėje (FR9): kiti + naudotojas, jei pažymėjo „Esu aikštelėje“ */
 function zaidejuAiksteleje(aikstele) {
   return aikstele.dabar + (gautiBuvimaAiksteleje() === aikstele.id ? 1 : 0);
+}
+
+function daugiskaita(n, vienas, keli, daug) {
+  const v = n % 10;
+  const d = n % 100;
+  if (v === 1 && d !== 11) return `${n} ${vienas}`;
+  if (v >= 2 && (d < 10 || d > 20)) return `${n} ${keli}`;
+  return `${n} ${daug}`;
+}
+
+function zaidejuTekstas(n) {
+  return daugiskaita(n, "žaidėjas", "žaidėjai", "žaidėjų");
 }
 
 function uzimtumoTekstas(aikstele) {
   const n = zaidejuAiksteleje(aikstele);
   if (n === 0) return "Šiuo metu laisva";
-  return `Dabar aikštelėje: ${n} ${n === 1 ? "žaidėjas" : n < 10 ? "žaidėjai" : "žaidėjų"}`;
+  return `Dabar aikštelėje: ${zaidejuTekstas(n)}`;
 }
 
-/* Paima parametrą iš adreso, pvz. rungtynes.html?id=r3 → "r3" */
 function gautiParametra(vardas) {
   return new URLSearchParams(window.location.search).get(vardas);
 }
 
-/* Rajono pavadinimas su miestu, kai jis vadinasi tiesiog „Centras“ */
 function rajonoPavadinimas(id) {
   const r = RAJONAI[id];
   return r.pavadinimas === "Centras" ? `${MIESTAI[r.miestas].pavadinimas} (centras)` : r.pavadinimas;
 }
 
-/* ---------- Dabartinis miestas ---------- */
 function dabartinisMiestas() {
   return RAJONAI[gautiRajona()].miestas;
 }
 
-/* ---------- Atstumas (km) nuo naudotojo vietos iki aikštelės ---------- */
 function atstumasKm(aikstele) {
   const vieta = RAJONAI[gautiRajona()];
   const R = 6371;
@@ -330,13 +310,10 @@ function formatuotiAtstuma(km) {
   return km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1).replace(".", ",")} km`;
 }
 
-/* Laikas pėsčiomis (~5 km/h) */
 function laikasPesciomis(km) {
   return `${Math.max(1, Math.round((km / 5) * 60))} min. pėsčiomis`;
 }
 
-/* ---------- Rungtynės su visa apskaičiuota informacija ---------- */
-/* Visos rungtynės: iš duomenų + naudotojo sukurtos */
 function visuRungtyniuSarasas() {
   return RUNGTYNES.concat(gautiSukurtasRungtynes());
 }
@@ -347,19 +324,22 @@ function gautiRungtynes(id) {
 }
 
 function visosRungtynes() {
+  return visuRungtyniuSarasas().map(papildytiRungtynes).filter((r) => !r.pasibaigusi);
+}
+
+function visosRungtynesSuPasibaigusiomis() {
   return visuRungtyniuSarasas().map(papildytiRungtynes);
 }
 
 function papildytiRungtynes(r) {
   let pradzia;
   if (r.pradziaMs) {
-    // Naudotojo sukurtos rungtynės turi tikslų laiką
     pradzia = new Date(r.pradziaMs);
     r = Object.assign({}, r, { pradziaPoMin: Math.round((r.pradziaMs - Date.now()) / 60000) });
   } else {
     pradzia = new Date(Date.now() + r.pradziaPoMin * 60000);
     pradzia.setSeconds(0, 0);
-    /* Vėlesnės rungtynės – „gražiu“ laiku (pvz. 18:00, 18:15), kaip realybėje */
+
     if (r.pradziaPoMin >= 60) pradzia.setMinutes(Math.round(pradzia.getMinutes() / 15) * 15);
   }
   const aikstele = gautiAikstele(r.aiksteleId);
@@ -367,7 +347,8 @@ function papildytiRungtynes(r) {
   const uzimta = r.dalyviai.length + mano;
   return Object.assign({}, r, {
     pradzia: pradzia,
-    vyksta: r.pradziaPoMin <= 0,
+    vyksta: r.pradziaPoMin <= 0 && r.pradziaPoMin + r.trukmeMin > 0,
+    pasibaigusi: r.pradziaPoMin + r.trukmeMin <= 0,
     aikstele: aikstele,
     atstumas: atstumasKm(aikstele),
     manoKiekis: mano,
@@ -376,7 +357,6 @@ function papildytiRungtynes(r) {
   });
 }
 
-/* ---------- Laiko formatavimas ---------- */
 function formatuotiLaika(data) {
   const hh = String(data.getHours()).padStart(2, "0");
   const mm = String(data.getMinutes()).padStart(2, "0");
@@ -388,14 +368,12 @@ function formatuotiLaika(data) {
   return `${data.getMonth() + 1}-${data.getDate()} ${hh}:${mm}`;
 }
 
-/* Rungtynių laikas žmonių kalba: „Vyksta dabar“, „Po 40 min.“, „Šiandien 18:00“ */
 function rungtyniuLaikas(r) {
   if (r.vyksta) return "● Vyksta dabar";
   if (r.pradziaPoMin < 60) return `Po ${r.pradziaPoMin} min.`;
   return formatuotiLaika(r.pradzia);
 }
 
-/* ---------- Lygiai ---------- */
 const LYGIAI = {
   pradedantysis: "Pradedantysis",
   vidutinis: "Vidutinis",

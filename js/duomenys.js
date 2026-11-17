@@ -1,11 +1,3 @@
-/* ==========================================================
-   Krepšinis Visur – prototipo duomenys
-   Backendo nėra, todėl visi duomenys surašyti čia.
-   Aikštelių vietos apytikslės, žaidėjai išgalvoti.
-   ========================================================== */
-
-/* ---------- Miestai ----------
-   Penki didžiausi Lietuvos miestai. Nuotraukos – img/miestai/ (šaltiniai nurodyti ataskaitoje). */
 const MIESTAI = {
   vilnius: { pavadinimas: "Vilnius", sukis: "Sostinė · Krepšinis visus metus", nuotrauka: "img/miestai/vilnius.jpg", numatytasRajonas: "fabijoniskes" },
   kaunas: { pavadinimas: "Kaunas", sukis: "Žalgirio miestas", nuotrauka: "img/miestai/kaunas.jpg", numatytasRajonas: "kaunas-centras" },
@@ -14,8 +6,6 @@ const MIESTAI = {
   panevezys: { pavadinimas: "Panevėžys", sukis: "Aukštaitijos sostinė", nuotrauka: "img/miestai/panevezys.jpg", numatytasRajonas: "panevezys-centras" },
 };
 
-/* ---------- Rajonai (imituoja GPS vietą) ----------
-   Naudotojas pasirenka miestą ir rajoną – pagal tai skaičiuojami atstumai iki aikštelių. */
 const RAJONAI = {
   fabijoniskes: { pavadinimas: "Fabijoniškės", miestas: "vilnius", lat: 54.7275, lng: 25.2440 },
   senamiestis: { pavadinimas: "Senamiestis", miestas: "vilnius", lat: 54.6825, lng: 25.2870 },
@@ -26,7 +16,6 @@ const RAJONAI = {
   "panevezys-centras": { pavadinimas: "Centras", miestas: "panevezys", lat: 55.7348, lng: 24.3575 },
 };
 
-/* ---------- Aikštelės ---------- */
 const AIKSTELES = [
   {
     id: "a1",
@@ -38,7 +27,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
     ivertinimas: 4.7, atsiliepimai: 38,
     nuotrauka: "🏟️",
-    dabar: 4, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 4,
   },
   {
     id: "a2",
@@ -49,7 +38,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 2,
     ivertinimas: 3.4, atsiliepimai: 12,
     nuotrauka: "🏀",
-    dabar: 6, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 6,
   },
   {
     id: "a3",
@@ -60,7 +49,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.2, atsiliepimai: 21,
     nuotrauka: "🏀",
-    dabar: 2, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 2,
   },
   {
     id: "a4",
@@ -71,7 +60,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
     ivertinimas: 4.8, atsiliepimai: 54,
     nuotrauka: "🏟️",
-    dabar: 7, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 7,
   },
   {
     id: "a5",
@@ -82,7 +71,7 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.1, atsiliepimai: 17,
     nuotrauka: "🏀",
-    dabar: 0, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 0,
   },
   {
     id: "a6",
@@ -93,7 +82,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 1,
     ivertinimas: 3.6, atsiliepimai: 9,
     nuotrauka: "🏀",
-    dabar: 0, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 0,
   },
   {
     id: "a7",
@@ -104,7 +93,7 @@ const AIKSTELES = [
     danga: "Asfaltas", bukle: "Gera", apsvietimas: true, lankai: 2,
     ivertinimas: 4.0, atsiliepimai: 15,
     nuotrauka: "🏀",
-    dabar: 3, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 3,
   },
   {
     id: "a8",
@@ -115,9 +104,9 @@ const AIKSTELES = [
     danga: "Guminė", bukle: "Gera", apsvietimas: false, lankai: 2,
     ivertinimas: 3.9, atsiliepimai: 11,
     nuotrauka: "🏀",
-    dabar: 1, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
+    dabar: 1,
   },
-  /* ---------- Kitų miestų aikštelės (apytikslės vietos, prototipui) ---------- */
+
   { id: "k1", miestas: "kaunas", pavadinimas: "Nemuno salos aikštelė", adresas: "Nemuno sala, prie Žalgirio arenos",
     lat: 54.8905, lng: 23.9145, danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
     ivertinimas: 4.7, atsiliepimai: 41, nuotrauka: "🏟️", dabar: 5 },
@@ -156,7 +145,6 @@ const AIKSTELES = [
     ivertinimas: 4.1, atsiliepimai: 7, nuotrauka: "🏀", dabar: 3 },
 ];
 
-/* ---------- Žaidėjai ---------- */
 const ZAIDEJAI = [
   { id: "z1", vardas: "Tadas", amzius: 19, lygis: "vidutinis", pozicija: "Įžaidėjas", rajonas: "fabijoniskes" },
   { id: "z2", vardas: "Lukas", amzius: 17, lygis: "vidutinis", pozicija: "Lengvasis puolėjas", rajonas: "fabijoniskes" },
@@ -181,10 +169,6 @@ const ZAIDEJAI = [
   { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras", rajonas: "fabijoniskes" },
 ];
 
-/* ---------- Rungtynės ----------
-   Laikas nurodomas minutėmis nuo „dabar“ (pradziaPoMin),
-   kad prototipe rungtynės visada būtų šiandien / artimiausiomis dienomis.
-   Neigiamas skaičius = rungtynės jau vyksta. */
 const RUNGTYNES = [
   {
     id: "r1", aiksteleId: "a2", pradziaPoMin: -15, trukmeMin: 90,
