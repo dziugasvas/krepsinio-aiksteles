@@ -96,20 +96,32 @@ function laikasPesciomis(km) {
 }
 
 /* ---------- Rungtynės su visa apskaičiuota informacija ---------- */
+/* Visos rungtynės: iš duomenų + naudotojo sukurtos */
+function visuRungtyniuSarasas() {
+  return RUNGTYNES.concat(gautiSukurtasRungtynes());
+}
+
 function gautiRungtynes(id) {
-  const r = RUNGTYNES.find((x) => x.id === id);
+  const r = visuRungtyniuSarasas().find((x) => x.id === id);
   return r ? papildytiRungtynes(r) : null;
 }
 
 function visosRungtynes() {
-  return RUNGTYNES.map(papildytiRungtynes);
+  return visuRungtyniuSarasas().map(papildytiRungtynes);
 }
 
 function papildytiRungtynes(r) {
-  const pradzia = new Date(Date.now() + r.pradziaPoMin * 60000);
-  pradzia.setSeconds(0, 0);
-  /* Vėlesnės rungtynės – „gražiu“ laiku (pvz. 18:00, 18:15), kaip realybėje */
-  if (r.pradziaPoMin >= 60) pradzia.setMinutes(Math.round(pradzia.getMinutes() / 15) * 15);
+  let pradzia;
+  if (r.pradziaMs) {
+    // Naudotojo sukurtos rungtynės turi tikslų laiką
+    pradzia = new Date(r.pradziaMs);
+    r = Object.assign({}, r, { pradziaPoMin: Math.round((r.pradziaMs - Date.now()) / 60000) });
+  } else {
+    pradzia = new Date(Date.now() + r.pradziaPoMin * 60000);
+    pradzia.setSeconds(0, 0);
+    /* Vėlesnės rungtynės – „gražiu“ laiku (pvz. 18:00, 18:15), kaip realybėje */
+    if (r.pradziaPoMin >= 60) pradzia.setMinutes(Math.round(pradzia.getMinutes() / 15) * 15);
+  }
   const aikstele = gautiAikstele(r.aiksteleId);
   const mano = kiekRegistruota(r.id);
   const uzimta = r.dalyviai.length + mano;

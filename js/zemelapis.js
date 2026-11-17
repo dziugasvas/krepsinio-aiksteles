@@ -29,7 +29,7 @@ L.marker([vieta.lat, vieta.lng], {
 const zymekliai = {};
 
 for (const aikstele of AIKSTELES) {
-  const rungtyniuKiekis = RUNGTYNES.filter((r) => r.aiksteleId === aikstele.id).length;
+  const rungtyniuKiekis = visosRungtynes().filter((r) => r.aiksteleId === aikstele.id).length;
   const klase = rungtyniuKiekis > 0 ? "su-rungtynemis" : "";
 
   const zymeklis = L.marker([aikstele.lat, aikstele.lng], {

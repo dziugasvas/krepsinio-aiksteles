@@ -10,6 +10,11 @@ let kiekDalyvaus = 1; // 1 – „Tik aš“, 2 – „Aš + 1“
 
 piestiPuslapi();
 
+/* Ką tik sukurtos rungtynės – patvirtinimas */
+if (gautiParametra("naujos")) {
+  rodytiPranesima("✓ Rungtynės sukurtos! Jos jau matomos kitiems žaidėjams.", { trukme: 5000 });
+}
+
 function piestiPuslapi() {
   const r = gautiRungtynes(rungtyniuId);
   const turinys = document.getElementById("rungtyniu-turinys");
@@ -27,7 +32,7 @@ function piestiPuslapi() {
 
   const a = r.aikstele;
   const procentai = Math.round((r.uzimta / r.vietu) * 100);
-  const organizatorius = gautiZaideja(r.organizatorius);
+  const organizatorius = r.organizatorius === "jus" ? { vardas: `${r.organizatoriusVardas} (jūs)` } : gautiZaideja(r.organizatorius);
 
   turinys.innerHTML = `
     <div class="rungtyniu-antraste">${rungtyniuLaikas(r)}</div>
@@ -97,6 +102,15 @@ function dalyvisHtml(raide, vardas, detales, jus) {
 
 /* Apatinė sritis: prisijungimas / dalyvavimas / pilna */
 function veiksmuSritis(r) {
+  // Naudotojo sukurtos rungtynės – organizatorius gali jas atšaukti
+  if (r.organizatorius === "jus") {
+    return `
+      <div class="dalyvaujate-blokas">
+        <div class="dalyvaujate">✓ Jūs organizuojate šias rungtynes</div>
+        <button class="mygtukas pavojingas platus" onclick="atsauktiRungtynes()">Atšaukti rungtynes</button>
+      </div>`;
+  }
+
   // Jau dalyvauja
   if (r.manoKiekis > 0) {
     const kiti = r.manoKiekis > 1 ? " (Aš + 1)" : "";
@@ -162,4 +176,11 @@ function atsaukti() {
     },
     trukme: 6000,
   });
+}
+
+/* Organizatorius atšaukia savo rungtynes (su patvirtinimu – negrįžtamas veiksmas) */
+function atsauktiRungtynes() {
+  if (!confirm("Atšaukti šias rungtynes? Visi dalyviai bus informuoti.")) return;
+  istrintiSukurtasRungtynes(rungtyniuId);
+  window.location.href = "index.html";
 }

@@ -90,6 +90,26 @@ function atsauktiDalyvavima(rungtyniuId) {
   rasytiSaugykla(d);
 }
 
+/* ---------- Naudotojo sukurtos rungtynės (FR17) ---------- */
+
+function gautiSukurtasRungtynes() {
+  return skaitytiSaugykla().sukurtos || [];
+}
+
+function issaugotiSukurtasRungtynes(rungtynes) {
+  const d = skaitytiSaugykla();
+  d.sukurtos = d.sukurtos || [];
+  d.sukurtos.push(rungtynes);
+  rasytiSaugykla(d);
+}
+
+function istrintiSukurtasRungtynes(id) {
+  const d = skaitytiSaugykla();
+  d.sukurtos = (d.sukurtos || []).filter((r) => r.id !== id);
+  if (d.dalyvavimai) delete d.dalyvavimai[id];
+  rasytiSaugykla(d);
+}
+
 /* ---------- Filtrai (kad nereikėtų kaskart rinktis iš naujo) ---------- */
 
 function gautiFiltrus() {

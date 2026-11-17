@@ -1,0 +1,104 @@
+/* ==========================================================
+   Rungtynių kūrimo forma
+   ========================================================== */
+
+.formos-grupe {
+  margin-bottom: 18px;
+}
+
+.formos-grupe > label,
+.formos-etikete {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.formos-grupe select,
+.formos-grupe input[type="time"],
+.formos-grupe textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.formos-grupe textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.formos-grupe select:focus,
+.formos-grupe input:focus,
+.formos-grupe textarea:focus {
+  outline: none;
+  border-color: var(--oranzine);
+}
+
+.formos-grupe.su-klaida select,
+.formos-grupe.su-klaida input {
+  border-color: var(--raudona);
+}
+
+.lauko-pagalba {
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+  margin-top: 4px;
+}
+
+.lauko-klaida {
+  font-size: 13px;
+  color: var(--raudona);
+  margin-top: 4px;
+}
+
+/* Pasirinkimai mygtukais */
+.parinktys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.parinktis {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.parinktis.pasirinkta {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+/* Santrauka prieš sukuriant */
+.santrauka {
+  border-color: var(--oranzine);
+}
+
+.santrauka .eilute {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.santrauka .eilute span:first-child {
+  color: var(--tekstas-blankus);
+}
+
+.santrauka .eilute span:last-child {
+  text-align: right;
+}

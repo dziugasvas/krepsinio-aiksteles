@@ -182,3 +182,30 @@
   gap: 8px;
   margin-top: 16px;
 }
+
+/* ---------- Mygtukas „Sukurti rungtynes“ (plaukiojantis) ---------- */
+.kurti-mygtukas {
+  position: fixed;
+  right: max(16px, calc(50% - 240px + 16px));
+  bottom: calc(var(--navigacijos-aukstis) + 16px);
+  z-index: 15;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 52px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--oranzine);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.kurti-mygtukas:active {
+  background: var(--oranzine-tamsi);
+}
+
+/* Kad plaukiojantis mygtukas neuždengtų paskutinės kortelės */
+#rungtyniu-sarasas {
+  padding-bottom: 72px;
+}
