@@ -115,7 +115,7 @@ function piestiAiksteleskortele(a) {
    Aikštelių sąrašas su filtrais (FR7)
    ========================================================== */
 
-const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi" };
+const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi", uzimtumas: "visi" };
 
 function rodytiVaizda(vaizdas) {
   const sarasas = vaizdas === "sarasas";
@@ -138,6 +138,8 @@ function piestiAiksteliuSarasa() {
     if (f.danga !== "visos" && a.danga !== f.danga) return false;
     if (f.apsviesta && !a.apsvietimas) return false;
     if (f.atstumas !== "visi" && atstumasKm(a) > Number(f.atstumas)) return false;
+    if (f.uzimtumas === "zaidziama" && zaidejuAiksteleje(a) === 0) return false;
+    if (f.uzimtumas === "laisva" && zaidejuAiksteleje(a) > 0) return false;
     return true;
   }).sort((a, b) => atstumasKm(a) - atstumasKm(b));
 
@@ -154,6 +156,10 @@ function piestiAiksteliuSarasa() {
       ${filtroMygtukas("Iki 1 km", f.atstumas === "1", "aiksteliuFiltrai.atstumas = '1'")}
       ${filtroMygtukas("Iki 3 km", f.atstumas === "3", "aiksteliuFiltrai.atstumas = '3'")}
       ${filtroMygtukas("Iki 5 km", f.atstumas === "5", "aiksteliuFiltrai.atstumas = '5'")}
+      <span class="etikete">Užimtumas</span>
+      ${filtroMygtukas("Bet koks", f.uzimtumas === "visi", "aiksteliuFiltrai.uzimtumas = 'visi'")}
+      ${filtroMygtukas("👥 Žaidžiama dabar", f.uzimtumas === "zaidziama", "aiksteliuFiltrai.uzimtumas = 'zaidziama'")}
+      ${filtroMygtukas("Laisva", f.uzimtumas === "laisva", "aiksteliuFiltrai.uzimtumas = 'laisva'")}
       <span class="etikete">Kita</span>
       ${filtroMygtukas("💡 Tik apšviestos", f.apsviesta, "aiksteliuFiltrai.apsviesta = !aiksteliuFiltrai.apsviesta")}
     </div>

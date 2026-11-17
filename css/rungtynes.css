@@ -88,34 +88,52 @@
   padding: 12px 0 4px;
 }
 
-/* „Kas dalyvaus?“ pasirinkimas */
-.pasirinkimas {
+/* „Kas dalyvaus?“ – aš ir draugai (− / +) */
+.skaiciuokle {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
-.pasirinkimas button {
-  flex: 1;
-  min-height: 44px;
+.skaiciuokle button {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid var(--linija);
   background: var(--pavirsius);
-  color: var(--tekstas);
-  font-size: 15px;
+  color: var(--oranzine);
+  font-size: 26px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.pasirinkimas button.pasirinktas {
-  border-color: var(--oranzine);
-  background: var(--oranzine-sviesi);
-  color: var(--oranzine);
-  font-weight: 700;
+.skaiciuokle button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
-.pasirinkimas button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.skaiciuokles-reiksme {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--oranzine);
+  background: var(--oranzine-sviesi);
+  text-align: center;
+}
+
+.skaiciuokles-reiksme strong {
+  color: var(--oranzine);
+  font-size: 17px;
+}
+
+.skaiciuokles-reiksme .blankus {
+  font-size: 12px;
 }
 
 .pasirinkimo-etikete {

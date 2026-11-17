@@ -1,12 +1,12 @@
 /* ==========================================================
    Rungtynių puslapis: informacija, dalyviai, prisijungimas,
-   „Aš + 1“ ir dalyvavimo atšaukimas (užduotys 2 ir 3)
+   draugų pridėjimas („Aš + 1“, „Aš + 2“…) ir dalyvavimo atšaukimas (užduotys 2 ir 3)
    ========================================================== */
 
 piestiNavigacija("rungtynes");
 
 const rungtyniuId = gautiParametra("id");
-let kiekDalyvaus = 1; // 1 – „Tik aš“, 2 – „Aš + 1“
+let kiekDalyvaus = 1; // 1 – „Tik aš“, 2 – „Aš + 1“, 3 – „Aš + 2“ ir t. t.
 
 piestiPuslapi();
 
@@ -113,7 +113,7 @@ function veiksmuSritis(r) {
 
   // Jau dalyvauja
   if (r.manoKiekis > 0) {
-    const kiti = r.manoKiekis > 1 ? " (Aš + 1)" : "";
+    const kiti = r.manoKiekis > 1 ? ` (Aš + ${r.manoKiekis - 1})` : "";
     return `
       <div class="dalyvaujate-blokas">
         <div class="dalyvaujate">✓ Jūs dalyvaujate${kiti}</div>
@@ -126,22 +126,36 @@ function veiksmuSritis(r) {
     return `<button class="mygtukas antrinis platus" disabled>Vietų nebėra</button>`;
   }
 
-  // Galima prisijungti: pasirinkimas „Tik aš“ / „Aš + 1“ (FR15)
-  if (kiekDalyvaus > r.laisvu) kiekDalyvaus = 1;
+  // Galima prisijungti: kiek žmonių dalyvaus – aš ir draugai (FR15)
+  if (kiekDalyvaus > r.laisvu) kiekDalyvaus = r.laisvu;
+  const draugu = kiekDalyvaus - 1;
   return `
-    <div class="pasirinkimo-etikete">Kas dalyvaus?</div>
-    <div class="pasirinkimas">
-      <button class="${kiekDalyvaus === 1 ? "pasirinktas" : ""}" onclick="pasirinktiKieki(1)">Tik aš</button>
-      <button class="${kiekDalyvaus === 2 ? "pasirinktas" : ""}" onclick="pasirinktiKieki(2)" ${r.laisvu < 2 ? "disabled" : ""}>Aš + 1</button>
+    <div class="pasirinkimo-etikete">Kas dalyvaus? <span class="blankus">(laisvų vietų: ${r.laisvu})</span></div>
+    <div class="skaiciuokle">
+      <button onclick="keistiKieki(-1)" ${draugu === 0 ? "disabled" : ""} aria-label="Vienu draugu mažiau">−</button>
+      <div class="skaiciuokles-reiksme">
+        <strong>${draugu === 0 ? "Tik aš" : `Aš + ${draugu}`}</strong>
+        <span class="blankus">${draugu === 0 ? "Su draugais? Spauskite „+“" : `${zaidejuTekstas(kiekDalyvaus)} iš viso`}</span>
+      </div>
+      <button onclick="keistiKieki(1)" ${kiekDalyvaus >= r.laisvu ? "disabled" : ""} aria-label="Pridėti draugą">+</button>
     </div>
     <button class="mygtukas platus" onclick="prisijungtiPrieRungtyniu()">
-      Prisijungti${kiekDalyvaus > 1 ? ` (${kiekDalyvaus} žaidėjai)` : ""}
+      Prisijungti${kiekDalyvaus > 1 ? ` (${zaidejuTekstas(kiekDalyvaus)})` : ""}
     </button>`;
 }
 
-function pasirinktiKieki(kiekis) {
-  kiekDalyvaus = kiekis;
+/* „+“ / „−“: pridėti ar atimti draugą (ne daugiau nei laisvų vietų) */
+function keistiKieki(pokytis) {
+  const r = gautiRungtynes(rungtyniuId);
+  kiekDalyvaus = Math.min(r.laisvu, Math.max(1, kiekDalyvaus + pokytis));
   piestiPuslapi();
+}
+
+/* 1 žaidėjas, 2 žaidėjai, 10 žaidėjų (lietuviška daugiskaita) */
+function zaidejuTekstas(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return `${n} žaidėjas`;
+  if (n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) return `${n} žaidėjai`;
+  return `${n} žaidėjų`;
 }
 
 function prisijungtiPrieRungtyniu() {
@@ -156,7 +170,7 @@ function prisijungtiPrieRungtyniu() {
   }
 
   registruotisRungtynems(rungtyniuId, kiekDalyvaus);
-  const zaideju = kiekDalyvaus === 1 ? "1 žaidėjas" : `${kiekDalyvaus} žaidėjai`;
+  const zaideju = zaidejuTekstas(kiekDalyvaus);
   kiekDalyvaus = 1;
   piestiPuslapi();
   rodytiPranesima(`✓ Prisijungėte: ${zaideju}. Priminimą gausite 1 val. prieš rungtynes.`, { trukme: 5000 });

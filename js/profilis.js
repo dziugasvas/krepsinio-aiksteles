@@ -107,7 +107,7 @@ function manoRungtynes() {
     .map(
       (r) => `
       <a class="mano-rungtynes" href="rungtynes.html?id=${r.id}">
-        <span><strong>${r.aikstele.pavadinimas}</strong><br><span class="blankus">${rungtyniuLaikas(r)}${r.manoKiekis > 1 ? " · Aš + 1" : ""}</span></span>
+        <span><strong>${r.aikstele.pavadinimas}</strong><br><span class="blankus">${rungtyniuLaikas(r)}${r.manoKiekis > 1 ? ` · Aš + ${r.manoKiekis - 1}` : ""}</span></span>
         <span>›</span>
       </a>`
     )
