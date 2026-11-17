@@ -95,10 +95,12 @@ function atidarytiMeniu() {
     ${
       n
         ? `<div class="meniu-statistika">
+            <div><strong>${n.ugis ? n.ugis : "–"}</strong><span>Ūgis, cm</span></div>
+            <div><strong>${n.svoris ? n.svoris : "–"}</strong><span>Svoris, kg</span></div>
+            <div><strong>${n.suolis ? n.suolis : "–"}</strong><span>Šuolis, cm</span></div>
             <div><strong>${LYGIAI[n.lygis]}</strong><span>Lygis</span></div>
-            <div><strong>${n.pozicija || "–"}</strong><span>Pozicija</span></div>
-            <div><strong>${mano}</strong><span>Rungtynės</span></div>
-          </div>`
+          </div>
+          <div class="meniu-pozicija">${n.pozicija && n.pozicija !== "Nesvarbu" ? n.pozicija : "Pozicija nenurodyta"} · ${daugiskaita(mano, "rungtynės", "rungtynės", "rungtynių")}</div>`
         : `<a class="mygtukas platus" style="margin-bottom: 18px" href="prisijungimas.html?atgal=${encodeURIComponent(location.pathname.split("/").pop() + location.search)}">Prisijungti</a>`
     }
     ${n ? `<a class="meniu-punktas" href="profilis.html"><span class="ikona">${svg("piestukas")}</span>Redaguoti profilį</a>` : ""}

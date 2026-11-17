@@ -146,27 +146,27 @@ const AIKSTELES = [
 ];
 
 const ZAIDEJAI = [
-  { id: "z1", vardas: "Tadas", amzius: 19, lygis: "vidutinis", pozicija: "Įžaidėjas", rajonas: "fabijoniskes" },
-  { id: "z2", vardas: "Lukas", amzius: 17, lygis: "vidutinis", pozicija: "Lengvasis puolėjas", rajonas: "fabijoniskes" },
+  { id: "z1", vardas: "Tadas", amzius: 19, lygis: "vidutinis", pozicija: "Įžaidėjas", rajonas: "fabijoniskes", ugis: 183, svoris: 76, suolis: 62, patirtis: 6 },
+  { id: "z2", vardas: "Lukas", amzius: 17, lygis: "vidutinis", pozicija: "Lengvasis puolėjas", rajonas: "fabijoniskes", ugis: 178, svoris: 68, suolis: 58, patirtis: 4 },
   { id: "z3", vardas: "Matas", amzius: 22, lygis: "pradedantysis", pozicija: "Gynėjas", rajonas: "fabijoniskes" },
   { id: "z4", vardas: "Rokas", amzius: 18, lygis: "vidutinis", pozicija: "Centras", rajonas: "zirmunai" },
-  { id: "z5", vardas: "Domas", amzius: 31, lygis: "aukštas", pozicija: "Įžaidėjas", rajonas: "zirmunai" },
-  { id: "z6", vardas: "Paulius", amzius: 27, lygis: "aukštas", pozicija: "Lengvasis puolėjas", rajonas: "senamiestis" },
-  { id: "z7", vardas: "Andrius", amzius: 34, lygis: "aukštas", pozicija: "Centras", rajonas: "zirmunai" },
-  { id: "z8", vardas: "Ignas", amzius: 25, lygis: "aukštas", pozicija: "Sunkusis puolėjas", rajonas: "senamiestis" },
-  { id: "z9", vardas: "Mantas", amzius: 29, lygis: "aukštas", pozicija: "Gynėjas", rajonas: "zirmunai" },
-  { id: "z10", vardas: "Giedrius", amzius: 44, lygis: "vidutinis", pozicija: "Sunkusis puolėjas", rajonas: "senamiestis" },
+  { id: "z5", vardas: "Domas", amzius: 31, lygis: "aukštas", pozicija: "Įžaidėjas", rajonas: "zirmunai", ugis: 191, svoris: 88, suolis: 70, patirtis: 15 },
+  { id: "z6", vardas: "Paulius", amzius: 27, lygis: "aukštas", pozicija: "Lengvasis puolėjas", rajonas: "senamiestis", ugis: 196, svoris: 92, suolis: 74, patirtis: 12 },
+  { id: "z7", vardas: "Andrius", amzius: 34, lygis: "aukštas", pozicija: "Centras", rajonas: "zirmunai", ugis: 205, svoris: 104, suolis: 60, patirtis: 20 },
+  { id: "z8", vardas: "Ignas", amzius: 25, lygis: "aukštas", pozicija: "Sunkusis puolėjas", rajonas: "senamiestis", ugis: 193, svoris: 86, suolis: 72, patirtis: 10 },
+  { id: "z9", vardas: "Mantas", amzius: 29, lygis: "aukštas", pozicija: "Gynėjas", rajonas: "zirmunai", ugis: 188, svoris: 83, suolis: 68, patirtis: 14 },
+  { id: "z10", vardas: "Giedrius", amzius: 44, lygis: "vidutinis", pozicija: "Sunkusis puolėjas", rajonas: "senamiestis", ugis: 185, svoris: 90, suolis: 40, patirtis: 30 },
   { id: "z11", vardas: "Jonas (12 m.)", amzius: 12, lygis: "pradedantysis", pozicija: "Gynėjas", rajonas: "senamiestis" },
   { id: "z12", vardas: "Rasa", amzius: 41, lygis: "vidutinis", pozicija: "Gynėja", rajonas: "senamiestis" },
   { id: "z13", vardas: "Emilija (11 m.)", amzius: 11, lygis: "pradedantysis", pozicija: "Lengvoji puolėja", rajonas: "senamiestis" },
   { id: "z14", vardas: "Karolis", amzius: 20, lygis: "pradedantysis", pozicija: "Centras", rajonas: "fabijoniskes" },
   { id: "z15", vardas: "Simas", amzius: 23, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "zirmunai" },
-  { id: "z17", vardas: "Justas", amzius: 24, lygis: "aukštas", pozicija: "Įžaidėjas", rajonas: "kaunas-centras" },
+  { id: "z17", vardas: "Justas", amzius: 24, lygis: "aukštas", pozicija: "Įžaidėjas", rajonas: "kaunas-centras", ugis: 190, svoris: 84, suolis: 71, patirtis: 11 },
   { id: "z18", vardas: "Ugnius", amzius: 19, lygis: "vidutinis", pozicija: "Lengvasis puolėjas", rajonas: "kaunas-centras" },
   { id: "z19", vardas: "Erikas", amzius: 21, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "klaipeda-centras" },
   { id: "z20", vardas: "Dovilė", amzius: 26, lygis: "vidutinis", pozicija: "Lengvoji puolėja", rajonas: "siauliai-centras" },
-  { id: "z21", vardas: "Arnas", amzius: 30, lygis: "aukštas", pozicija: "Centras", rajonas: "panevezys-centras" },
-  { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras", rajonas: "fabijoniskes" },
+  { id: "z21", vardas: "Arnas", amzius: 30, lygis: "aukštas", pozicija: "Centras", rajonas: "panevezys-centras", ugis: 203, svoris: 101, suolis: 58, patirtis: 18 },
+  { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras", rajonas: "fabijoniskes", ugis: 201, svoris: 98, suolis: 55, patirtis: 22 },
 ];
 
 const RUNGTYNES = [

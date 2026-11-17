@@ -143,3 +143,61 @@
 .jungiklis:checked::after {
   left: 23px;
 }
+
+.fiziniai {
+  display: grid;
+  gap: 12px;
+}
+
+.fiziniu-tinklelis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.fizinis-laukas {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tekstas-blankus);
+}
+
+.fizinis-laukas .ivestis {
+  position: relative;
+}
+
+.fizinis-laukas input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 40px 10px 14px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.fizinis-laukas input:focus {
+  outline: none;
+  border-color: var(--oranzine);
+  background: var(--pavirsius);
+}
+
+.fizinis-laukas input.su-klaida {
+  border-color: var(--raudona);
+}
+
+.fizinis-laukas .vienetai {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 500;
+}
+
+.jungiklis-eilute.be-remelio {
+  border: none;
+  padding: 4px 0;
+}

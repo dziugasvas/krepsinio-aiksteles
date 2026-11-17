@@ -95,3 +95,31 @@
   display: block;
   padding: 6px 0;
 }
+
+.zaidejo-fiziniai {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--linija);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.zaidejo-fiziniai div {
+  text-align: center;
+  padding: 8px 2px;
+  border-right: 1px solid var(--linija);
+}
+
+.zaidejo-fiziniai div:last-child {
+  border-right: none;
+}
+
+.zaidejo-fiziniai strong {
+  display: block;
+  font-size: 16px;
+}
+
+.zaidejo-fiziniai span {
+  font-size: 11px;
+  color: var(--tekstas-blankus);
+}

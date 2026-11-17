@@ -77,6 +77,16 @@ function zaidejoProfilis(z) {
   const rungtynes = visosRungtynes().filter((r) => r.dalyviai.includes(z.id));
   return `
     <div class="zaidejo-profilis">
+      ${
+        z.ugis
+          ? `<div class="zaidejo-fiziniai">
+              <div><strong>${z.ugis}</strong><span>Ūgis, cm</span></div>
+              <div><strong>${z.svoris}</strong><span>Svoris, kg</span></div>
+              <div><strong>${z.suolis}</strong><span>Šuolis, cm</span></div>
+              <div><strong>${z.patirtis}</strong><span>Patirtis, m.</span></div>
+            </div>`
+          : ""
+      }
       <div class="blankus">Dalyvauja rungtynėse:</div>
       ${
         rungtynes.length

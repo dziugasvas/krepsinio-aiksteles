@@ -1,3 +1,10 @@
+const FIZINIU_RIBOS = {
+  ugis: { min: 120, max: 230, pavadinimas: "Ūgis" },
+  svoris: { min: 30, max: 200, pavadinimas: "Svoris" },
+  suolis: { min: 10, max: 130, pavadinimas: "Šuolis" },
+  patirtis: { min: 0, max: 60, pavadinimas: "Patirtis" },
+};
+
 piestiNavigacija("");
 piestiProfili();
 
@@ -41,6 +48,23 @@ function piestiProfili() {
               `<button class="parinktis ${(naudotojas.pozicija || "Nesvarbu") === p ? "pasirinkta" : ""}" onclick="keistiPozicija('${p}')">${p}</button>`
           )
           .join("")}
+      </div>
+
+      <h2 class="skyriaus-pavadinimas">Fiziniai duomenys</h2>
+      <div class="kortele fiziniai">
+        <p class="blankus">Neprivaloma. Padeda kitiems rasti panašaus lygio žaidėjų.</p>
+        <div class="fiziniu-tinklelis">
+          ${fizinisLaukas("ugis", "Ūgis", "cm", naudotojas.ugis)}
+          ${fizinisLaukas("svoris", "Svoris", "kg", naudotojas.svoris)}
+          ${fizinisLaukas("suolis", "Šuolis", "cm", naudotojas.suolis)}
+          ${fizinisLaukas("patirtis", "Patirtis", "m.", naudotojas.patirtis)}
+        </div>
+        <div class="klaidos-tekstas" id="fiziniu-klaida"></div>
+        <label class="jungiklis-eilute be-remelio">
+          <span>Rodyti kitiems žaidėjams<br><span class="blankus">Išjungus duomenys matomi tik jums</span></span>
+          <input type="checkbox" class="jungiklis" id="rodyti-fizinius" ${naudotojas.rodytiFizinius !== false ? "checked" : ""}>
+        </label>
+        <button class="mygtukas platus" onclick="issaugotiFizinius()">Išsaugoti duomenis</button>
       </div>
 
       ${buvimoInformacija()}
@@ -189,4 +213,44 @@ function buvimoInformacija() {
 if (location.hash) {
   const tikslas = document.querySelector(location.hash);
   if (tikslas) setTimeout(() => tikslas.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+}
+
+function fizinisLaukas(id, pavadinimas, vienetai, reiksme) {
+  const r = FIZINIU_RIBOS[id];
+  return `
+    <label class="fizinis-laukas">
+      <span>${pavadinimas}</span>
+      <span class="ivestis">
+        <input id="${id}" type="number" inputmode="numeric" min="${r.min}" max="${r.max}" value="${reiksme ?? ""}" placeholder="–">
+        <span class="vienetai">${vienetai}</span>
+      </span>
+    </label>`;
+}
+
+function issaugotiFizinius() {
+  const laukai = {};
+  const klaidos = [];
+  for (const [id, r] of Object.entries(FIZINIU_RIBOS)) {
+    const el = document.getElementById(id);
+    el.classList.remove("su-klaida");
+    if (el.value === "") {
+      laukai[id] = null;
+      continue;
+    }
+    const n = Number(el.value);
+    if (!Number.isFinite(n) || n < r.min || n > r.max) {
+      klaidos.push(`${r.pavadinimas}: nuo ${r.min} iki ${r.max}`);
+      el.classList.add("su-klaida");
+    } else {
+      laukai[id] = Math.round(n);
+    }
+  }
+  if (klaidos.length) {
+    document.getElementById("fiziniu-klaida").textContent = "Patikrinkite: " + klaidos.join("; ") + ".";
+    return;
+  }
+  laukai.rodytiFizinius = document.getElementById("rodyti-fizinius").checked;
+  atnaujintiNaudotoja(laukai);
+  piestiProfili();
+  rodytiPranesima("✓ Fiziniai duomenys išsaugoti");
 }

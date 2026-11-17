@@ -543,10 +543,17 @@ a.kortele:active {
 
 .meniu-statistika {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border: 1px solid var(--linija);
   border-radius: var(--apvalinimas);
-  margin-bottom: 18px;
+  margin-bottom: 8px;
+}
+
+.meniu-pozicija {
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+  text-align: center;
+  margin-bottom: 14px;
 }
 
 .meniu-statistika div {
