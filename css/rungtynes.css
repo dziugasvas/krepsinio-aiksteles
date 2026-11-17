@@ -2,18 +2,55 @@
    Rungtynių puslapis
    ========================================================== */
 
+/* Aikštelės nuotrauka arba tamsus fonas su krepšio siluetu */
+.virselis {
+  height: 170px;
+  border-radius: 22px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 14px;
+  box-shadow: var(--seselis);
+}
+
+.virselis.be-nuotraukos {
+  background-image: linear-gradient(160deg, #2b2b2e 0%, #0f0f10 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.virselis.be-nuotraukos svg {
+  width: 64px;
+  height: 64px;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.2;
+}
+
 .rungtyniu-antraste {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 2px;
+  font-family: var(--antrastes-sriftas);
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--zalia);
+  line-height: 1.1;
+}
+
+.rungtyniu-antraste.vyksta {
+  color: var(--oranzine);
 }
 
 .aiksteles-nuoroda {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--tekstas);
+  margin-top: 4px;
+}
+
+.aiksteles-nuoroda span {
+  color: var(--oranzine);
 }
 
 .info-eilutes {
@@ -31,7 +68,14 @@
 
 .info-eilute .ikona {
   width: 22px;
-  text-align: center;
+  display: flex;
+  color: var(--oranzine);
+  flex-shrink: 0;
+}
+
+.info-eilute .ikona svg {
+  width: 20px;
+  height: 20px;
 }
 
 .aprasymas {

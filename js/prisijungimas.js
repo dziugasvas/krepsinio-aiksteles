@@ -61,6 +61,7 @@ function perjungtiRezima() {
   document.getElementById("vardo-laukas").hidden = !registracija;
   document.getElementById("pamirsau").hidden = registracija;
   document.getElementById("pateikti").textContent = registracija ? "Sukurti paskyrą" : "Prisijungti";
+  document.getElementById("pavadinimas").textContent = registracija ? "Registracija" : "Prisijunkite";
   document.getElementById("perjungimo-tekstas").textContent = registracija ? "Jau turite paskyrą?" : "Neturite paskyros?";
   document.getElementById("perjungimo-mygtukas").textContent = registracija ? "Prisijungti" : "Registruotis";
   document.getElementById("slaptazodis").autocomplete = registracija ? "new-password" : "current-password";

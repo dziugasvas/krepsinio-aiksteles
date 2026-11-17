@@ -14,11 +14,27 @@ const IKONOS = {
   kamuolys: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/><path d="M5.6 5.6c2.8 2.8 2.8 10 0 12.8M18.4 5.6c-2.8 2.8-2.8 10 0 12.8"/>',
   zmones: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.9.3 5 2.6 5 5.8"/>',
   varpelis: '<path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2H4.5z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  laikas: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  sluoksniai: '<path d="M12 3 2 8l10 5 10-5z"/><path d="m2 13 10 5 10-5"/>',
+  asmuo: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  lempute: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  kompasas: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  zemelapis: '<path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
+  nustatymai: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  klaustukas: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5"/><path d="M12 17h.01"/>',
+  iseiti: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',
+  piestukas: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  filtras: '<path d="M4 6h16M7 12h10M10 18h4"/>',
   krepsys: '<rect x="3.5" y="2.5" width="17" height="10" rx="1.5"/><rect x="9" y="6" width="6" height="4.5"/><path d="M7.5 13.5h9"/><path d="M8.5 13.5 10 21M15.5 13.5 14 21M12 13.5V21M9.2 17.2h5.6"/>',
 };
 
 function svg(ikona, papildoma = "") {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${papildoma}>${IKONOS[ikona]}</svg>`;
+}
+
+/* Maža ikona teksto eilutėje */
+function ik(ikona) {
+  return `<span class="mini-ikona">${svg(ikona)}</span>`;
 }
 
 function piestiNavigacija(aktyvus) {
@@ -102,11 +118,11 @@ function atidarytiMeniu() {
           </div>`
         : `<a class="mygtukas platus" style="margin-bottom: 18px" href="prisijungimas.html?atgal=${encodeURIComponent(location.pathname.split("/").pop() + location.search)}">Prisijungti</a>`
     }
-    ${n ? `<a class="meniu-punktas" href="profilis.html"><span class="ikona">👤</span>Redaguoti profilį</a>` : ""}
-    <a class="meniu-punktas" href="profilis.html#vieta"><span class="ikona">📍</span>Mano vieta · ${MIESTAI[rajonas.miestas].pavadinimas}</a>
-    <a class="meniu-punktas" href="profilis.html#nustatymai"><span class="ikona">⚙️</span>Nustatymai</a>
-    <a class="meniu-punktas" href="pagalba.html"><span class="ikona">❓</span>Pagalba</a>
-    ${n ? `<button class="meniu-punktas" onclick="atsijungtiIsMeniu()"><span class="ikona">↩️</span>Atsijungti</button>` : ""}
+    ${n ? `<a class="meniu-punktas" href="profilis.html"><span class="ikona">${svg("piestukas")}</span>Redaguoti profilį</a>` : ""}
+    <a class="meniu-punktas" href="profilis.html#vieta"><span class="ikona">${svg("vieta")}</span>Mano vieta · ${MIESTAI[rajonas.miestas].pavadinimas}</a>
+    <a class="meniu-punktas" href="profilis.html#nustatymai"><span class="ikona">${svg("nustatymai")}</span>Nustatymai</a>
+    <a class="meniu-punktas" href="pagalba.html"><span class="ikona">${svg("klaustukas")}</span>Pagalba</a>
+    ${n ? `<button class="meniu-punktas" onclick="atsijungtiIsMeniu()"><span class="ikona">${svg("iseiti")}</span>Atsijungti</button>` : ""}
     <div class="meniu-apacia">Krepšinis Visur · prototipas v1.0</div>`;
 
   document.body.append(fonas, meniu);
@@ -148,7 +164,7 @@ function gautiPriminimus() {
   // FR20: rungtynės, prie kurių prisijungta ir kurios prasideda per artimiausią valandą
   for (const r of visos.filter((r) => r.manoKiekis > 0 && r.pradziaPoMin <= 60 && r.pradziaPoMin > -r.trukmeMin)) {
     const kada = r.vyksta ? "jau vyksta" : `prasideda po ${r.pradziaPoMin} min.`;
-    sarasas.push({ raktas: "p-" + r.id, ikona: "🔔", tekstas: `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, nuoroda: `rungtynes.html?id=${r.id}` });
+    sarasas.push({ raktas: "p-" + r.id, ikona: svg("laikas"), tekstas: `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, nuoroda: `rungtynes.html?id=${r.id}` });
   }
 
   // FR21: netoliese (iki 1,5 km) ieškoma žaidėjų, o naudotojas dar nedalyvauja
@@ -159,7 +175,7 @@ function gautiPriminimus() {
     if (ieskoma) {
       sarasas.push({
         raktas: "i-" + ieskoma.id,
-        ikona: "📣",
+        ikona: svg("zmones"),
         tekstas: `Netoliese ieškoma žaidėjų: <strong>${ieskoma.aikstele.pavadinimas}</strong> (${formatuotiAtstuma(ieskoma.atstumas)}) – trūksta ${ieskoma.laisvu}`,
         nuoroda: `rungtynes.html?id=${ieskoma.id}`,
       });
@@ -217,7 +233,7 @@ function rungtyniuKorteleHtml(r, mygtukas = "") {
         <div>
           <div class="laikas ${r.vyksta ? "vyksta" : ""}">${r.vyksta ? "● " : ""}${laikas}</div>
           <div class="pavadinimas">${r.aikstele.pavadinimas}</div>
-          <div class="vieta-eilute">📍 ${formatuotiAtstuma(r.atstumas)} · Organizuoja ${org}</div>
+          <div class="vieta-eilute">${ik("vieta")}${formatuotiAtstuma(r.atstumas)} · Organizuoja ${org}</div>
           <div class="zymos"><span class="zyma oranzine">${LYGIAI[r.lygis]}</span>${r.zymos.map((z) => `<span class="zyma">${z}</span>`).join("")}</div>
         </div>
       </div>
@@ -374,7 +390,7 @@ function formatuotiLaika(data) {
 
 /* Rungtynių laikas žmonių kalba: „Vyksta dabar“, „Po 40 min.“, „Šiandien 18:00“ */
 function rungtyniuLaikas(r) {
-  if (r.vyksta) return "🔴 Vyksta dabar";
+  if (r.vyksta) return "● Vyksta dabar";
   if (r.pradziaPoMin < 60) return `Po ${r.pradziaPoMin} min.`;
   return formatuotiLaika(r.pradzia);
 }

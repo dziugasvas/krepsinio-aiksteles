@@ -21,7 +21,7 @@ L.control.zoom({ position: "topright" }).addTo(zemelapis);
 
 /* Naudotojo vieta */
 L.marker([vieta.lat, vieta.lng], {
-  icon: L.divIcon({ className: "", html: '<div class="mano-vieta">📍</div>', iconSize: [28, 28], iconAnchor: [14, 28] }),
+  icon: L.divIcon({ className: "", html: '<div class="mano-vieta"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }),
 })
   .addTo(zemelapis)
   .bindTooltip("Jūs esate čia");
@@ -36,7 +36,7 @@ for (const aikstele of AIKSTELES) {
   const zymeklis = L.marker([aikstele.lat, aikstele.lng], {
     icon: L.divIcon({
       className: "",
-      html: `<div class="aiksteles-zymeklis ${klase}" data-id="${aikstele.id}">🏀</div>`,
+      html: `<div class="aiksteles-zymeklis ${klase}" data-id="${aikstele.id}">${svg("krepsys")}</div>`,
       iconSize: [36, 36],
       iconAnchor: [18, 18],
     }),
@@ -96,13 +96,13 @@ function piestiAiksteleskortele(a) {
         <h2>${a.pavadinimas}</h2>
         <button class="uzdaryti" onclick="uzdarytiKortele()" aria-label="Uždaryti">✕ Uždaryti</button>
       </div>
-      <div class="atstumo-eilute">📍 ${formatuotiAtstuma(km)} · 🚶 ${laikasPesciomis(km)}</div>
-      <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">👥 ${uzimtumoTekstas(a)}</div>
+      <div class="atstumo-eilute">${ik("vieta")}${formatuotiAtstuma(km)} · ${laikasPesciomis(km)}</div>
+      <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">${ik("zmones")}${uzimtumoTekstas(a)}</div>
       <div>
         <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
         <span class="zyma">Danga: ${a.danga}</span>
         <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">Būklė: ${a.bukle}</span>
-        <span class="zyma">${a.apsvietimas ? "💡 Apšviesta" : "Be apšvietimo"}</span>
+        <span class="zyma">${a.apsvietimas ? "Apšviesta" : "Be apšvietimo"}</span>
       </div>
       <h3 class="skyriaus-pavadinimas">Rungtynės (${rungtynes.length})</h3>
       ${rungtyniuHtml}
@@ -160,10 +160,10 @@ function piestiAiksteliuSarasa() {
       ${filtroMygtukas("Iki 5 km", f.atstumas === "5", "aiksteliuFiltrai.atstumas = '5'")}
       <span class="etikete">Užimtumas</span>
       ${filtroMygtukas("Bet koks", f.uzimtumas === "visi", "aiksteliuFiltrai.uzimtumas = 'visi'")}
-      ${filtroMygtukas("👥 Žaidžiama dabar", f.uzimtumas === "zaidziama", "aiksteliuFiltrai.uzimtumas = 'zaidziama'")}
+      ${filtroMygtukas("Žaidžiama dabar", f.uzimtumas === "zaidziama", "aiksteliuFiltrai.uzimtumas = 'zaidziama'")}
       ${filtroMygtukas("Laisva", f.uzimtumas === "laisva", "aiksteliuFiltrai.uzimtumas = 'laisva'")}
       <span class="etikete">Kita</span>
-      ${filtroMygtukas("💡 Tik apšviestos", f.apsviesta, "aiksteliuFiltrai.apsviesta = !aiksteliuFiltrai.apsviesta")}
+      ${filtroMygtukas("Tik apšviestos", f.apsviesta, "aiksteliuFiltrai.apsviesta = !aiksteliuFiltrai.apsviesta")}
     </div>
     <p class="blankus" style="margin-bottom: 8px">Rasta aikštelių: ${aiksteles.length}</p>`;
 
@@ -179,14 +179,14 @@ function piestiAiksteliuSarasa() {
       <a class="kortele aiksteles-eilute" href="aikstele.html?id=${a.id}">
         <div class="virsus-eilute">
           <span class="pavadinimas">${a.pavadinimas}</span>
-          <span class="atstumas">📍 ${formatuotiAtstuma(km)}</span>
+          <span class="atstumas">${ik("vieta")}${formatuotiAtstuma(km)}</span>
         </div>
-        <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">👥 ${uzimtumoTekstas(a)}</div>
+        <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">${ik("zmones")}${uzimtumoTekstas(a)}</div>
         <div>
           <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
           <span class="zyma">${a.danga}</span>
           <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">${a.bukle}</span>
-          ${a.apsvietimas ? `<span class="zyma">💡 Apšviesta</span>` : ""}
+          ${a.apsvietimas ? `<span class="zyma">Apšviesta</span>` : ""}
           ${rungtyniu ? `<span class="zyma oranzine">Rungtynių: ${rungtyniu}</span>` : ""}
         </div>
       </a>`;

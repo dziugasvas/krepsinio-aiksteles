@@ -39,7 +39,7 @@ function piestiProfili() {
 
       <h2 class="skyriaus-pavadinimas">Pozicija</h2>
       <div class="parinkciu-eile">
-        ${["Gynėjas", "Puolėjas", "Centras", "Nesvarbu"]
+        ${["Įžaidėjas", "Gynėjas", "Lengvasis puolėjas", "Sunkusis puolėjas", "Centras", "Nesvarbu"]
           .map(
             (p) =>
               `<button class="parinktis ${(naudotojas.pozicija || "Nesvarbu") === p ? "pasirinkta" : ""}" onclick="keistiPozicija('${p}')">${p}</button>`
@@ -51,7 +51,7 @@ function piestiProfili() {
 
       <h2 class="skyriaus-pavadinimas" id="nustatymai">Pranešimai</h2>
       <label class="jungiklis-eilute">
-        <span>📣 Pranešti, kai netoliese ieškoma žaidėjų<br><span class="blankus">Pranešimą galite išjungti bet kada</span></span>
+        <span>Pranešti, kai netoliese ieškoma žaidėjų<br><span class="blankus">Pranešimą galite išjungti bet kada</span></span>
         <input type="checkbox" class="jungiklis" ${gautiPranesimuNustatyma() ? "checked" : ""} onchange="keistiPranesimus(this.checked)">
       </label>
 
@@ -89,7 +89,7 @@ function piestiProfili() {
               .filter(([, r]) => r.miestas === dabartinisMiestas())
               .map(
                 ([raktas, r]) =>
-                  `<button class="parinktis ${rajonas === raktas ? "pasirinkta" : ""}" onclick="keistiRajona('${raktas}')">📍 ${r.pavadinimas}</button>`
+                  `<button class="parinktis ${rajonas === raktas ? "pasirinkta" : ""}" onclick="keistiRajona('${raktas}')">${r.pavadinimas}</button>`
               )
               .join("")}
           </div>`
@@ -136,13 +136,13 @@ function keistiLygi(lygis) {
 function keistiMiesta(miestas) {
   nustatytiMiesta(miestas);
   piestiProfili();
-  rodytiPranesima(`📍 Miestas: ${MIESTAI[miestas].pavadinimas}`);
+  rodytiPranesima(`Miestas: ${MIESTAI[miestas].pavadinimas}`);
 }
 
 function keistiRajona(rajonas) {
   nustatytiRajona(rajonas);
   piestiProfili();
-  rodytiPranesima(`📍 Vieta pakeista: ${RAJONAI[rajonas].pavadinimas}`);
+  rodytiPranesima(`Vieta pakeista: ${RAJONAI[rajonas].pavadinimas}`);
 }
 
 function atsijungtiIsProfilio() {
@@ -183,7 +183,7 @@ function keistiPozicija(pozicija) {
 /* ---------- Pranešimai (FR21) ---------- */
 function keistiPranesimus(ijungta) {
   nustatytiPranesimus(ijungta);
-  rodytiPranesima(ijungta ? "🔔 Pranešimai įjungti" : "🔕 Pranešimai išjungti");
+  rodytiPranesima(ijungta ? "Pranešimai įjungti" : "Pranešimai išjungti");
 }
 
 /* ---------- Kur naudotojas pažymėjo esantis (FR10) ---------- */
@@ -193,7 +193,7 @@ function buvimoInformacija() {
   const a = gautiAikstele(id);
   return `
     <h2 class="skyriaus-pavadinimas">Šiuo metu</h2>
-    <a class="kortele" href="aikstele.html?id=${a.id}">📍 Esate: <strong>${a.pavadinimas}</strong> ›</a>`;
+    <a class="kortele" href="aikstele.html?id=${a.id}">${ik("vieta")}Esate: <strong>${a.pavadinimas}</strong> ›</a>`;
 }
 
 /* Atėjus iš meniu (#vieta, #nustatymai) – nuslenkama prie reikiamos vietos */

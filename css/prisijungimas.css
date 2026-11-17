@@ -3,61 +3,41 @@
    ========================================================== */
 
 .prisijungimo-puslapis {
-  padding-bottom: 24px;
+  padding-bottom: 32px;
+  background: var(--pavirsius);
 }
 
-.logotipas {
-  font-size: 56px;
-  text-align: center;
-  margin-top: 8px;
+.prisijungimo-puslapis .virsus {
+  background: var(--pavirsius);
 }
 
-.pavadinimas {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 6px;
-}
-
-.pavadinimas .akcentas {
-  color: var(--oranzine);
+.prisijungimo-puslapis .turinys {
+  padding: 8px 24px 24px;
 }
 
 .centre {
   text-align: center;
 }
 
-.greiti-budai {
-  display: grid;
-  gap: 10px;
-  margin-top: 24px;
+.logotipas-tekstas.centre {
+  display: block;
+  padding-left: 0.4em; /* kompensuoja raidžių tarpą gale */
+  margin-top: 12px;
 }
 
-.mygtukas.baltas {
-  background: #ffffff;
-  color: #1f1f1f;
+.pavadinimas {
+  text-align: center;
+  font-family: var(--antrastes-sriftas);
+  font-size: 46px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin: 10px 0 8px;
 }
 
-.mygtukas.juodas {
-  background: #000000;
-  color: #ffffff;
-  border: 1px solid #444444;
-}
-
-.skirtukas {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 22px 0 14px;
-  color: var(--tekstas-blankus);
-  font-size: 13px;
-}
-
-.skirtukas::before,
-.skirtukas::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--linija);
+#paaiskinimas {
+  font-size: 16px;
+  margin-bottom: 28px;
 }
 
 /* Formos laukai */
@@ -68,34 +48,40 @@
 .laukas label {
   display: block;
   font-size: 14px;
+  font-weight: 600;
   margin-bottom: 6px;
 }
 
 .laukas input {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--linija);
+  min-height: 54px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1.5px solid transparent;
   background: var(--pavirsius-2);
   color: var(--tekstas);
-  font-size: 16px;
+  font-size: 17px;
+}
+
+.laukas input::placeholder {
+  color: #a1a1a6;
 }
 
 .laukas input:focus {
   outline: none;
   border-color: var(--oranzine);
+  background: var(--pavirsius);
 }
 
 .laukas.su-klaida input {
   border-color: var(--raudona);
+  background: #fff5f4;
 }
 
 .klaidos-tekstas {
   color: var(--raudona);
   font-size: 13px;
   margin-top: 4px;
-  min-height: 0;
 }
 
 .slaptazodzio-eilute {
@@ -104,14 +90,55 @@
 
 .slaptazodzio-eilute .rodyti {
   position: absolute;
-  right: 8px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   color: var(--oranzine);
   font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
+}
+
+#forma .mygtukas {
+  min-height: 56px;
+  font-size: 17px;
+}
+
+.skirtukas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+}
+
+.skirtukas::before,
+.skirtukas::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--linija);
+}
+
+/* Kontūriniai mygtukai („Tęsti su Google / Apple“) */
+.greiti-budai {
+  display: grid;
+  gap: 12px;
+}
+
+.mygtukas.konturinis {
+  min-height: 56px;
+  background: var(--pavirsius);
+  color: var(--tekstas);
+  border: 1.5px solid var(--tekstas);
+  font-size: 17px;
+}
+
+.mygtukas.konturinis:active {
+  background: var(--pavirsius-2);
 }
 
 .nuoroda-mygtukas {
@@ -119,18 +146,29 @@
   border: none;
   color: var(--oranzine);
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   padding: 4px 0;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .perjungimas {
-  margin-top: 18px;
+  margin-top: 22px;
   color: var(--tekstas-blankus);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .perjungimas .nuoroda-mygtukas {
   margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.be-prisijungimo {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px;
+  color: var(--tekstas);
   font-weight: 600;
+  font-size: 15px;
 }

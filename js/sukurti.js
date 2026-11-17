@@ -96,7 +96,7 @@ function piestiForma(klaida = "") {
     <div class="formos-grupe">
       <span class="formos-etikete">Kita</span>
       <div class="parinktys">
-        ${parinktis("👨‍👦 Tinka šeimoms", forma.seimoms, "forma.seimoms = !forma.seimoms")}
+        ${parinktis("Tinka šeimoms", forma.seimoms, "forma.seimoms = !forma.seimoms")}
       </div>
     </div>
 

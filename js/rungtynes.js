@@ -35,20 +35,21 @@ function piestiPuslapi() {
   const organizatorius = r.organizatorius === "jus" ? { vardas: `${r.organizatoriusVardas} (jūs)` } : gautiZaideja(r.organizatorius);
 
   turinys.innerHTML = `
-    <div class="rungtyniu-antraste">${rungtyniuLaikas(r)}</div>
-    <a class="aiksteles-nuoroda" href="aikstele.html?id=${a.id}">🏀 ${a.pavadinimas} ›</a>
+    ${miniatiuraHtml(a, "virselis")}
+    <div class="rungtyniu-antraste ${r.vyksta ? "vyksta" : ""}">${r.vyksta ? "● Vyksta dabar" : formatuotiLaika(r.pradzia).replace(" ", " · ")}</div>
+    <a class="aiksteles-nuoroda" href="aikstele.html?id=${a.id}">${a.pavadinimas} <span aria-hidden="true">›</span></a>
 
     <div class="info-eilutes">
-      <div class="info-eilute"><span class="ikona">📍</span>
-        <span>${a.adresas}<br><span class="blankus">${formatuotiAtstuma(r.atstumas)} · ${laikasPesciomis(r.atstumas)}</span></span>
+      <div class="info-eilute"><span class="ikona">${svg("vieta")}</span>
+        <span>${a.adresas}, ${MIESTAI[a.miestas].pavadinimas}<br><span class="blankus">${formatuotiAtstuma(r.atstumas)} · ${laikasPesciomis(r.atstumas)}</span></span>
       </div>
-      <div class="info-eilute"><span class="ikona">🕒</span>
+      <div class="info-eilute"><span class="ikona">${svg("laikas")}</span>
         <span>${formatuotiLaika(r.pradzia)} · ${r.trukmeMin} min.</span>
       </div>
-      <div class="info-eilute"><span class="ikona">🧱</span>
+      <div class="info-eilute"><span class="ikona">${svg("sluoksniai")}</span>
         <span>Danga: ${a.danga.toLowerCase()} · būklė: ${a.bukle.toLowerCase()}${a.apsvietimas ? " · apšviesta" : ""}</span>
       </div>
-      <div class="info-eilute"><span class="ikona">👤</span>
+      <div class="info-eilute"><span class="ikona">${svg("asmuo")}</span>
         <span>Organizatorius: ${organizatorius.vardas}</span>
       </div>
     </div>

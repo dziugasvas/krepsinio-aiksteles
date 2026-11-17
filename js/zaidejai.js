@@ -5,7 +5,7 @@
 piestiNavigacija("zaidejai");
 piestiVirsu("Žaidėjai");
 
-const zaidejuFiltrai = { lygis: "visi", rajonas: "visi" };
+const zaidejuFiltrai = { lygis: "visi", miestas: dabartinisMiestas() };
 let isskleistas = null; // kurio žaidėjo profilis atidarytas
 
 piestiFiltrus();
@@ -26,10 +26,10 @@ function piestiFiltrus() {
         .join("")}
     </div>
     <div class="filtru-eile">
-      <span class="etikete">Rajonas</span>
-      ${filtroMygtukas("Visi", f.rajonas === "visi", "zaidejuFiltrai.rajonas = 'visi'")}
-      ${Object.entries(RAJONAI)
-        .map(([k, r]) => filtroMygtukas(rajonoPavadinimas(k), f.rajonas === k, `zaidejuFiltrai.rajonas = '${k}'`))
+      <span class="etikete">Miestas</span>
+      ${filtroMygtukas("Visi", f.miestas === "visi", "zaidejuFiltrai.miestas = 'visi'")}
+      ${Object.entries(MIESTAI)
+        .map(([k, m]) => filtroMygtukas(m.pavadinimas, f.miestas === k, `zaidejuFiltrai.miestas = '${k}'`))
         .join("")}
     </div>`;
 }
@@ -41,7 +41,7 @@ function piestiZaidejus() {
   const sarasas = ZAIDEJAI.filter((z) => {
     if (tekstas && !z.vardas.toLowerCase().includes(tekstas)) return false;
     if (f.lygis !== "visi" && z.lygis !== f.lygis) return false;
-    if (f.rajonas !== "visi" && z.rajonas !== f.rajonas) return false;
+    if (f.miestas !== "visi" && RAJONAI[z.rajonas].miestas !== f.miestas) return false;
     return true;
   });
 
@@ -88,7 +88,7 @@ function zaidejoProfilis(z) {
           ? rungtynes
               .map(
                 (r) =>
-                  `<a href="rungtynes.html?id=${r.id}" onclick="event.stopPropagation()">🏀 ${r.aikstele.pavadinimas} – ${rungtyniuLaikas(r)} ›</a>`
+                  `<a href="rungtynes.html?id=${r.id}" onclick="event.stopPropagation()">${r.aikstele.pavadinimas} – ${rungtyniuLaikas(r)} ›</a>`
               )
               .join("")
           : `<p class="blankus">Šiuo metu niekur neužsiregistravęs.</p>`

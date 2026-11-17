@@ -16,21 +16,9 @@
     </header>
 
     <main class="turinys">
-      <div class="logotipas">🏀</div>
-      <h2 class="pavadinimas">Krepšinis <span class="akcentas">Visur</span></h2>
+      <div class="logotipas-tekstas centre">Krepšinis visur</div>
+      <h2 class="pavadinimas" id="pavadinimas">Prisijunkite</h2>
       <p class="blankus centre" id="paaiskinimas">Prisijunkite, kad galėtumėte dalyvauti rungtynėse.</p>
-
-      <!-- Greitas prisijungimas (Kevinas nemėgsta registruotis) -->
-      <div class="greiti-budai">
-        <button class="mygtukas platus baltas" onclick="prisijungtiPer('Google')">
-          <strong>G</strong>&nbsp; Tęsti su Google
-        </button>
-        <button class="mygtukas platus juodas" onclick="prisijungtiPer('Apple')">
-           Tęsti su Apple
-        </button>
-      </div>
-
-      <div class="skirtukas"><span>arba el. paštu</span></div>
 
       <!-- Prisijungimas / registracija el. paštu -->
       <form id="forma" novalidate onsubmit="pateiktiForma(event)">
@@ -60,12 +48,20 @@
         <button type="submit" class="mygtukas platus" id="pateikti">Prisijungti</button>
       </form>
 
+      <div class="skirtukas"><span>arba</span></div>
+
+      <!-- Greitas prisijungimas vienu paspaudimu (Kevinas nemėgsta registruotis) -->
+      <div class="greiti-budai">
+        <button class="mygtukas platus konturinis" onclick="prisijungtiPer('Google')">Tęsti su Google</button>
+        <button class="mygtukas platus konturinis" onclick="prisijungtiPer('Apple')">Tęsti su Apple</button>
+      </div>
+
       <p class="centre perjungimas">
         <span id="perjungimo-tekstas">Neturite paskyros?</span>
         <button class="nuoroda-mygtukas" onclick="perjungtiRezima()" id="perjungimo-mygtukas">Registruotis</button>
       </p>
 
-      <p class="centre"><a href="index.html" id="be-prisijungimo">Tęsti be prisijungimo</a></p>
+      <p class="centre"><a class="be-prisijungimo" href="index.html" id="be-prisijungimo">Tęsti be prisijungimo</a></p>
     </main>
   </div>
 

@@ -607,8 +607,26 @@ a.kortele:active {
 
 .meniu-punktas .ikona {
   width: 24px;
-  text-align: center;
-  font-size: 18px;
+  height: 24px;
+  display: flex;
+}
+
+.meniu-punktas .ikona svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Maža ikona teksto eilutėje */
+.mini-ikona {
+  display: inline-flex;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+
+.mini-ikona svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
 }
 
 .meniu-apacia {
@@ -645,6 +663,16 @@ a.kortele:active {
   border-radius: 12px;
   color: var(--tekstas);
   font-size: 14px;
+}
+
+.pranesimu-langas a > span:first-child {
+  color: var(--oranzine);
+  flex-shrink: 0;
+}
+
+.pranesimu-langas a svg {
+  width: 20px;
+  height: 20px;
 }
 
 .pranesimu-langas a:active {

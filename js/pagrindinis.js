@@ -36,7 +36,7 @@ function piestiMiesta() {
     ${
       rajonai.length > 1
         ? `<div class="rajonai" role="group" aria-label="Jūsų rajonas">
-            <span class="blankus">📍 Jūsų vieta:</span>
+            <span class="blankus">Jūsų vieta:</span>
             ${rajonai
               .map(([id, r]) => `<button class="rajonas ${id === gautiRajona() ? "pasirinktas" : ""}" onclick="keistiRajona('${id}')">${r.pavadinimas}</button>`)
               .join("")}
@@ -48,7 +48,7 @@ function piestiMiesta() {
 function keistiRajona(rajonas) {
   nustatytiRajona(rajonas);
   atnaujintiViska();
-  rodytiPranesima(`📍 Vieta: ${RAJONAI[rajonas].pavadinimas}`);
+  rodytiPranesima(`Vieta: ${RAJONAI[rajonas].pavadinimas}`);
 }
 
 /* Miestų pasirinkimas (iššoka iš apačios) */
@@ -101,7 +101,7 @@ function pasirinktiMiesta(miestas) {
   uzdarytiMiestuSarasa();
   atnaujintiViska();
   window.scrollTo({ top: 0, behavior: "smooth" });
-  rodytiPranesima(`📍 Miestas: ${MIESTAI[miestas].pavadinimas}`);
+  rodytiPranesima(`Miestas: ${MIESTAI[miestas].pavadinimas}`);
 }
 
 /* ---------- Rungtynių sąrašas ---------- */
@@ -175,7 +175,7 @@ function greitasPrisijungimas(ivykis, id) {
   atnaujintiViska();
 
   // Aiškus patvirtinimas + galimybė atšaukti
-  rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas} (${r.aikstele.adresas}), ${pirmaMaza(rungtyniuLaikas(r).replace("🔴 ", ""))}`, {
+  rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas} (${r.aikstele.adresas}), ${pirmaMaza(rungtyniuLaikas(r).replace("● ", ""))}`, {
     mygtukas: "Atšaukti",
     veiksmas: () => {
       atsauktiDalyvavima(id);
@@ -296,7 +296,7 @@ function isvalytiFiltrus() {
 function piestiAktyviusFiltrus() {
   const aktyvus = Object.entries(filtrai).filter(([, v]) => v !== "visi");
   const mygtukas = document.getElementById("filtru-mygtukas");
-  mygtukas.textContent = aktyvus.length ? `⚙️ Filtrai (${aktyvus.length})` : "⚙️ Filtrai";
+  mygtukas.textContent = aktyvus.length ? `Filtrai (${aktyvus.length})` : "Filtrai";
   mygtukas.classList.toggle("aktyvus", aktyvus.length > 0);
 
   document.getElementById("aktyvus-filtrai").innerHTML = aktyvus.length

@@ -31,10 +31,10 @@ function piestiAikstele() {
   const marsrutas = `https://www.google.com/maps/dir/?api=1&destination=${a.lat},${a.lng}&travelmode=walking`;
 
   turinys.innerHTML = `
-    <div class="virselis">${a.nuotrauka}</div>
+    ${miniatiuraHtml(a, "virselis")}
 
     <div class="aiksteles-vardas">${a.pavadinimas}</div>
-    <div class="adresas">📍 ${a.adresas} · ${formatuotiAtstuma(km)} · 🚶 ${laikasPesciomis(km)}</div>
+    <div class="adresas">${ik("vieta")}${a.adresas}, ${MIESTAI[a.miestas].pavadinimas} · ${formatuotiAtstuma(km)} · ${laikasPesciomis(km)}</div>
 
     <div class="ivertinimo-eilute">
       <span class="zvaigzdes">${zvaigzdes(a.ivertinimas)}</span>
@@ -43,20 +43,20 @@ function piestiAikstele() {
     </div>
 
     <div class="uzimtumo-kortele ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">
-      <div>👥 <strong>${uzimtumoTekstas(a)}</strong></div>
+      <div>${ik("zmones")}<strong>${uzimtumoTekstas(a)}</strong></div>
       ${buvimoMygtukas(a)}
     </div>
 
     <div class="info-tinklelis">
       ${langelis("Danga", a.danga)}
       ${langelis("Būklė", a.bukle, a.bukle === "Puiki" || a.bukle === "Gera" ? "gera" : "vidutine")}
-      ${langelis("Apšvietimas", a.apsvietimas ? "💡 Yra" : "Nėra")}
+      ${langelis("Apšvietimas", a.apsvietimas ? "Yra" : "Nėra")}
       ${langelis("Lankų skaičius", a.lankai)}
     </div>
 
     <div class="mygtuku-eile">
-      <a class="mygtukas antrinis" href="${marsrutas}" target="_blank" rel="noopener">🧭 Maršrutas</a>
-      <a class="mygtukas antrinis" href="zemelapis.html">🗺️ Žemėlapyje</a>
+      <a class="mygtukas antrinis" href="${marsrutas}" target="_blank" rel="noopener">${svg("kompasas", 'width="18" height="18"')} Maršrutas</a>
+      <a class="mygtukas antrinis" href="zemelapis.html">${svg("zemelapis", 'width="18" height="18"')} Žemėlapyje</a>
     </div>
 
     <h2 class="skyriaus-pavadinimas">Rungtynės šioje aikštelėje (${rungtynes.length})</h2>
@@ -159,7 +159,7 @@ function buvimoMygtukas(a) {
     return `<div class="blankus" style="margin-top: 6px">✓ Pažymėjote, kad esate čia (galioja 2 val.)</div>
       <button class="mygtukas antrinis platus" style="margin-top: 8px" onclick="iseiti()">Išeinu iš aikštelės</button>`;
   }
-  return `<button class="mygtukas antrinis platus" style="margin-top: 8px" onclick="esuCia()">📍 Esu aikštelėje</button>`;
+  return `<button class="mygtukas antrinis platus" style="margin-top: 8px" onclick="esuCia()">${svg("vieta", 'width="18" height="18"')} Esu aikštelėje</button>`;
 }
 
 function esuCia() {
