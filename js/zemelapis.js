@@ -45,11 +45,66 @@ for (const aikstele of AIKSTELES) {
   zymekliai[aikstele.id] = zymeklis;
 }
 
-/* Paspaudus žymeklį – jis paryškinamas (kortelė atsiras 2d žingsnyje) */
+/* Paspaudus žymeklį – jis paryškinamas ir apačioje parodoma aikštelės kortelė */
 function pasirinktiAikstele(id) {
   document.querySelectorAll(".aiksteles-zymeklis").forEach((el) => {
     el.classList.toggle("pasirinktas", el.dataset.id === id);
   });
   const aikstele = gautiAikstele(id);
-  zemelapis.panTo([aikstele.lat, aikstele.lng]);
+  // Aikštelė perkeliama į viršutinę ekrano dalį, kad jos neuždengtų kortelė
+  const taskas = zemelapis.latLngToContainerPoint([aikstele.lat, aikstele.lng]);
+  const tikslas = L.point(zemelapis.getSize().x / 2, zemelapis.getSize().y * 0.25);
+  zemelapis.panBy(taskas.subtract(tikslas));
+  piestiAiksteleskortele(aikstele);
+}
+
+/* Paspaudus tuščią žemėlapio vietą – kortelė uždaroma */
+zemelapis.on("click", uzdarytiKortele);
+
+function uzdarytiKortele() {
+  document.getElementById("aiksteles-kortele").innerHTML = "";
+  document.querySelectorAll(".aiksteles-zymeklis").forEach((el) => el.classList.remove("pasirinktas"));
+}
+
+/* Aikštelės kortelė: atstumas, būklė ir rungtynės šioje aikštelėje */
+function piestiAiksteleskortele(a) {
+  const km = atstumasKm(a);
+  const rungtynes = visosRungtynes()
+    .filter((r) => r.aiksteleId === a.id)
+    .sort((x, y) => x.pradziaPoMin - y.pradziaPoMin);
+
+  const rungtyniuHtml = rungtynes.length
+    ? rungtynes
+        .map(
+          (r) => `
+        <a class="mini-rungtynes" href="rungtynes.html?id=${r.id}">
+          <span>
+            <strong>${rungtyniuLaikas(r)}</strong><br>
+            <span class="zyma oranzine">${LYGIAI[r.lygis]}</span>${r.zymos.map((z) => `<span class="zyma">${z}</span>`).join("")}
+          </span>
+          <span class="laisva">${r.laisvu > 0 ? `Trūksta ${r.laisvu}` : "Pilna"} ›</span>
+        </a>`
+        )
+        .join("")
+    : `<p class="blankus" style="margin-top: 8px">Suplanuotų rungtynių šioje aikštelėje nėra.</p>`;
+
+  document.getElementById("aiksteles-kortele").innerHTML = `
+    <div class="kortele">
+      <div class="kortele-virsus">
+        <h2>${a.pavadinimas}</h2>
+        <button class="uzdaryti" onclick="uzdarytiKortele()" aria-label="Uždaryti">✕ Uždaryti</button>
+      </div>
+      <div class="atstumo-eilute">📍 ${formatuotiAtstuma(km)} · 🚶 ${laikasPesciomis(km)}</div>
+      <div>
+        <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
+        <span class="zyma">Danga: ${a.danga}</span>
+        <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">Būklė: ${a.bukle}</span>
+        <span class="zyma">${a.apsvietimas ? "💡 Apšviesta" : "Be apšvietimo"}</span>
+      </div>
+      <h3 class="skyriaus-pavadinimas">Rungtynės (${rungtynes.length})</h3>
+      ${rungtyniuHtml}
+      <div class="kortele-mygtukai">
+        <a class="mygtukas antrinis platus" href="aikstele.html?id=${a.id}">Visa aikštelės informacija</a>
+      </div>
+    </div>`;
 }

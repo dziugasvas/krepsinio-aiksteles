@@ -67,3 +67,70 @@
   background: #1a1a1a;
   font-family: inherit;
 }
+
+/* ---------- Aikštelės kortelė (iššoka apačioje paspaudus žymeklį) ---------- */
+#aiksteles-kortele {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--navigacijos-aukstis) + 8px);
+  transform: translateX(-50%);
+  width: calc(100% - 16px);
+  max-width: 464px;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 1000; /* virš žemėlapio */
+}
+
+#aiksteles-kortele .kortele {
+  margin: 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.6);
+}
+
+.kortele-virsus {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.kortele-virsus h2 {
+  font-size: 18px;
+}
+
+.uzdaryti {
+  border: none;
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.atstumo-eilute {
+  margin: 4px 0 8px;
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+}
+
+.mini-rungtynes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+}
+
+.mini-rungtynes .laisva {
+  color: var(--zalia);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.kortele-mygtukai {
+  margin-top: 12px;
+}
