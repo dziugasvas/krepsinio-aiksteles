@@ -9,9 +9,10 @@ const vieta = RAJONAI[gautiRajona()];
 /* Sukuriamas žemėlapis, centruotas į naudotojo vietą */
 const zemelapis = L.map("zemelapis", { zoomControl: false }).setView([vieta.lat, vieta.lng], 13);
 
-/* Tamsus žemėlapio fonas (CARTO), kad derėtų prie programėlės dizaino */
-L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-  attribution: '&copy; OpenStreetMap, &copy; CARTO',
+/* Žemėlapio fonas – OpenStreetMap (nemokamas, be API rakto).
+   Tamsią išvaizdą suteikia CSS filtras (css/zemelapis.css). */
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   maxZoom: 19,
 }).addTo(zemelapis);
 
