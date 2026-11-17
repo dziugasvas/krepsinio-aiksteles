@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#121212">
+  <meta name="theme-color" content="#f6f6f7">
   <title>Krepšinis Visur – Žemėlapis</title>
   <!-- Leaflet – nemokama žemėlapių biblioteka -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -12,14 +12,12 @@
 </head>
 <body>
   <div class="programele zemelapio-puslapis">
-    <header class="virsus">
-      <h1>Aikštelės aplink jus</h1>
-    </header>
+    <header id="virsus"></header>
 
     <!-- Perjungimas: žemėlapis arba aikštelių sąrašas (FR7) -->
     <div class="perjungiklis">
-      <button id="rodyti-zemelapi" class="pasirinktas" onclick="rodytiVaizda('zemelapis')">🗺️ Žemėlapis</button>
-      <button id="rodyti-sarasa" onclick="rodytiVaizda('sarasas')">📋 Sąrašas</button>
+      <button id="rodyti-zemelapi" class="pasirinktas" onclick="rodytiVaizda('zemelapis')">Žemėlapis</button>
+      <button id="rodyti-sarasa" onclick="rodytiVaizda('sarasas')">Sąrašas</button>
     </div>
 
     <!-- Aikštelių sąrašas su filtrais (paslėptas, kol nepasirinktas) -->

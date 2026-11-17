@@ -1,44 +1,271 @@
 /* ==========================================================
-   Pagrindinis ekranas – netoliese vykstančių rungtynių sąrašas
+   Pradžia – miestas ir netoliese vykstančios rungtynės
    ========================================================== */
 
-.vieta {
-  color: var(--tekstas-blankus);
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.vieta a {
-  font-weight: 600;
-}
-
-/* Rungtynių kortelė */
-.rungtyniu-kortele .virsutine-eilute {
+/* ---------- Miesto viršelis ---------- */
+.miesto-virselis {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: flex-start;
-  gap: 8px;
+  width: 100%;
+  height: 210px;
+  padding: 18px;
+  border: none;
+  border-radius: 22px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--seselis);
+  transition: transform 0.15s ease;
 }
 
-.rungtyniu-kortele .aiksteles-pavadinimas {
-  font-size: 17px;
+.miesto-virselis::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 60%);
+}
+
+.miesto-virselis:active {
+  transform: scale(0.985);
+}
+
+.miesto-pavadinimas,
+.miesto-sukis {
+  position: relative;
+}
+
+.miesto-pavadinimas {
+  font-family: var(--antrastes-sriftas);
+  font-size: 40px;
   font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-.rungtyniu-kortele .atstumas {
-  white-space: nowrap;
-  color: var(--tekstas-blankus);
+.miesto-pavadinimas .rodykle {
+  font-size: 26px;
+  vertical-align: 6px;
+}
+
+.miesto-sukis {
   font-size: 14px;
-}
-
-.rungtyniu-kortele .laikas {
-  margin: 4px 0 8px;
-  font-size: 15px;
-}
-
-.rungtyniu-kortele .laikas.vyksta {
-  color: var(--oranzine);
   font-weight: 600;
+  color: #ffd2bf;
+  margin-top: 6px;
+}
+
+/* ---------- Statistika ---------- */
+.miesto-statistika {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.miesto-statistika div {
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  border-radius: 16px;
+  padding: 12px 6px;
+  text-align: center;
+}
+
+.miesto-statistika strong {
+  display: block;
+  font-family: var(--antrastes-sriftas);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.miesto-statistika span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tekstas-blankus);
+}
+
+/* ---------- Rajonai (Vilniuje) ---------- */
+.rajonai {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.rajonas {
+  min-height: 34px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--linija);
+  background: var(--pavirsius);
+  color: var(--tekstas);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rajonas.pasirinktas {
+  border-color: var(--tekstas);
+  background: var(--tekstas);
+  color: #ffffff;
+}
+
+/* ---------- Sąrašo antraštė su filtrais ---------- */
+.saraso-antraste {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24px 0 4px;
+}
+
+.saraso-antraste h2 {
+  font-family: var(--antrastes-sriftas);
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#filtru-mygtukas.aktyvus {
+  border-color: var(--oranzine);
+  color: var(--oranzine);
+}
+
+.aktyvus-filtrai {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- Miestų pasirinkimo lapas (iš apačios) ---------- */
+.lapas-fonas {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: background 0.25s ease;
+}
+
+.lapas-fonas.atidarytas {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.lapas {
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--pavirsius);
+  border-radius: 24px 24px 0 0;
+  padding: 10px 16px calc(20px + env(safe-area-inset-bottom));
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lapas-fonas.atidarytas .lapas {
+  transform: translateY(0);
+}
+
+.lapas-rankenele {
+  width: 40px;
+  height: 5px;
+  border-radius: 999px;
+  background: #d1d1d6;
+  margin: 0 auto 10px;
+}
+
+.lapas-antraste {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.lapas-antraste h2 {
+  font-family: var(--antrastes-sriftas);
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.uzdaryti-lapa {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--pavirsius-2);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.miestu-tinklelis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.miesto-plytele {
+  position: relative;
+  height: 130px;
+  border: 3px solid transparent;
+  border-radius: 18px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.miesto-plytele:first-child {
+  grid-column: 1 / -1;
+  height: 150px;
+}
+
+.miesto-plytele::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 65%);
+}
+
+.miesto-plytele.pasirinkta {
+  border-color: var(--oranzine);
+}
+
+.plyteles-pavadinimas,
+.plyteles-info {
+  position: relative;
+}
+
+.plyteles-pavadinimas {
+  font-family: var(--antrastes-sriftas);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.plyteles-info {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.9;
 }
 
 /* Užpildymo juosta: kiek vietų užimta */
@@ -78,9 +305,9 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 48px;
-  border-radius: 12px;
-  background: rgba(62, 207, 110, 0.12);
+  min-height: 50px;
+  border-radius: 999px;
+  background: var(--zalia-sviesi);
   color: var(--zalia);
   font-weight: 600;
 }
@@ -115,7 +342,8 @@
 
 .filtru-langas {
   background: var(--pavirsius);
-  border: 1px solid var(--oranzine);
+  box-shadow: var(--seselis);
+  border: 1px solid var(--linija);
   border-radius: var(--apvalinimas);
   padding: 14px;
   margin: 8px 0 12px;
@@ -178,64 +406,9 @@
 
 .filtru-mygtukai {
   display: grid;
+  align-items: center;
   grid-template-columns: 1fr 2fr;
   gap: 8px;
   margin-top: 16px;
 }
 
-/* ---------- Mygtukas „Sukurti rungtynes“ (plaukiojantis) ---------- */
-.kurti-mygtukas {
-  position: fixed;
-  right: max(16px, calc(50% - 240px + 16px));
-  bottom: calc(var(--navigacijos-aukstis) + 16px);
-  z-index: 15;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 52px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  background: var(--oranzine);
-  color: #ffffff;
-  font-weight: 700;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-
-.kurti-mygtukas:active {
-  background: var(--oranzine-tamsi);
-}
-
-/* Kad plaukiojantis mygtukas neuždengtų paskutinės kortelės */
-#rungtyniu-sarasas {
-  padding-bottom: 72px;
-}
-
-/* ---------- Priminimai ir pranešimai (FR20, FR21) ---------- */
-.priminimas {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--oranzine-sviesi);
-  border: 1px solid var(--oranzine);
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin: 8px 0;
-}
-
-.priminimas a {
-  flex: 1;
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  color: var(--tekstas);
-  font-size: 14px;
-}
-
-.priminimas button {
-  background: none;
-  border: none;
-  color: var(--tekstas-blankus);
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px;
-}

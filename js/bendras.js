@@ -4,28 +4,229 @@
    Reikia įtraukti PO duomenys.js ir saugykla.js.
    ========================================================== */
 
-/* ---------- Apatinė navigacija ----------
+/* ---------- Apatinė navigacija (4 ikonos) ----------
    Kiekviename HTML faile turi būti <nav id="navigacija"></nav>,
-   o puslapio JS iškviečia: piestiNavigacija("rungtynes") */
+   o puslapio JS iškviečia: piestiNavigacija("rungtynes")
+   Pavadinimas nerašomas po ikona – jis rodomas viršuje (piestiVirsu). */
+const IKONOS = {
+  namai: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>',
+  vieta: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  kamuolys: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/><path d="M5.6 5.6c2.8 2.8 2.8 10 0 12.8M18.4 5.6c-2.8 2.8-2.8 10 0 12.8"/>',
+  zmones: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2c2.9.3 5 2.6 5 5.8"/>',
+  varpelis: '<path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2H4.5z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  krepsys: '<rect x="3.5" y="2.5" width="17" height="10" rx="1.5"/><rect x="9" y="6" width="6" height="4.5"/><path d="M7.5 13.5h9"/><path d="M8.5 13.5 10 21M15.5 13.5 14 21M12 13.5V21M9.2 17.2h5.6"/>',
+};
+
+function svg(ikona, papildoma = "") {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${papildoma}>${IKONOS[ikona]}</svg>`;
+}
+
 function piestiNavigacija(aktyvus) {
   const punktai = [
-    { id: "rungtynes", nuoroda: "index.html", ikona: "🏀", tekstas: "Rungtynės" },
-    { id: "zemelapis", nuoroda: "zemelapis.html", ikona: "🗺️", tekstas: "Žemėlapis" },
-    { id: "zaidejai", nuoroda: "zaidejai.html", ikona: "👥", tekstas: "Žaidėjai" },
-    { id: "profilis", nuoroda: "profilis.html", ikona: "👤", tekstas: "Profilis" },
+    { id: "rungtynes", nuoroda: "index.html", ikona: "namai", tekstas: "Pradžia" },
+    { id: "zemelapis", nuoroda: "zemelapis.html", ikona: "vieta", tekstas: "Aikštelės" },
+    { id: "mano", nuoroda: "mano-rungtynes.html", ikona: "kamuolys", tekstas: "Mano rungtynės" },
+    { id: "zaidejai", nuoroda: "zaidejai.html", ikona: "zmones", tekstas: "Žaidėjai" },
   ];
   const nav = document.getElementById("navigacija");
   if (!nav) return;
   nav.className = "apatine-navigacija";
+  nav.setAttribute("aria-label", "Pagrindinė navigacija");
   nav.innerHTML = punktai
     .map(
       (p) => `
-      <a href="${p.nuoroda}" class="${p.id === aktyvus ? "aktyvus" : ""}">
-        <span class="ikona">${p.ikona}</span>
-        <span>${p.tekstas}</span>
-      </a>`
+      <a href="${p.nuoroda}" class="${p.id === aktyvus ? "aktyvus" : ""}" aria-label="${p.tekstas}" title="${p.tekstas}"
+        ${p.id === aktyvus ? 'aria-current="page"' : ""}>${svg(p.ikona)}</a>`
     )
     .join("");
+}
+
+/* ---------- Viršutinė juosta pagrindiniuose ekranuose ----------
+   piestiVirsu("Pradžia", { nuoroda: "sukurti.html", tekstas: "Sukurti" })
+   Kairėje – avataras (atidaro meniu), šalia – ekrano pavadinimas,
+   dešinėje – papildomas veiksmas ir varpelis (priminimai). */
+function piestiVirsu(pavadinimas, veiksmas = null) {
+  const el = document.getElementById("virsus");
+  if (!el) return;
+  const kiek = gautiPriminimus().length;
+  el.className = "virsus-pagrindinis";
+  el.innerHTML = `
+    ${avatarasHtml("avataras-mygtukas", 'onclick="atidarytiMeniu()" aria-label="Atidaryti meniu"')}
+    <h1 class="virsaus-pavadinimas ${pavadinimas.length > 10 ? "ilgas" : ""}">${pavadinimas}</h1>
+    <div class="virsaus-veiksmai">
+      ${veiksmas ? `<a class="virsaus-nuoroda" href="${veiksmas.nuoroda}">${veiksmas.tekstas}</a>` : ""}
+      <button class="varpelis" onclick="perjungtiPranesimuLanga()" aria-label="Priminimai ir pranešimai (${kiek})">
+        ${svg("varpelis")}
+        ${kiek ? `<span class="zenklelis">${kiek}</span>` : ""}
+      </button>
+    </div>`;
+}
+
+/* Avataras: vardo raidė (prisijungus) arba siluetas (svečias) */
+function avatarasHtml(klase, atributai = "") {
+  const n = gautiNaudotoja();
+  const turinys = n
+    ? n.vardas.charAt(0).toUpperCase()
+    : '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M2 24c0-5.5 4.5-10 10-10s10 4.5 10 10z"/></svg>';
+  return `<button class="${klase} ${n ? "prisijunges" : ""}" ${atributai}>${turinys}</button>`;
+}
+
+/* ---------- Šoninis meniu ---------- */
+function atidarytiMeniu() {
+  const n = gautiNaudotoja();
+  const rajonas = RAJONAI[gautiRajona()];
+  const mano = Object.keys(gautiDalyvavimus()).length;
+
+  const fonas = document.createElement("div");
+  fonas.className = "meniu-fonas";
+  fonas.onclick = uzdarytiMeniu;
+
+  const meniu = document.createElement("nav");
+  meniu.className = "meniu";
+  meniu.setAttribute("aria-label", "Meniu");
+  meniu.innerHTML = `
+    <div class="logotipas-tekstas">Krepšinis visur</div>
+    <div class="meniu-profilis">
+      ${avatarasHtml("avataras-mygtukas", "tabindex='-1'")}
+      <div>
+        <div class="vardas">${n ? n.vardas : "Svečias"}</div>
+        <div class="blankus">${n ? `Prisijungta per ${n.budas}` : "Naršote neprisijungę"}</div>
+      </div>
+    </div>
+    ${
+      n
+        ? `<div class="meniu-statistika">
+            <div><strong>${LYGIAI[n.lygis]}</strong><span>Lygis</span></div>
+            <div><strong>${n.pozicija || "–"}</strong><span>Pozicija</span></div>
+            <div><strong>${mano}</strong><span>Rungtynės</span></div>
+          </div>`
+        : `<a class="mygtukas platus" style="margin-bottom: 18px" href="prisijungimas.html?atgal=${encodeURIComponent(location.pathname.split("/").pop() + location.search)}">Prisijungti</a>`
+    }
+    ${n ? `<a class="meniu-punktas" href="profilis.html"><span class="ikona">👤</span>Redaguoti profilį</a>` : ""}
+    <a class="meniu-punktas" href="profilis.html#vieta"><span class="ikona">📍</span>Mano vieta · ${MIESTAI[rajonas.miestas].pavadinimas}</a>
+    <a class="meniu-punktas" href="profilis.html#nustatymai"><span class="ikona">⚙️</span>Nustatymai</a>
+    <a class="meniu-punktas" href="pagalba.html"><span class="ikona">❓</span>Pagalba</a>
+    ${n ? `<button class="meniu-punktas" onclick="atsijungtiIsMeniu()"><span class="ikona">↩️</span>Atsijungti</button>` : ""}
+    <div class="meniu-apacia">Krepšinis Visur · prototipas v1.0</div>`;
+
+  document.body.append(fonas, meniu);
+  document.addEventListener("keydown", meniuKlaviatura);
+  requestAnimationFrame(() => {
+    fonas.classList.add("atidarytas");
+    meniu.classList.add("atidarytas");
+  });
+}
+
+function uzdarytiMeniu() {
+  const fonas = document.querySelector(".meniu-fonas");
+  const meniu = document.querySelector(".meniu");
+  if (!meniu) return;
+  fonas.classList.remove("atidarytas");
+  meniu.classList.remove("atidarytas");
+  document.removeEventListener("keydown", meniuKlaviatura);
+  setTimeout(() => {
+    fonas.remove();
+    meniu.remove();
+  }, 280);
+}
+
+function meniuKlaviatura(e) {
+  if (e.key === "Escape") uzdarytiMeniu();
+}
+
+function atsijungtiIsMeniu() {
+  atsijungti();
+  window.location.href = "pradzia.html";
+}
+
+/* ---------- Priminimai (FR20) ir pranešimai apie netoliese ieškomus žaidėjus (FR21) ---------- */
+function gautiPriminimus() {
+  if (!gautiNaudotoja()) return [];
+  const visos = visosRungtynes();
+  const sarasas = [];
+
+  // FR20: rungtynės, prie kurių prisijungta ir kurios prasideda per artimiausią valandą
+  for (const r of visos.filter((r) => r.manoKiekis > 0 && r.pradziaPoMin <= 60 && r.pradziaPoMin > -r.trukmeMin)) {
+    const kada = r.vyksta ? "jau vyksta" : `prasideda po ${r.pradziaPoMin} min.`;
+    sarasas.push({ raktas: "p-" + r.id, ikona: "🔔", tekstas: `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, nuoroda: `rungtynes.html?id=${r.id}` });
+  }
+
+  // FR21: netoliese (iki 1,5 km) ieškoma žaidėjų, o naudotojas dar nedalyvauja
+  if (gautiPranesimuNustatyma()) {
+    const ieskoma = visos
+      .filter((r) => r.manoKiekis === 0 && r.laisvu > 0 && r.atstumas <= 1.5 && r.pradziaPoMin <= 120)
+      .sort((a, b) => a.atstumas - b.atstumas)[0];
+    if (ieskoma) {
+      sarasas.push({
+        raktas: "i-" + ieskoma.id,
+        ikona: "📣",
+        tekstas: `Netoliese ieškoma žaidėjų: <strong>${ieskoma.aikstele.pavadinimas}</strong> (${formatuotiAtstuma(ieskoma.atstumas)}) – trūksta ${ieskoma.laisvu}`,
+        nuoroda: `rungtynes.html?id=${ieskoma.id}`,
+      });
+    }
+  }
+  return sarasas;
+}
+
+function perjungtiPranesimuLanga() {
+  const esamas = document.querySelector(".pranesimu-langas");
+  if (esamas) {
+    esamas.remove();
+    return;
+  }
+  const sarasas = gautiPriminimus();
+  const langas = document.createElement("div");
+  langas.className = "pranesimu-langas";
+  langas.setAttribute("role", "dialog");
+  langas.innerHTML = `
+    <div class="antraste">Priminimai ir pranešimai</div>
+    ${
+      sarasas.length
+        ? sarasas.map((p) => `<a href="${p.nuoroda}"><span>${p.ikona}</span><span>${p.tekstas}</span></a>`).join("")
+        : `<p class="blankus" style="padding: 6px 10px 12px">${gautiNaudotoja() ? "Naujų pranešimų nėra." : "Prisijunkite, kad gautumėte priminimus."}</p>`
+    }`;
+  document.body.appendChild(langas);
+  // Paspaudus kitur – langas užsidaro
+  setTimeout(() => document.addEventListener("click", uzdarytiPranesimuLanga), 0);
+}
+
+function uzdarytiPranesimuLanga(e) {
+  const langas = document.querySelector(".pranesimu-langas");
+  if (langas && !langas.contains(e.target)) {
+    langas.remove();
+    document.removeEventListener("click", uzdarytiPranesimuLanga);
+  }
+}
+
+/* ---------- Aikštelės miniatiūra (nuotrauka arba krepšio siluetas) ---------- */
+function miniatiuraHtml(aikstele, klase = "miniatiura") {
+  if (aikstele.foto) {
+    return `<div class="${klase}" style="background-image: url('${aikstele.foto}')" role="img" aria-label="${aikstele.pavadinimas}"></div>`;
+  }
+  return `<div class="${klase} be-nuotraukos" aria-hidden="true">${svg("krepsys")}</div>`;
+}
+
+/* ---------- Rungtynių kortelė (Pradžia, Mano rungtynės) ---------- */
+function rungtyniuKorteleHtml(r, mygtukas = "") {
+  const org = r.organizatorius === "jus" ? `${r.organizatoriusVardas} (jūs)` : gautiZaideja(r.organizatorius).vardas;
+  const laikas = r.vyksta ? "Vyksta dabar" : formatuotiLaika(r.pradzia).replace(" ", " · ");
+  return `
+    <a class="kortele rungtyniu-kortele" href="rungtynes.html?id=${r.id}">
+      <div class="kortele-virsus">
+        ${miniatiuraHtml(r.aikstele)}
+        <div>
+          <div class="laikas ${r.vyksta ? "vyksta" : ""}">${r.vyksta ? "● " : ""}${laikas}</div>
+          <div class="pavadinimas">${r.aikstele.pavadinimas}</div>
+          <div class="vieta-eilute">📍 ${formatuotiAtstuma(r.atstumas)} · Organizuoja ${org}</div>
+          <div class="zymos"><span class="zyma oranzine">${LYGIAI[r.lygis]}</span>${r.zymos.map((z) => `<span class="zyma">${z}</span>`).join("")}</div>
+        </div>
+      </div>
+      <div class="kortele-apacia">
+        <span class="zaideju-skaicius"><strong>${r.uzimta}/${r.vietu}</strong> žaidėjų ·
+          ${r.laisvu > 0 ? `<span class="truksta">trūksta ${r.laisvu}</span>` : "pilna"}</span>
+        ${mygtukas}
+      </div>
+    </a>`;
 }
 
 /* ---------- Pranešimas ekrano apačioje ----------
@@ -84,6 +285,17 @@ function uzimtumoTekstas(aikstele) {
 /* Paima parametrą iš adreso, pvz. rungtynes.html?id=r3 → "r3" */
 function gautiParametra(vardas) {
   return new URLSearchParams(window.location.search).get(vardas);
+}
+
+/* Rajono pavadinimas su miestu, kai jis vadinasi tiesiog „Centras“ */
+function rajonoPavadinimas(id) {
+  const r = RAJONAI[id];
+  return r.pavadinimas === "Centras" ? `${MIESTAI[r.miestas].pavadinimas} (centras)` : r.pavadinimas;
+}
+
+/* ---------- Dabartinis miestas ---------- */
+function dabartinisMiestas() {
+  return RAJONAI[gautiRajona()].miestas;
 }
 
 /* ---------- Atstumas (km) nuo naudotojo vietos iki aikštelės ---------- */

@@ -1,0 +1,31 @@
+/* ==========================================================
+   Mano rungtynės – skirtukai „Būsimos“ / „Praėjusios“
+   ========================================================== */
+
+.skirtukai {
+  display: flex;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--linija);
+  background: var(--fonas);
+}
+
+.skirtukai button {
+  flex: 1;
+  padding: 12px 0 10px;
+  border: none;
+  background: none;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--tekstas-blankus);
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.skirtukai button.aktyvus {
+  color: var(--tekstas);
+  border-bottom-color: var(--oranzine);
+}
+
+.mano-turinys {
+  padding-top: 14px;
+}

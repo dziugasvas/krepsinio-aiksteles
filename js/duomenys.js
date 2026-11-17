@@ -4,19 +4,34 @@
    Aikštelių vietos apytikslės, žaidėjai išgalvoti.
    ========================================================== */
 
+/* ---------- Miestai ----------
+   Penki didžiausi Lietuvos miestai. Nuotraukos – img/miestai/ (šaltiniai nurodyti ataskaitoje). */
+const MIESTAI = {
+  vilnius: { pavadinimas: "Vilnius", sukis: "Sostinė · Krepšinis visus metus", nuotrauka: "img/miestai/vilnius.jpg", numatytasRajonas: "fabijoniskes" },
+  kaunas: { pavadinimas: "Kaunas", sukis: "Žalgirio miestas", nuotrauka: "img/miestai/kaunas.jpg", numatytasRajonas: "kaunas-centras" },
+  klaipeda: { pavadinimas: "Klaipėda", sukis: "Uostamiestis · Vakarų krepšinis", nuotrauka: "img/miestai/klaipeda.jpg", numatytasRajonas: "klaipeda-centras" },
+  siauliai: { pavadinimas: "Šiauliai", sukis: "Saulės miestas", nuotrauka: "img/miestai/siauliai.jpg", numatytasRajonas: "siauliai-centras" },
+  panevezys: { pavadinimas: "Panevėžys", sukis: "Aukštaitijos sostinė", nuotrauka: "img/miestai/panevezys.jpg", numatytasRajonas: "panevezys-centras" },
+};
+
 /* ---------- Rajonai (imituoja GPS vietą) ----------
-   Naudotojas profilyje gali pasirinkti, kur „yra“.
-   Pagal tai skaičiuojami atstumai iki aikštelių. */
+   Naudotojas pasirenka miestą ir rajoną – pagal tai skaičiuojami atstumai iki aikštelių. */
 const RAJONAI = {
-  fabijoniskes: { pavadinimas: "Fabijoniškės", lat: 54.7275, lng: 25.2440 },
-  senamiestis: { pavadinimas: "Senamiestis", lat: 54.6825, lng: 25.2870 },
-  zirmunai: { pavadinimas: "Žirmūnai", lat: 54.7055, lng: 25.2965 },
+  fabijoniskes: { pavadinimas: "Fabijoniškės", miestas: "vilnius", lat: 54.7275, lng: 25.2440 },
+  senamiestis: { pavadinimas: "Senamiestis", miestas: "vilnius", lat: 54.6825, lng: 25.2870 },
+  zirmunai: { pavadinimas: "Žirmūnai", miestas: "vilnius", lat: 54.7055, lng: 25.2965 },
+  "kaunas-centras": { pavadinimas: "Centras", miestas: "kaunas", lat: 54.8985, lng: 23.9036 },
+  "klaipeda-centras": { pavadinimas: "Centras", miestas: "klaipeda", lat: 55.7110, lng: 21.1310 },
+  "siauliai-centras": { pavadinimas: "Centras", miestas: "siauliai", lat: 55.9349, lng: 23.3137 },
+  "panevezys-centras": { pavadinimas: "Centras", miestas: "panevezys", lat: 55.7348, lng: 24.3575 },
 };
 
 /* ---------- Aikštelės ---------- */
 const AIKSTELES = [
   {
     id: "a1",
+    miestas: "vilnius",
+    foto: "img/baltojo-tilto-aikstele.jpg",
     pavadinimas: "Baltojo tilto aikštelė",
     adresas: "Upės g., Šnipiškės",
     lat: 54.6937, lng: 25.2747,
@@ -27,6 +42,7 @@ const AIKSTELES = [
   },
   {
     id: "a2",
+    miestas: "vilnius",
     pavadinimas: "Fabijoniškių parko aikštelė",
     adresas: "S. Stanevičiaus g., Fabijoniškės",
     lat: 54.7318, lng: 25.2468,
@@ -37,6 +53,7 @@ const AIKSTELES = [
   },
   {
     id: "a3",
+    miestas: "vilnius",
     pavadinimas: "Pašilaičių aikštelė",
     adresas: "Gabijos g., Pašilaičiai",
     lat: 54.7290, lng: 25.2310,
@@ -47,6 +64,7 @@ const AIKSTELES = [
   },
   {
     id: "a4",
+    miestas: "vilnius",
     pavadinimas: "Vingio parko aikštelė",
     adresas: "M. K. Čiurlionio g., Vingio parkas",
     lat: 54.6835, lng: 25.2395,
@@ -57,6 +75,7 @@ const AIKSTELES = [
   },
   {
     id: "a5",
+    miestas: "vilnius",
     pavadinimas: "Senamiesčio mokyklos aikštelė",
     adresas: "Pylimo g., Senamiestis",
     lat: 54.6800, lng: 25.2810,
@@ -67,6 +86,7 @@ const AIKSTELES = [
   },
   {
     id: "a6",
+    miestas: "vilnius",
     pavadinimas: "Užupio kiemo aikštelė",
     adresas: "Paupio g., Užupis",
     lat: 54.6795, lng: 25.2985,
@@ -77,6 +97,7 @@ const AIKSTELES = [
   },
   {
     id: "a7",
+    miestas: "vilnius",
     pavadinimas: "Žirmūnų aikštelė",
     adresas: "Kalvarijų g., Žirmūnai",
     lat: 54.7085, lng: 25.2930,
@@ -87,6 +108,7 @@ const AIKSTELES = [
   },
   {
     id: "a8",
+    miestas: "vilnius",
     pavadinimas: "Antakalnio aikštelė",
     adresas: "Antakalnio g., Antakalnis",
     lat: 54.6990, lng: 25.3150,
@@ -95,6 +117,43 @@ const AIKSTELES = [
     nuotrauka: "🏀",
     dabar: 1, // žaidėjų šiuo metu aikštelėje (imitacija, FR9)
   },
+  /* ---------- Kitų miestų aikštelės (apytikslės vietos, prototipui) ---------- */
+  { id: "k1", miestas: "kaunas", pavadinimas: "Nemuno salos aikštelė", adresas: "Nemuno sala, prie Žalgirio arenos",
+    lat: 54.8905, lng: 23.9145, danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 4,
+    ivertinimas: 4.7, atsiliepimai: 41, nuotrauka: "🏟️", dabar: 5 },
+  { id: "k2", miestas: "kaunas", pavadinimas: "Ąžuolyno parko aikštelė", adresas: "Ąžuolyno parkas",
+    lat: 54.9010, lng: 23.9420, danga: "Asfaltas", bukle: "Gera", apsvietimas: false, lankai: 2,
+    ivertinimas: 4.0, atsiliepimai: 14, nuotrauka: "🏀", dabar: 2 },
+  { id: "k3", miestas: "kaunas", pavadinimas: "Šilainių aikštelė", adresas: "Baltų pr., Šilainiai",
+    lat: 54.9290, lng: 23.8810, danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.2, atsiliepimai: 19, nuotrauka: "🏀", dabar: 0 },
+  { id: "kl1", miestas: "klaipeda", pavadinimas: "Danės krantinės aikštelė", adresas: "Danės krantinė",
+    lat: 55.7125, lng: 21.1345, danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.6, atsiliepimai: 22, nuotrauka: "🏀", dabar: 4 },
+  { id: "kl2", miestas: "klaipeda", pavadinimas: "Melnragės aikštelė", adresas: "Melnragė, prie paplūdimio",
+    lat: 55.7310, lng: 21.0860, danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 2,
+    ivertinimas: 3.7, atsiliepimai: 10, nuotrauka: "🏀", dabar: 0 },
+  { id: "kl3", miestas: "klaipeda", pavadinimas: "Debreceno g. aikštelė", adresas: "Debreceno g.",
+    lat: 55.6905, lng: 21.1590, danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.1, atsiliepimai: 12, nuotrauka: "🏀", dabar: 2 },
+  { id: "s1", miestas: "siauliai", pavadinimas: "Talšos pakrantės aikštelė", adresas: "Talšos ežero pakrantė",
+    lat: 55.9425, lng: 23.3205, danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.5, atsiliepimai: 16, nuotrauka: "🏀", dabar: 3 },
+  { id: "s2", miestas: "siauliai", pavadinimas: "Didždvario aikštelė", adresas: "Didždvario rajonas",
+    lat: 55.9235, lng: 23.3390, danga: "Asfaltas", bukle: "Gera", apsvietimas: false, lankai: 2,
+    ivertinimas: 3.9, atsiliepimai: 8, nuotrauka: "🏀", dabar: 0 },
+  { id: "s3", miestas: "siauliai", pavadinimas: "Lieporių aikštelė", adresas: "Lieporių rajonas",
+    lat: 55.9155, lng: 23.2860, danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.0, atsiliepimai: 9, nuotrauka: "🏀", dabar: 1 },
+  { id: "p1", miestas: "panevezys", pavadinimas: "Senvagės aikštelė", adresas: "Senvagės krantinė",
+    lat: 55.7335, lng: 24.3545, danga: "Guminė", bukle: "Puiki", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.4, atsiliepimai: 13, nuotrauka: "🏀", dabar: 2 },
+  { id: "p2", miestas: "panevezys", pavadinimas: "Kniaudiškių aikštelė", adresas: "Kniaudiškių rajonas",
+    lat: 55.7465, lng: 24.3795, danga: "Asfaltas", bukle: "Vidutinė", apsvietimas: false, lankai: 1,
+    ivertinimas: 3.5, atsiliepimai: 6, nuotrauka: "🏀", dabar: 0 },
+  { id: "p3", miestas: "panevezys", pavadinimas: "Klaipėdos g. aikštelė", adresas: "Klaipėdos g.",
+    lat: 55.7255, lng: 24.3305, danga: "Guminė", bukle: "Gera", apsvietimas: true, lankai: 2,
+    ivertinimas: 4.1, atsiliepimai: 7, nuotrauka: "🏀", dabar: 3 },
 ];
 
 /* ---------- Žaidėjai ---------- */
@@ -114,6 +173,11 @@ const ZAIDEJAI = [
   { id: "z13", vardas: "Emilija (11 m.)", amzius: 11, lygis: "pradedantysis", pozicija: "Puolėja", rajonas: "senamiestis" },
   { id: "z14", vardas: "Karolis", amzius: 20, lygis: "pradedantysis", pozicija: "Centras", rajonas: "fabijoniskes" },
   { id: "z15", vardas: "Simas", amzius: 23, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "zirmunai" },
+  { id: "z17", vardas: "Justas", amzius: 24, lygis: "aukštas", pozicija: "Įžaidėjas", rajonas: "kaunas-centras" },
+  { id: "z18", vardas: "Ugnius", amzius: 19, lygis: "vidutinis", pozicija: "Puolėjas", rajonas: "kaunas-centras" },
+  { id: "z19", vardas: "Erikas", amzius: 21, lygis: "vidutinis", pozicija: "Gynėjas", rajonas: "klaipeda-centras" },
+  { id: "z20", vardas: "Dovilė", amzius: 26, lygis: "vidutinis", pozicija: "Puolėja", rajonas: "siauliai-centras" },
+  { id: "z21", vardas: "Arnas", amzius: 30, lygis: "aukštas", pozicija: "Centras", rajonas: "panevezys-centras" },
   { id: "z16", vardas: "Vytautas", amzius: 38, lygis: "aukštas", pozicija: "Centras", rajonas: "fabijoniskes" },
 ];
 
@@ -163,5 +227,35 @@ const RUNGTYNES = [
     lygis: "vidutinis", vietu: 10, dalyviai: ["z10", "z12", "z13"],
     zymos: ["5 prieš 5", "Šeimoms"], organizatorius: "z10",
     aprasymas: "Rytoj, Užupyje. Įvairaus amžiaus.",
+  },
+  {
+    id: "r8", aiksteleId: "k1", pradziaPoMin: 120, trukmeMin: 120,
+    lygis: "aukštas", vietu: 10, dalyviai: ["z17", "z18", "z6", "z8", "z9", "z5", "z7"],
+    zymos: ["5 prieš 5"], organizatorius: "z17",
+    aprasymas: "Žaidžiam prie arenos, stiprus lygis.",
+  },
+  {
+    id: "r9", aiksteleId: "k3", pradziaPoMin: 30, trukmeMin: 90,
+    lygis: "vidutinis", vietu: 6, dalyviai: ["z18", "z14"],
+    zymos: ["3 prieš 3"], organizatorius: "z18",
+    aprasymas: "Greitas 3x3 Šilainiuose.",
+  },
+  {
+    id: "r10", aiksteleId: "kl1", pradziaPoMin: 90, trukmeMin: 90,
+    lygis: "vidutinis", vietu: 10, dalyviai: ["z19", "z1", "z3", "z15"],
+    zymos: ["5 prieš 5"], organizatorius: "z19",
+    aprasymas: "Prie Danės, visi kviečiami.",
+  },
+  {
+    id: "r11", aiksteleId: "s1", pradziaPoMin: 60, trukmeMin: 90,
+    lygis: "pradedantysis", vietu: 6, dalyviai: ["z20", "z13"],
+    zymos: ["3 prieš 3", "Šeimoms"], organizatorius: "z20",
+    aprasymas: "Ramus žaidimas prie Talšos.",
+  },
+  {
+    id: "r12", aiksteleId: "p3", pradziaPoMin: 150, trukmeMin: 90,
+    lygis: "aukštas", vietu: 10, dalyviai: ["z21", "z16", "z7", "z5"],
+    zymos: ["5 prieš 5"], organizatorius: "z21",
+    aprasymas: "Vakarinis žaidimas Panevėžyje.",
   },
 ];

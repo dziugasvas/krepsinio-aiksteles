@@ -1,0 +1,42 @@
+/* ==========================================================
+   Pagalba (DUK)
+   ========================================================== */
+
+.klausimas {
+  background: var(--pavirsius);
+  border: 1px solid var(--linija);
+  border-radius: 16px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.klausimas summary {
+  padding: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.klausimas summary::-webkit-details-marker {
+  display: none;
+}
+
+.klausimas summary::after {
+  content: "+";
+  color: var(--oranzine);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.klausimas[open] summary::after {
+  content: "−";
+}
+
+.klausimas p {
+  padding: 0 16px 16px;
+  color: #3a3a3c;
+  font-size: 15px;
+}

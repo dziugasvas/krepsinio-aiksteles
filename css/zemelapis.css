@@ -63,13 +63,10 @@
 }
 
 /* Šviesų OpenStreetMap žemėlapį paverčiame tamsiu (žymekliai nekeičiami) */
-.leaflet-tile-pane {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
 
 /* Leaflet tamsiam dizainui */
 .leaflet-container {
-  background: #1a1a1a;
+  background: #e9e9ec;
   font-family: inherit;
 }
 
@@ -140,30 +137,33 @@
   margin-top: 12px;
 }
 
-/* ---------- Perjungiklis Žemėlapis / Sąrašas ---------- */
+/* ---------- Perjungiklis Žemėlapis / Sąrašas (segmentuotas) ---------- */
 .perjungiklis {
   display: flex;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--fonas);
+  gap: 4px;
+  margin: 4px 16px 10px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #e6e6ea;
 }
 
 .perjungiklis button {
   flex: 1;
-  min-height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--linija);
-  background: var(--pavirsius);
-  color: var(--tekstas);
+  min-height: 38px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--tekstas-blankus);
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .perjungiklis button.pasirinktas {
-  border-color: var(--oranzine);
-  background: var(--oranzine-sviesi);
-  color: var(--oranzine);
-  font-weight: 700;
+  background: var(--pavirsius);
+  color: var(--tekstas);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 /* ---------- Aikštelių sąrašas ---------- */

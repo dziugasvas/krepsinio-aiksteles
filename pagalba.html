@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f6f7">
+  <title>Krepšinis Visur – Pagalba</title>
+  <link rel="stylesheet" href="css/bendras.css">
+  <link rel="stylesheet" href="css/pagalba.css">
+</head>
+<body>
+  <div class="programele">
+    <header class="virsus">
+      <a class="atgal" href="index.html" onclick="if (history.length > 1) { history.back(); return false; }">‹ Atgal</a>
+      <h1>Pagalba</h1>
+    </header>
+
+    <main class="turinys">
+      <p class="blankus" style="margin-bottom: 14px">Dažniausiai užduodami klausimai apie programėlę.</p>
+
+      <!-- Nielseno 10-oji euristika: pagalba ir dokumentacija -->
+      <details class="klausimas" open>
+        <summary>Kaip prisijungti prie rungtynių?</summary>
+        <p>Pradžios ekrane prie rungtynių paspauskite <strong>„Prisijungti“</strong>. Jei norite atsivesti draugų, atidarykite rungtynes ir mygtuku <strong>„+“</strong> pasirinkite, kiek žmonių dalyvaus.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Kaip atšaukti dalyvavimą?</summary>
+        <p>Atidarykite rungtynes ir paspauskite <strong>„Atšaukti dalyvavimą“</strong>. Iškart po prisijungimo galite spausti ir <strong>„Atšaukti“</strong> pranešime ekrano apačioje.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Kaip rasti aikštelę netoli manęs?</summary>
+        <p>Apačioje pasirinkite <strong>Aikštelės</strong> (📍). Žemėlapyje oranžiniai žymekliai rodo aikšteles, kuriose yra rungtynių. Perjungę į <strong>„Sąrašas“</strong>, aikšteles galite filtruoti pagal dangą, atstumą ir užimtumą.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Kaip pakeisti miestą ar rajoną?</summary>
+        <p>Pradžios ekrane paspauskite ant miesto nuotraukos ir pasirinkite miestą. Vilniuje po nuotrauka galite pasirinkti ir rajoną.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Kaip sukurti savo rungtynes?</summary>
+        <p>Viršuje dešinėje paspauskite <strong>„Sukurti“</strong>, pasirinkite aikštelę, laiką, lygį ir formatą. Rungtynės iškart bus matomos kitiems žaidėjams.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Ką reiškia „Esu aikštelėje“?</summary>
+        <p>Pažymėjus aikštelės puslapyje, kiti žaidėjai mato, kad aikštelėje kažkas žaidžia. Žymėjimas galioja 2 valandas.</p>
+      </details>
+      <details class="klausimas">
+        <summary>Ar galiu naudotis be paskyros?</summary>
+        <p>Taip – rungtynes, aikšteles ir žaidėjus galite peržiūrėti neprisijungę. Paskyros reikia tik norint dalyvauti, kurti rungtynes ar vertinti aikšteles.</p>
+      </details>
+    </main>
+
+    <nav id="navigacija"></nav>
+  </div>
+
+  <script src="js/duomenys.js"></script>
+  <script src="js/saugykla.js"></script>
+  <script src="js/bendras.js"></script>
+  <script>piestiNavigacija("");</script>
+</body>
+</html>

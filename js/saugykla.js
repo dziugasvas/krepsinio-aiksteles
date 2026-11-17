@@ -69,7 +69,13 @@ function pazymetiPradziaMatyta() {
 /* ---------- Vieta (rajonas vietoje GPS) ---------- */
 
 function gautiRajona() {
-  return skaitytiSaugykla().rajonas || "fabijoniskes";
+  const r = skaitytiSaugykla().rajonas;
+  return RAJONAI[r] ? r : "fabijoniskes";
+}
+
+/* Miesto pakeitimas: jei dabartinis rajonas kitame mieste – parenkamas miesto numatytasis */
+function nustatytiMiesta(miestas) {
+  if (RAJONAI[gautiRajona()].miestas !== miestas) nustatytiRajona(MIESTAI[miestas].numatytasRajonas);
 }
 
 function nustatytiRajona(rajonas) {

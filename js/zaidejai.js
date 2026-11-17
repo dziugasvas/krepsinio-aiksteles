@@ -3,6 +3,7 @@
    ========================================================== */
 
 piestiNavigacija("zaidejai");
+piestiVirsu("Žaidėjai");
 
 const zaidejuFiltrai = { lygis: "visi", rajonas: "visi" };
 let isskleistas = null; // kurio žaidėjo profilis atidarytas
@@ -28,7 +29,7 @@ function piestiFiltrus() {
       <span class="etikete">Rajonas</span>
       ${filtroMygtukas("Visi", f.rajonas === "visi", "zaidejuFiltrai.rajonas = 'visi'")}
       ${Object.entries(RAJONAI)
-        .map(([k, r]) => filtroMygtukas(r.pavadinimas, f.rajonas === k, `zaidejuFiltrai.rajonas = '${k}'`))
+        .map(([k, r]) => filtroMygtukas(rajonoPavadinimas(k), f.rajonas === k, `zaidejuFiltrai.rajonas = '${k}'`))
         .join("")}
     </div>`;
 }
@@ -59,7 +60,7 @@ function piestiZaidejus() {
           <div class="zaidejo-avataras">${z.vardas.charAt(0)}</div>
           <div>
             <div class="zaidejo-vardas">${z.vardas}</div>
-            <div class="zaidejo-detales">${z.amzius} m. · ${LYGIAI[z.lygis]} · ${z.pozicija} · ${RAJONAI[z.rajonas].pavadinimas}</div>
+            <div class="zaidejo-detales">${z.amzius} m. · ${LYGIAI[z.lygis]} · ${z.pozicija} · ${rajonoPavadinimas(z.rajonas)}</div>
           </div>
           <span class="rodykle">${atidarytas ? "▲" : "▼"}</span>
         </div>

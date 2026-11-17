@@ -1,5 +1,5 @@
 /* ==========================================================
-   Pagrindinis ekranas – netoliese vykstančių rungtynių sąrašas
+   Pradžia: pasirinktas miestas ir netoliese vykstančios rungtynės
    ========================================================== */
 
 /* Pirmą kartą atidarius (neprisijungus) – rodomas pradžios ekranas */
@@ -7,18 +7,106 @@ if (!gautiNaudotoja() && !arPradziaMatyta()) {
   window.location.replace("pradzia.html");
 }
 
-/* Puslapio paleidimas – failo pabaigoje (kai visi kintamieji jau aprašyti) */
-
-/* Rodo, pagal kokią vietą skaičiuojami atstumai */
-function piestiVieta() {
-  const rajonas = RAJONAI[gautiRajona()];
-  document.getElementById("vieta").innerHTML =
-    `📍 Jūsų vieta: <a href="profilis.html">${rajonas.pavadinimas}</a>`;
+/* ---------- Miestas (viršuje, su nuotrauka) ---------- */
+function miestoRungtynes() {
+  return visosRungtynes().filter((r) => r.aikstele.miestas === dabartinisMiestas());
 }
 
-/* Sugrupuoja rungtynes ir nupiešia sąrašą */
+function piestiMiesta() {
+  const miestoId = dabartinisMiestas();
+  const m = MIESTAI[miestoId];
+  const aiksteles = AIKSTELES.filter((a) => a.miestas === miestoId);
+  const siandien = miestoRungtynes().filter((r) => r.vyksta || arSiandien(r.pradzia)).length;
+  const zaidzia = aiksteles.reduce((suma, a) => suma + zaidejuAiksteleje(a), 0);
+  const rajonai = Object.entries(RAJONAI).filter(([, r]) => r.miestas === miestoId);
+
+  document.getElementById("miestas").innerHTML = `
+    <button class="miesto-virselis" style="background-image: url('${m.nuotrauka}')" onclick="atidarytiMiestuSarasa()"
+      aria-label="Pakeisti miestą (dabar: ${m.pavadinimas})">
+      <span class="miesto-pavadinimas">${m.pavadinimas} <span class="rodykle">⌄</span></span>
+      <span class="miesto-sukis">${m.sukis}</span>
+    </button>
+
+    <div class="miesto-statistika">
+      <div><strong>${siandien}</strong><span>Rungtynės šiandien</span></div>
+      <div><strong>${aiksteles.length}</strong><span>Aikštelės</span></div>
+      <div><strong>${zaidzia}</strong><span>Žaidžia dabar</span></div>
+    </div>
+
+    ${
+      rajonai.length > 1
+        ? `<div class="rajonai" role="group" aria-label="Jūsų rajonas">
+            <span class="blankus">📍 Jūsų vieta:</span>
+            ${rajonai
+              .map(([id, r]) => `<button class="rajonas ${id === gautiRajona() ? "pasirinktas" : ""}" onclick="keistiRajona('${id}')">${r.pavadinimas}</button>`)
+              .join("")}
+          </div>`
+        : ""
+    }`;
+}
+
+function keistiRajona(rajonas) {
+  nustatytiRajona(rajonas);
+  atnaujintiViska();
+  rodytiPranesima(`📍 Vieta: ${RAJONAI[rajonas].pavadinimas}`);
+}
+
+/* Miestų pasirinkimas (iššoka iš apačios) */
+function atidarytiMiestuSarasa() {
+  const dabartinis = dabartinisMiestas();
+  const fonas = document.createElement("div");
+  fonas.className = "lapas-fonas";
+  fonas.onclick = (e) => {
+    if (e.target === fonas) uzdarytiMiestuSarasa();
+  };
+  fonas.innerHTML = `
+    <div class="lapas" role="dialog" aria-label="Miesto pasirinkimas">
+      <div class="lapas-rankenele"></div>
+      <div class="lapas-antraste">
+        <h2>Pasirinkite miestą</h2>
+        <button class="uzdaryti-lapa" onclick="uzdarytiMiestuSarasa()" aria-label="Uždaryti">✕</button>
+      </div>
+      <div class="miestu-tinklelis">
+        ${Object.entries(MIESTAI)
+          .map(([id, m]) => {
+            const kiek = AIKSTELES.filter((a) => a.miestas === id).length;
+            return `
+            <button class="miesto-plytele ${id === dabartinis ? "pasirinkta" : ""}" style="background-image: url('${m.nuotrauka}')" onclick="pasirinktiMiesta('${id}')">
+              <span class="plyteles-pavadinimas">${m.pavadinimas}</span>
+              <span class="plyteles-info">${kiek} aikštelės${id === dabartinis ? " · ✓ dabar" : ""}</span>
+            </button>`;
+          })
+          .join("")}
+      </div>
+    </div>`;
+  document.body.appendChild(fonas);
+  document.addEventListener("keydown", lapoKlaviatura);
+  requestAnimationFrame(() => fonas.classList.add("atidarytas"));
+}
+
+function uzdarytiMiestuSarasa() {
+  const fonas = document.querySelector(".lapas-fonas");
+  if (!fonas) return;
+  fonas.classList.remove("atidarytas");
+  document.removeEventListener("keydown", lapoKlaviatura);
+  setTimeout(() => fonas.remove(), 250);
+}
+
+function lapoKlaviatura(e) {
+  if (e.key === "Escape") uzdarytiMiestuSarasa();
+}
+
+function pasirinktiMiesta(miestas) {
+  nustatytiMiesta(miestas);
+  uzdarytiMiestuSarasa();
+  atnaujintiViska();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  rodytiPranesima(`📍 Miestas: ${MIESTAI[miestas].pavadinimas}`);
+}
+
+/* ---------- Rungtynių sąrašas ---------- */
 function piestiRungtynes() {
-  const visos = visosRungtynes().filter(atitinkaFiltrus);
+  const visos = miestoRungtynes().filter(atitinkaFiltrus);
 
   const grupes = [
     { pavadinimas: "Vyksta dabar", rungtynes: visos.filter((r) => r.vyksta) },
@@ -32,7 +120,7 @@ function piestiRungtynes() {
     // Kiekvienoje grupėje – artimiausios viršuje
     grupe.rungtynes.sort((a, b) => a.atstumas - b.atstumas);
     html += `<h2 class="skyriaus-pavadinimas">${grupe.pavadinimas}</h2>`;
-    html += grupe.rungtynes.map(rungtyniuKortele).join("");
+    html += grupe.rungtynes.map((r) => rungtyniuKorteleHtml(r, prisijungimoMygtukas(r))).join("");
   }
 
   if (html === "") {
@@ -44,7 +132,8 @@ function piestiRungtynes() {
         </div>`
       : `<div class="tuscia">
           <div class="ikona">🏀</div>
-          <p>Šiuo metu netoliese rungtynių nėra.</p>
+          <p>Šiuo metu šiame mieste rungtynių nėra.</p>
+          <p style="margin-top: 12px"><a class="mygtukas" href="sukurti.html">Sukurti rungtynes</a></p>
         </div>`;
   }
 
@@ -55,42 +144,15 @@ function arSiandien(data) {
   return data.toDateString() === new Date().toDateString();
 }
 
-/* Vienos rungtynių kortelės HTML */
-function rungtyniuKortele(r) {
-  const procentai = Math.round((r.uzimta / r.vietu) * 100);
-  const zymos = r.zymos.map((z) => `<span class="zyma">${z}</span>`).join("");
-
-  return `
-    <a class="kortele rungtyniu-kortele" href="rungtynes.html?id=${r.id}">
-      <div class="virsutine-eilute">
-        <span class="aiksteles-pavadinimas">${r.aikstele.pavadinimas}</span>
-        <span class="atstumas">📍 ${formatuotiAtstuma(r.atstumas)}</span>
-      </div>
-      <div class="laikas ${r.vyksta ? "vyksta" : ""}">${rungtyniuLaikas(r)}</div>
-      <div>
-        <span class="zyma oranzine">${LYGIAI[r.lygis]}</span>${zymos}
-      </div>
-      <div class="uzpildymas">
-        <div class="juosta"><span style="width: ${procentai}%"></span></div>
-        <div class="tekstas">
-          <span>${r.uzimta} / ${r.vietu} žaidėjų</span>
-          ${r.laisvu > 0 ? `<span class="truksta">Trūksta ${r.laisvu}</span>` : `<span>Pilna</span>`}
-        </div>
-      </div>
-      ${prisijungimoMygtukas(r)}
-    </a>`;
-}
-
-/* Mygtukas kortelėje: „Prisijungti“, „Jūs dalyvaujate“ arba „Vietų nėra“ */
+/* Mygtukas kortelėje: „Prisijungti“, „Dalyvaujate“ arba „Pilna“ */
 function prisijungimoMygtukas(r) {
+  if (r.organizatorius === "jus") return `<span class="pill dalyvauja">✓ Organizuojate</span>`;
   if (r.manoKiekis > 0) {
-    const kiti = r.manoKiekis > 1 ? ` (+${r.manoKiekis - 1})` : "";
-    return `<div class="dalyvaujate">✓ Jūs dalyvaujate${kiti}</div>`;
+    const kiti = r.manoKiekis > 1 ? ` +${r.manoKiekis - 1}` : "";
+    return `<span class="pill dalyvauja">✓ Dalyvaujate${kiti}</span>`;
   }
-  if (r.laisvu === 0) {
-    return `<button class="mygtukas antrinis platus" disabled>Vietų nebėra</button>`;
-  }
-  return `<button class="mygtukas platus" onclick="greitasPrisijungimas(event, '${r.id}')">Prisijungti</button>`;
+  if (r.laisvu === 0) return `<button class="pill" disabled>Pilna</button>`;
+  return `<button class="pill oranzinis" onclick="greitasPrisijungimas(event, '${r.id}')">Prisijungti</button>`;
 }
 
 /* Prisijungimas prie rungtynių tiesiai iš sąrašo (1 užduotis – Kevinas) */
@@ -99,7 +161,7 @@ function greitasPrisijungimas(ivykis, id) {
   ivykis.preventDefault();
   ivykis.stopPropagation();
 
-  // Svečias (neprisijungęs) – pasiūlome prisijungti, bet nieko neprarandame
+  // Svečias – pasiūlome prisijungti, bet nieko neprarandame
   if (!gautiNaudotoja()) {
     rodytiPranesima("Norėdami dalyvauti, prisijunkite", {
       mygtukas: "Prisijungti",
@@ -110,16 +172,14 @@ function greitasPrisijungimas(ivykis, id) {
 
   const r = gautiRungtynes(id);
   registruotisRungtynems(id, 1);
-  piestiRungtynes();
-  piestiPriminimus();
+  atnaujintiViska();
 
   // Aiškus patvirtinimas + galimybė atšaukti
   rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas} (${r.aikstele.adresas}), ${pirmaMaza(rungtyniuLaikas(r).replace("🔴 ", ""))}`, {
     mygtukas: "Atšaukti",
     veiksmas: () => {
       atsauktiDalyvavima(id);
-      piestiRungtynes();
-      piestiPriminimus();
+      atnaujintiViska();
       rodytiPranesima("Dalyvavimas atšauktas");
     },
     trukme: 6000,
@@ -188,7 +248,7 @@ function piestiFiltruLanga() {
     html += `</div></div>`;
   }
 
-  const kiek = visosRungtynes().filter((r) => atitinkaFiltrusSu(r, juodrastis)).length;
+  const kiek = miestoRungtynes().filter((r) => atitinkaFiltrusSu(r, juodrastis)).length;
   html += `
     <div class="filtru-mygtukai">
       <button class="mygtukas antrinis" onclick="pasirinktiNumatytuosius()">Išvalyti</button>
@@ -245,69 +305,13 @@ function piestiAktyviusFiltrus() {
     : "";
 }
 
-/* ==========================================================
-   Priminimai (FR20) ir pranešimai apie netoliese ieškomus žaidėjus (FR21)
-   ========================================================== */
-
-let uzdarytiPriminimai = [];
-try {
-  uzdarytiPriminimai = JSON.parse(sessionStorage.getItem("uzdarytiPriminimai")) || [];
-} catch (klaida) {}
-
-function piestiPriminimus() {
-  const el = document.getElementById("priminimai");
-  if (!gautiNaudotoja()) {
-    el.innerHTML = "";
-    return;
-  }
-  const visos = visosRungtynes();
-  let html = "";
-
-  // FR20: rungtynės, prie kurių prisijungta ir kurios prasideda per artimiausią valandą
-  const artimos = visos.filter((r) => r.manoKiekis > 0 && r.pradziaPoMin <= 60 && r.pradziaPoMin > -r.trukmeMin);
-  for (const r of artimos) {
-    const raktas = "p-" + r.id;
-    if (uzdarytiPriminimai.includes(raktas)) continue;
-    const kada = r.vyksta ? "jau vyksta" : `prasideda po ${r.pradziaPoMin} min.`;
-    html += priminimas(raktas, "🔔", `<strong>Priminimas:</strong> rungtynės ${r.aikstele.pavadinimas} ${kada}`, `rungtynes.html?id=${r.id}`);
-  }
-
-  // FR21: netoliese (iki 1,5 km) ieškoma žaidėjų, o naudotojas dar nedalyvauja
-  if (gautiPranesimuNustatyma()) {
-    const ieskoma = visos
-      .filter((r) => r.manoKiekis === 0 && r.laisvu > 0 && r.atstumas <= 1.5 && r.pradziaPoMin <= 120)
-      .sort((a, b) => a.atstumas - b.atstumas)[0];
-    if (ieskoma && !uzdarytiPriminimai.includes("i-" + ieskoma.id)) {
-      html += priminimas(
-        "i-" + ieskoma.id,
-        "📣",
-        `Netoliese ieškoma žaidėjų: <strong>${ieskoma.aikstele.pavadinimas}</strong> (${formatuotiAtstuma(ieskoma.atstumas)}) – trūksta ${ieskoma.laisvu}`,
-        `rungtynes.html?id=${ieskoma.id}`
-      );
-    }
-  }
-  el.innerHTML = html;
-}
-
-function priminimas(raktas, ikona, tekstas, nuoroda) {
-  return `
-    <div class="priminimas">
-      <a href="${nuoroda}"><span class="ikona">${ikona}</span><span>${tekstas}</span></a>
-      <button onclick="uzdarytiPriminima('${raktas}')" aria-label="Uždaryti priminimą">✕</button>
-    </div>`;
-}
-
-function uzdarytiPriminima(raktas) {
-  uzdarytiPriminimai.push(raktas);
-  try {
-    sessionStorage.setItem("uzdarytiPriminimai", JSON.stringify(uzdarytiPriminimai));
-  } catch (klaida) {}
-  piestiPriminimus();
-}
-
 /* ---------- Puslapio paleidimas ---------- */
+function atnaujintiViska() {
+  piestiVirsu("Pradžia", { nuoroda: "sukurti.html", tekstas: "Sukurti" });
+  piestiMiesta();
+  piestiAktyviusFiltrus();
+  piestiRungtynes();
+}
+
 piestiNavigacija("rungtynes");
-piestiVieta();
-piestiPriminimus();
-piestiAktyviusFiltrus();
-piestiRungtynes();
+atnaujintiViska();

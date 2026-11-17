@@ -3,6 +3,7 @@
    ========================================================== */
 
 piestiNavigacija("zemelapis");
+piestiVirsu("Aikštelės");
 
 const vieta = RAJONAI[gautiRajona()];
 
@@ -135,6 +136,7 @@ function filtroMygtukas(tekstas, pasirinkta, veiksmas) {
 function piestiAiksteliuSarasa() {
   const f = aiksteliuFiltrai;
   const aiksteles = AIKSTELES.filter((a) => {
+    if (a.miestas !== dabartinisMiestas()) return false;
     if (f.danga !== "visos" && a.danga !== f.danga) return false;
     if (f.apsviesta && !a.apsvietimas) return false;
     if (f.atstumas !== "visi" && atstumasKm(a) > Number(f.atstumas)) return false;

@@ -2,7 +2,7 @@
    Profilis: naudotojo lygis, mano rungtynės, vieta (vietoj GPS)
    ========================================================== */
 
-piestiNavigacija("profilis");
+piestiNavigacija("");
 piestiProfili();
 
 function piestiProfili() {
@@ -49,7 +49,7 @@ function piestiProfili() {
 
       ${buvimoInformacija()}
 
-      <h2 class="skyriaus-pavadinimas">Pranešimai</h2>
+      <h2 class="skyriaus-pavadinimas" id="nustatymai">Pranešimai</h2>
       <label class="jungiklis-eilute">
         <span>📣 Pranešti, kai netoliese ieškoma žaidėjų<br><span class="blankus">Pranešimą galite išjungti bet kada</span></span>
         <input type="checkbox" class="jungiklis" ${gautiPranesimuNustatyma() ? "checked" : ""} onchange="keistiPranesimus(this.checked)">
@@ -72,16 +72,29 @@ function piestiProfili() {
   // Vieta – prieinama ir svečiui
   const rajonas = gautiRajona();
   html += `
-    <h2 class="skyriaus-pavadinimas">Mano vieta</h2>
+    <h2 class="skyriaus-pavadinimas" id="vieta">Mano vieta</h2>
     <p class="blankus">Prototipe vieta pasirenkama ranka (vietoj GPS). Pagal ją skaičiuojami atstumai.</p>
     <div class="parinkciu-eile">
-      ${Object.entries(RAJONAI)
+      ${Object.entries(MIESTAI)
         .map(
-          ([raktas, r]) =>
-            `<button class="parinktis ${rajonas === raktas ? "pasirinkta" : ""}" onclick="keistiRajona('${raktas}')">📍 ${r.pavadinimas}</button>`
+          ([raktas, m]) =>
+            `<button class="parinktis ${dabartinisMiestas() === raktas ? "pasirinkta" : ""}" onclick="keistiMiesta('${raktas}')">${m.pavadinimas}</button>`
         )
         .join("")}
     </div>
+    ${
+      Object.values(RAJONAI).filter((r) => r.miestas === dabartinisMiestas()).length > 1
+        ? `<div class="parinkciu-eile">
+            ${Object.entries(RAJONAI)
+              .filter(([, r]) => r.miestas === dabartinisMiestas())
+              .map(
+                ([raktas, r]) =>
+                  `<button class="parinktis ${rajonas === raktas ? "pasirinkta" : ""}" onclick="keistiRajona('${raktas}')">📍 ${r.pavadinimas}</button>`
+              )
+              .join("")}
+          </div>`
+        : ""
+    }
 
     <div class="apacios-mygtukai">
       ${naudotojas ? `<button class="mygtukas antrinis platus" onclick="atsijungtiIsProfilio()">Atsijungti</button>` : ""}
@@ -118,6 +131,12 @@ function keistiLygi(lygis) {
   atnaujintiNaudotoja({ lygis: lygis });
   piestiProfili();
   rodytiPranesima(`✓ Lygis pakeistas: ${LYGIAI[lygis]}`);
+}
+
+function keistiMiesta(miestas) {
+  nustatytiMiesta(miestas);
+  piestiProfili();
+  rodytiPranesima(`📍 Miestas: ${MIESTAI[miestas].pavadinimas}`);
 }
 
 function keistiRajona(rajonas) {
@@ -175,4 +194,10 @@ function buvimoInformacija() {
   return `
     <h2 class="skyriaus-pavadinimas">Šiuo metu</h2>
     <a class="kortele" href="aikstele.html?id=${a.id}">📍 Esate: <strong>${a.pavadinimas}</strong> ›</a>`;
+}
+
+/* Atėjus iš meniu (#vieta, #nustatymai) – nuslenkama prie reikiamos vietos */
+if (location.hash) {
+  const tikslas = document.querySelector(location.hash);
+  if (tikslas) setTimeout(() => tikslas.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
 }
