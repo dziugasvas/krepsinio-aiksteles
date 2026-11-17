@@ -84,3 +84,101 @@
   color: var(--zalia);
   font-weight: 600;
 }
+
+/* ---------- Filtrai ---------- */
+.filtru-juosta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.filtru-juosta .mygtukas {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 15px;
+}
+
+.filtru-juosta .mygtukas.aktyvus {
+  border-color: var(--oranzine);
+  color: var(--oranzine);
+}
+
+.isvalyti-filtrus {
+  background: none;
+  border: none;
+  color: var(--tekstas-blankus);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filtru-langas {
+  background: var(--pavirsius);
+  border: 1px solid var(--oranzine);
+  border-radius: var(--apvalinimas);
+  padding: 14px;
+  margin: 8px 0 12px;
+}
+
+.filtru-antraste {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.filtru-antraste h2 {
+  font-size: 18px;
+}
+
+.uzdaryti-filtrus {
+  border: none;
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtru-grupe {
+  margin-top: 12px;
+}
+
+.filtru-grupes-pavadinimas {
+  font-size: 14px;
+  color: var(--tekstas-blankus);
+  margin-bottom: 6px;
+}
+
+.filtru-parinktys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtro-parinktis {
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filtro-parinktis.pasirinkta {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+.filtru-mygtukai {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 8px;
+  margin-top: 16px;
+}

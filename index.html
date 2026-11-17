@@ -18,6 +18,13 @@
       <!-- Vieta, pagal kurią skaičiuojami atstumai (vietoje GPS) -->
       <p class="vieta" id="vieta"></p>
 
+      <!-- Filtrų juosta ir langas (2 užduotis – Skirmantas) -->
+      <div class="filtru-juosta">
+        <button class="mygtukas antrinis" id="filtru-mygtukas" onclick="atidarytiFiltrus()">⚙️ Filtrai</button>
+        <div id="aktyvus-filtrai"></div>
+      </div>
+      <div id="filtru-langas" class="filtru-langas" hidden></div>
+
       <!-- Čia JS įdeda rungtynių sąrašą -->
       <div id="rungtyniu-sarasas"></div>
     </main>

@@ -1,0 +1,130 @@
+/* ==========================================================
+   Rungtynių puslapis
+   ========================================================== */
+
+.rungtyniu-antraste {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.aiksteles-nuoroda {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.info-eilutes {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.info-eilute {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 15px;
+}
+
+.info-eilute .ikona {
+  width: 22px;
+  text-align: center;
+}
+
+.aprasymas {
+  font-style: italic;
+  color: var(--tekstas-blankus);
+  margin-top: 6px;
+}
+
+/* Dalyvių sąrašas */
+.dalyvis {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--linija);
+}
+
+.dalyvis:last-child {
+  border-bottom: none;
+}
+
+.avataras {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pavirsius-2);
+  font-weight: 700;
+  color: var(--oranzine);
+  flex-shrink: 0;
+}
+
+.dalyvis.jus .avataras {
+  background: var(--oranzine);
+  color: #ffffff;
+}
+
+.dalyvis .vardas {
+  font-weight: 600;
+}
+
+.dalyvis .detales {
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+}
+
+/* Veiksmų sritis ekrano apačioje (virš navigacijos) */
+.veiksmai {
+  position: sticky;
+  bottom: calc(var(--navigacijos-aukstis) + 8px);
+  background: var(--fonas);
+  padding: 12px 0 4px;
+}
+
+/* „Kas dalyvaus?“ pasirinkimas */
+.pasirinkimas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.pasirinkimas button {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius);
+  color: var(--tekstas);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pasirinkimas button.pasirinktas {
+  border-color: var(--oranzine);
+  background: var(--oranzine-sviesi);
+  color: var(--oranzine);
+  font-weight: 700;
+}
+
+.pasirinkimas button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pasirinkimo-etikete {
+  font-size: 14px;
+  color: var(--tekstas-blankus);
+  margin-bottom: 6px;
+}
+
+.dalyvaujate-blokas {
+  display: grid;
+  gap: 8px;
+}

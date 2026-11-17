@@ -1,0 +1,136 @@
+/* ==========================================================
+   Prisijungimo / registracijos puslapis
+   ========================================================== */
+
+.prisijungimo-puslapis {
+  padding-bottom: 24px;
+}
+
+.logotipas {
+  font-size: 56px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.pavadinimas {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.pavadinimas .akcentas {
+  color: var(--oranzine);
+}
+
+.centre {
+  text-align: center;
+}
+
+.greiti-budai {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.mygtukas.baltas {
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+.mygtukas.juodas {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+.skirtukas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 14px;
+  color: var(--tekstas-blankus);
+  font-size: 13px;
+}
+
+.skirtukas::before,
+.skirtukas::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--linija);
+}
+
+/* Formos laukai */
+.laukas {
+  margin-bottom: 14px;
+}
+
+.laukas label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.laukas input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius-2);
+  color: var(--tekstas);
+  font-size: 16px;
+}
+
+.laukas input:focus {
+  outline: none;
+  border-color: var(--oranzine);
+}
+
+.laukas.su-klaida input {
+  border-color: var(--raudona);
+}
+
+.klaidos-tekstas {
+  color: var(--raudona);
+  font-size: 13px;
+  margin-top: 4px;
+  min-height: 0;
+}
+
+.slaptazodzio-eilute {
+  position: relative;
+}
+
+.slaptazodzio-eilute .rodyti {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--oranzine);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nuoroda-mygtukas {
+  background: none;
+  border: none;
+  color: var(--oranzine);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-bottom: 14px;
+}
+
+.perjungimas {
+  margin-top: 18px;
+  color: var(--tekstas-blankus);
+  font-size: 14px;
+}
+
+.perjungimas .nuoroda-mygtukas {
+  margin: 0;
+  font-weight: 600;
+}

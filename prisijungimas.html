@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <title>Krepšinis Visur – Prisijungimas</title>
+  <link rel="stylesheet" href="css/bendras.css">
+  <link rel="stylesheet" href="css/prisijungimas.css">
+</head>
+<body>
+  <div class="programele prisijungimo-puslapis">
+    <header class="virsus">
+      <a class="atgal" id="atgal" href="index.html">‹ Atgal</a>
+      <h1></h1>
+    </header>
+
+    <main class="turinys">
+      <div class="logotipas">🏀</div>
+      <h2 class="pavadinimas">Krepšinis <span class="akcentas">Visur</span></h2>
+      <p class="blankus centre" id="paaiskinimas">Prisijunkite, kad galėtumėte dalyvauti rungtynėse.</p>
+
+      <!-- Greitas prisijungimas (Kevinas nemėgsta registruotis) -->
+      <div class="greiti-budai">
+        <button class="mygtukas platus baltas" onclick="prisijungtiPer('Google')">
+          <strong>G</strong>&nbsp; Tęsti su Google
+        </button>
+        <button class="mygtukas platus juodas" onclick="prisijungtiPer('Apple')">
+           Tęsti su Apple
+        </button>
+      </div>
+
+      <div class="skirtukas"><span>arba el. paštu</span></div>
+
+      <!-- Prisijungimas / registracija el. paštu -->
+      <form id="forma" novalidate onsubmit="pateiktiForma(event)">
+        <div class="laukas" id="vardo-laukas" hidden>
+          <label for="vardas">Vardas</label>
+          <input id="vardas" type="text" autocomplete="given-name" placeholder="pvz. Kevinas">
+          <div class="klaidos-tekstas" id="vardas-klaida"></div>
+        </div>
+
+        <div class="laukas">
+          <label for="pastas">El. paštas</label>
+          <input id="pastas" type="email" autocomplete="email" placeholder="vardas@pastas.lt">
+          <div class="klaidos-tekstas" id="pastas-klaida"></div>
+        </div>
+
+        <div class="laukas">
+          <label for="slaptazodis">Slaptažodis</label>
+          <div class="slaptazodzio-eilute">
+            <input id="slaptazodis" type="password" autocomplete="current-password" placeholder="Bent 6 simboliai">
+            <button type="button" class="rodyti" onclick="rodytiSlaptazodi()" id="rodyti-mygtukas">Rodyti</button>
+          </div>
+          <div class="klaidos-tekstas" id="slaptazodis-klaida"></div>
+        </div>
+
+        <button type="button" class="nuoroda-mygtukas" id="pamirsau" onclick="atkurtiSlaptazodi()">Pamiršote slaptažodį?</button>
+
+        <button type="submit" class="mygtukas platus" id="pateikti">Prisijungti</button>
+      </form>
+
+      <p class="centre perjungimas">
+        <span id="perjungimo-tekstas">Neturite paskyros?</span>
+        <button class="nuoroda-mygtukas" onclick="perjungtiRezima()" id="perjungimo-mygtukas">Registruotis</button>
+      </p>
+
+      <p class="centre"><a href="index.html" id="be-prisijungimo">Tęsti be prisijungimo</a></p>
+    </main>
+  </div>
+
+  <script src="js/duomenys.js"></script>
+  <script src="js/saugykla.js"></script>
+  <script src="js/bendras.js"></script>
+  <script src="js/prisijungimas.js"></script>
+</body>
+</html>
