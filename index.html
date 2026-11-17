@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#121212">
-  <title>Krepšinis Visur</title>
+  <title>Krepšinis Visur – Rungtynės</title>
   <link rel="stylesheet" href="css/bendras.css">
+  <link rel="stylesheet" href="css/pagrindinis.css">
 </head>
 <body>
   <div class="programele">
@@ -14,17 +15,11 @@
     </header>
 
     <main class="turinys">
-      <!-- Laikinas turinys: pagrindo patikrinimas. 2 žingsnyje čia bus rungtynių sąrašas. -->
-      <div class="kortele">
-        <h2>Pagrindas veikia ✅</h2>
-        <p class="blankus" id="patikrinimas"></p>
-        <p style="margin-top: 8px">
-          <span class="zyma oranzine">Aukštas</span>
-          <span class="zyma zalia">Laisva 1 vieta</span>
-          <span class="zyma">Šeimoms</span>
-        </p>
-      </div>
-      <button class="mygtukas platus" onclick="rodytiPranesima('Pranešimai veikia!')">Išbandyti pranešimą</button>
+      <!-- Vieta, pagal kurią skaičiuojami atstumai (vietoje GPS) -->
+      <p class="vieta" id="vieta"></p>
+
+      <!-- Čia JS įdeda rungtynių sąrašą -->
+      <div id="rungtyniu-sarasas"></div>
     </main>
 
     <nav id="navigacija"></nav>
@@ -33,10 +28,6 @@
   <script src="js/duomenys.js"></script>
   <script src="js/saugykla.js"></script>
   <script src="js/bendras.js"></script>
-  <script>
-    piestiNavigacija("rungtynes");
-    document.getElementById("patikrinimas").textContent =
-      `Duomenys įkelti: ${AIKSTELES.length} aikštelės, ${RUNGTYNES.length} rungtynės, ${ZAIDEJAI.length} žaidėjai.`;
-  </script>
+  <script src="js/pagrindinis.js"></script>
 </body>
 </html>
