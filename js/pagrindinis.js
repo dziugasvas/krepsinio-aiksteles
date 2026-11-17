@@ -69,5 +69,54 @@ function rungtyniuKortele(r) {
           ${r.laisvu > 0 ? `<span class="truksta">Trūksta ${r.laisvu}</span>` : `<span>Pilna</span>`}
         </div>
       </div>
+      ${prisijungimoMygtukas(r)}
     </a>`;
+}
+
+/* Mygtukas kortelėje: „Prisijungti“, „Jūs dalyvaujate“ arba „Vietų nėra“ */
+function prisijungimoMygtukas(r) {
+  if (r.manoKiekis > 0) {
+    const kiti = r.manoKiekis > 1 ? ` (+${r.manoKiekis - 1})` : "";
+    return `<div class="dalyvaujate">✓ Jūs dalyvaujate${kiti}</div>`;
+  }
+  if (r.laisvu === 0) {
+    return `<button class="mygtukas antrinis platus" disabled>Vietų nebėra</button>`;
+  }
+  return `<button class="mygtukas platus" onclick="greitasPrisijungimas(event, '${r.id}')">Prisijungti</button>`;
+}
+
+/* Prisijungimas prie rungtynių tiesiai iš sąrašo (1 užduotis – Kevinas) */
+function greitasPrisijungimas(ivykis, id) {
+  // Kad paspaudus mygtuką neatsidarytų rungtynių puslapis
+  ivykis.preventDefault();
+  ivykis.stopPropagation();
+
+  // Svečias (neprisijungęs) – pasiūlome prisijungti, bet nieko neprarandame
+  if (!gautiNaudotoja()) {
+    rodytiPranesima("Norėdami dalyvauti, prisijunkite", {
+      mygtukas: "Prisijungti",
+      veiksmas: () => (window.location.href = "prisijungimas.html?atgal=index.html"),
+    });
+    return;
+  }
+
+  const r = gautiRungtynes(id);
+  registruotisRungtynems(id, 1);
+  piestiRungtynes();
+
+  // Aiškus patvirtinimas + galimybė atšaukti
+  rodytiPranesima(`✓ Prisijungėte: ${r.aikstele.pavadinimas}, ${pirmaMaza(rungtyniuLaikas(r).replace("🔴 ", ""))}`, {
+    mygtukas: "Atšaukti",
+    veiksmas: () => {
+      atsauktiDalyvavima(id);
+      piestiRungtynes();
+      rodytiPranesima("Dalyvavimas atšauktas");
+    },
+    trukme: 6000,
+  });
+}
+
+/* „Vyksta dabar“ → „vyksta dabar“ (sakinio viduryje) */
+function pirmaMaza(tekstas) {
+  return tekstas.charAt(0).toLowerCase() + tekstas.slice(1);
 }
