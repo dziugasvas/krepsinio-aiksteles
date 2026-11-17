@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <title>Krepšinis Visur – Žemėlapis</title>
+  <!-- Leaflet – nemokama žemėlapių biblioteka -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/bendras.css">
+  <link rel="stylesheet" href="css/zemelapis.css">
+</head>
+<body>
+  <div class="programele zemelapio-puslapis">
+    <header class="virsus">
+      <h1>Aikštelės aplink jus</h1>
+    </header>
+
+    <!-- Žemėlapis -->
+    <div id="zemelapis"></div>
+
+    <!-- Paaiškinimas, ką reiškia žymekliai -->
+    <div class="legenda">
+      <span><i class="taskas oranzinis"></i> Yra rungtynių</span>
+      <span><i class="taskas pilkas"></i> Rungtynių nėra</span>
+      <span>📍 Jūs</span>
+    </div>
+
+    <!-- Paspaudus aikštelę – čia atsiranda jos kortelė (2d žingsnis) -->
+    <div id="aiksteles-kortele"></div>
+
+    <nav id="navigacija"></nav>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/duomenys.js"></script>
+  <script src="js/saugykla.js"></script>
+  <script src="js/bendras.js"></script>
+  <script src="js/zemelapis.js"></script>
+</body>
+</html>

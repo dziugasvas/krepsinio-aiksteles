@@ -1,0 +1,69 @@
+/* ==========================================================
+   Žemėlapio ekranas
+   ========================================================== */
+
+.zemelapio-puslapis {
+  padding-bottom: 0;
+}
+
+#zemelapis {
+  height: calc(100vh - 60px - var(--navigacijos-aukstis) - 40px);
+  width: 100%;
+}
+
+/* Legenda po žemėlapiu */
+.legenda {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 10px;
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+  background: var(--pavirsius);
+}
+
+.taskas {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.taskas.oranzinis { background: var(--oranzine); }
+.taskas.pilkas { background: #777777; }
+
+/* Aikštelės žymeklis žemėlapyje */
+.aiksteles-zymeklis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: #777777;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.aiksteles-zymeklis.su-rungtynemis {
+  background: var(--oranzine);
+}
+
+.aiksteles-zymeklis.pasirinktas {
+  transform: scale(1.25);
+  border-color: var(--oranzine);
+}
+
+/* Naudotojo vieta */
+.mano-vieta {
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* Leaflet tamsiam dizainui */
+.leaflet-container {
+  background: #1a1a1a;
+  font-family: inherit;
+}
