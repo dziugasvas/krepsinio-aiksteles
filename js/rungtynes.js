@@ -65,6 +65,8 @@ function piestiPuslapi() {
     ${r.pasibaigusi && r.manoKiekis > 0 ? `<p class="blankus vertinimo-pastaba">Rungtynės baigėsi – įvertinkite kitus žaidėjus. Vertinimai ir atvykimas lemia žaidėjų reitingą ir patikimumą.</p>` : ""}
     <div class="kortele">${dalyviuSarasas(r)}</div>
 
+    ${pokalbioHtml(r)}
+
     <div class="veiksmai">${veiksmuSritis(r)}</div>`;
 }
 
