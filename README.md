@@ -12,15 +12,20 @@ Prototipas sukurtas kaip grupinis darbas modulyje „Naudotojo sąsajos kūrimas
 - Prisijungimas prie rungtynių vienu paspaudimu, draugų pridėjimas („Aš + 1“, „Aš + 2“…)
 - Rungtynių kūrimas ir atšaukimas
 - Aikštelių žemėlapis ir sąrašas: danga, būklė, apšvietimas, užimtumas, įvertinimai
-- Žymėjimas „Esu aikštelėje“
+- Aikštelių reitingas mieste, rikiavimas pagal įvertinimą
+- Mygtukas „Rasti mane“ žemėlapyje (GPS)
+- Žymėjimas „Esu aikštelėje“ su GPS patikrinimu
+- Rungtynių pokalbis (tik dalyviams)
 - Žaidėjų paieška pagal lygį ir miestą
+- Žaidėjų reitingai ir patikimumas: vertinimas po rungtynių, žyma „Neatvyko“, vėlyvo atšaukimo taisyklė
+- „Dažniausiai žaidžiate su“, žaidėjų sekimas ir kvietimas į rungtynes
 - Profilis: lygis, pozicija, ūgis, svoris, šuolis, patirtis
 - Priminimai ir pranešimai apie netoliese ieškomus žaidėjus
 - 5 miestai: Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys
 
 ## Apie prototipą
 
-Tai tik naudotojo sąsajos prototipas, be serverio dalies. Aikštelės, žaidėjai ir rungtynės yra pavyzdiniai duomenys (`js/duomenys.js`), o naudotojo veiksmai išsaugomi naršyklėje (`localStorage`). Prisijungimas imituojamas, o vieta (vietoj GPS) pasirenkama profilyje arba pradžios ekrane.
+Tai tik naudotojo sąsajos prototipas, be serverio dalies. Aikštelės, žaidėjai ir rungtynės yra pavyzdiniai duomenys (`js/duomenys.js`), o naudotojo veiksmai išsaugomi naršyklėje (`localStorage`). Prisijungimas imituojamas. Atstumai skaičiuojami nuo profilyje arba pradžios ekrane pasirinkto rajono, o tikra GPS vieta naudojama mygtukui „Rasti mane“ ir žymėjimui „Esu aikštelėje“ (tam reikia HTTPS arba vietinio serverio).
 
 ## Paleidimas
 
