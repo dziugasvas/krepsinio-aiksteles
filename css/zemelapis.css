@@ -229,3 +229,31 @@
 .uzimtumas.laisva {
   color: var(--tekstas-blankus);
 }
+
+.vietos-zenklas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 6px;
+  margin-right: 6px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  vertical-align: 2px;
+  color: #ffffff;
+  background: #8e8e93;
+}
+
+.vietos-zenklas.vieta-1 {
+  background: #e0a400;
+}
+
+.vietos-zenklas.vieta-2 {
+  background: #9aa3ad;
+}
+
+.vietos-zenklas.vieta-3 {
+  background: #b87333;
+}

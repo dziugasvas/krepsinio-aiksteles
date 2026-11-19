@@ -274,6 +274,29 @@ function daugiskaita(n, vienas, keli, daug) {
   return `${n} ${daug}`;
 }
 
+function aiksteleVidurkis(a) {
+  let mano = 0;
+  try {
+    mano = (JSON.parse(localStorage.getItem("krepsinisVisurVertinimai")) || {})[a.id] || 0;
+  } catch (klaida) {}
+  const kiek = a.atsiliepimai + (mano ? 1 : 0);
+  return { vidurkis: Math.round(((a.ivertinimas * a.atsiliepimai + mano) / kiek) * 10) / 10, kiek: kiek };
+}
+
+function aiksteliuReitingas(miestas) {
+  return AIKSTELES.filter((a) => a.miestas === miestas)
+    .map((a) => Object.assign({ aikstele: a }, aiksteleVidurkis(a)))
+    .sort((x, y) => y.vidurkis - x.vidurkis || y.kiek - x.kiek);
+}
+
+function aiksteleVieta(a) {
+  return aiksteliuReitingas(a.miestas).findIndex((x) => x.aikstele.id === a.id) + 1;
+}
+
+function vidurkioTekstas(v) {
+  return String(v.toFixed(1)).replace(".", ",");
+}
+
 function patikimumas(z) {
   const viso = z.suzaista + z.praleista;
   return viso ? Math.round((z.suzaista / viso) * 100) : 100;

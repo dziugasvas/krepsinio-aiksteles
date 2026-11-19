@@ -33,10 +33,15 @@ function piestiAikstele() {
     <div class="adresas">${ik("vieta")}${a.adresas}, ${MIESTAI[a.miestas].pavadinimas} · ${formatuotiAtstuma(km)} · ${laikasPesciomis(km)}</div>
 
     <div class="ivertinimo-eilute">
-      <span class="zvaigzdes">${zvaigzdes(a.ivertinimas)}</span>
-      <strong>${String(a.ivertinimas).replace(".", ",")}</strong>
-      <span class="blankus">(${daugiskaita(a.atsiliepimai, "įvertinimas", "įvertinimai", "įvertinimų")})</span>
+      <span class="zvaigzdes">${zvaigzdes(aiksteleVidurkis(a).vidurkis)}</span>
+      <strong>${vidurkioTekstas(aiksteleVidurkis(a).vidurkis)}</strong>
+      <span class="blankus">(${daugiskaita(aiksteleVidurkis(a).kiek, "įvertinimas", "įvertinimai", "įvertinimų")})</span>
     </div>
+    <a class="reitingo-juosta" href="zemelapis.html?vaizdas=reitingas">
+      <span class="vietos-numeris">#${aiksteleVieta(a)}</span>
+      <span>${MIESTAI[a.miestas].kilmininkas} aikštelių reitinge iš ${AIKSTELES.filter((x) => x.miestas === a.miestas).length}</span>
+      <span aria-hidden="true">›</span>
+    </a>
 
     <div class="uzimtumo-kortele ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">
       <div>${ik("zmones")}<strong>${uzimtumoTekstas(a)}</strong></div>

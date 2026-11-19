@@ -1,9 +1,9 @@
 const MIESTAI = {
-  vilnius: { pavadinimas: "Vilnius", sukis: "Sostinė · Krepšinis visus metus", nuotrauka: "img/miestai/vilnius.jpg", numatytasRajonas: "fabijoniskes" },
-  kaunas: { pavadinimas: "Kaunas", sukis: "Žalgirio miestas", nuotrauka: "img/miestai/kaunas.jpg", numatytasRajonas: "kaunas-centras" },
-  klaipeda: { pavadinimas: "Klaipėda", sukis: "Uostamiestis · Vakarų krepšinis", nuotrauka: "img/miestai/klaipeda.jpg", numatytasRajonas: "klaipeda-centras" },
-  siauliai: { pavadinimas: "Šiauliai", sukis: "Saulės miestas", nuotrauka: "img/miestai/siauliai.jpg", numatytasRajonas: "siauliai-centras" },
-  panevezys: { pavadinimas: "Panevėžys", sukis: "Aukštaitijos sostinė", nuotrauka: "img/miestai/panevezys.jpg", numatytasRajonas: "panevezys-centras" },
+  vilnius: { pavadinimas: "Vilnius", kilmininkas: "Vilniaus", sukis: "Sostinė · Krepšinis visus metus", nuotrauka: "img/miestai/vilnius.jpg", numatytasRajonas: "fabijoniskes" },
+  kaunas: { pavadinimas: "Kaunas", kilmininkas: "Kauno", sukis: "Žalgirio miestas", nuotrauka: "img/miestai/kaunas.jpg", numatytasRajonas: "kaunas-centras" },
+  klaipeda: { pavadinimas: "Klaipėda", kilmininkas: "Klaipėdos", sukis: "Uostamiestis · Vakarų krepšinis", nuotrauka: "img/miestai/klaipeda.jpg", numatytasRajonas: "klaipeda-centras" },
+  siauliai: { pavadinimas: "Šiauliai", kilmininkas: "Šiaulių", sukis: "Saulės miestas", nuotrauka: "img/miestai/siauliai.jpg", numatytasRajonas: "siauliai-centras" },
+  panevezys: { pavadinimas: "Panevėžys", kilmininkas: "Panevėžio", sukis: "Aukštaitijos sostinė", nuotrauka: "img/miestai/panevezys.jpg", numatytasRajonas: "panevezys-centras" },
 };
 
 const RAJONAI = {

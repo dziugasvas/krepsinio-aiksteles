@@ -87,7 +87,7 @@ function piestiAiksteleskortele(a) {
       <div class="atstumo-eilute">${ik("vieta")}${formatuotiAtstuma(km)} · ${laikasPesciomis(km)}</div>
       <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">${ik("zmones")}${uzimtumoTekstas(a)}</div>
       <div>
-        <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
+        <span class="zyma">★ ${vidurkioTekstas(aiksteleVidurkis(a).vidurkis)} · #${aiksteleVieta(a)} mieste</span>
         <span class="zyma">Danga: ${a.danga}</span>
         <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">Būklė: ${a.bukle}</span>
         <span class="zyma">${a.apsvietimas ? "Apšviesta" : "Be apšvietimo"}</span>
@@ -100,7 +100,7 @@ function piestiAiksteleskortele(a) {
     </div>`;
 }
 
-const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi", uzimtumas: "visi" };
+const aiksteliuFiltrai = { danga: "visos", apsviesta: false, atstumas: "visi", uzimtumas: "visi", rikiavimas: "atstumas" };
 
 function rodytiVaizda(vaizdas) {
   const sarasas = vaizdas === "sarasas";
@@ -127,12 +127,17 @@ function piestiAiksteliuSarasa() {
     if (f.uzimtumas === "zaidziama" && zaidejuAiksteleje(a) === 0) return false;
     if (f.uzimtumas === "laisva" && zaidejuAiksteleje(a) > 0) return false;
     return true;
-  }).sort((a, b) => atstumasKm(a) - atstumasKm(b));
+  }).sort((a, b) =>
+    f.rikiavimas === "reitingas" ? aiksteleVidurkis(b).vidurkis - aiksteleVidurkis(a).vidurkis : atstumasKm(a) - atstumasKm(b)
+  );
 
   const visos = visosRungtynes();
 
   let html = `
     <div class="saraso-filtrai">
+      <span class="etikete">Rikiuoti</span>
+      ${filtroMygtukas("Arčiausiai", f.rikiavimas === "atstumas", "aiksteliuFiltrai.rikiavimas = 'atstumas'")}
+      ${filtroMygtukas("★ Geriausiai įvertintos", f.rikiavimas === "reitingas", "aiksteliuFiltrai.rikiavimas = 'reitingas'")}
       <span class="etikete">Danga</span>
       ${filtroMygtukas("Visos", f.danga === "visos", "aiksteliuFiltrai.danga = 'visos'")}
       ${filtroMygtukas("Guminė", f.danga === "Guminė", "aiksteliuFiltrai.danga = 'Guminė'")}
@@ -162,12 +167,12 @@ function piestiAiksteliuSarasa() {
       return `
       <a class="kortele aiksteles-eilute" href="aikstele.html?id=${a.id}">
         <div class="virsus-eilute">
-          <span class="pavadinimas">${a.pavadinimas}</span>
+          <span class="pavadinimas">${vietosZenklas(a)}${a.pavadinimas}</span>
           <span class="atstumas">${ik("vieta")}${formatuotiAtstuma(km)}</span>
         </div>
         <div class="uzimtumas ${zaidejuAiksteleje(a) === 0 ? "laisva" : ""}">${ik("zmones")}${uzimtumoTekstas(a)}</div>
         <div>
-          <span class="zyma">⭐ ${String(a.ivertinimas).replace(".", ",")}</span>
+          <span class="zyma">★ ${vidurkioTekstas(aiksteleVidurkis(a).vidurkis)}</span>
           <span class="zyma">${a.danga}</span>
           <span class="zyma ${a.bukle === "Puiki" || a.bukle === "Gera" ? "zalia" : ""}">${a.bukle}</span>
           ${a.apsvietimas ? `<span class="zyma">Apšviesta</span>` : ""}
@@ -178,4 +183,14 @@ function piestiAiksteliuSarasa() {
     .join("");
 
   document.getElementById("aiksteliu-sarasas").innerHTML = html;
+}
+
+function vietosZenklas(a) {
+  const vieta = aiksteleVieta(a);
+  return vieta <= 3 ? `<span class="vietos-zenklas vieta-${vieta}" title="${vieta} vieta mieste pagal įvertinimą">#${vieta}</span>` : "";
+}
+
+if (gautiParametra("vaizdas") === "reitingas") {
+  aiksteliuFiltrai.rikiavimas = "reitingas";
+  rodytiVaizda("sarasas");
 }
