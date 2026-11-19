@@ -31,7 +31,7 @@ function piestiSarasa() {
   const praejusi = (r) => r.pradziaPoMin + r.trukmeMin < 0;
   const sarasas = mano
     .filter((r) => (skirtukas === "busimos" ? !praejusi(r) : praejusi(r)))
-    .sort((a, b) => a.pradziaPoMin - b.pradziaPoMin);
+    .sort((a, b) => (skirtukas === "busimos" ? a.pradziaPoMin - b.pradziaPoMin : b.pradziaPoMin - a.pradziaPoMin));
 
   if (sarasas.length === 0) {
     el.innerHTML =
@@ -47,8 +47,9 @@ function piestiSarasa() {
 
   el.innerHTML = sarasas
     .map((r) => {
-      const busena =
-        r.organizatorius === "jus"
+      const busena = r.pasibaigusi
+        ? `<span class="pill oranzinis">Įvertinti žaidėjus</span>`
+        : r.organizatorius === "jus"
           ? `<span class="pill dalyvauja">✓ Organizuojate</span>`
           : `<span class="pill dalyvauja">✓ Dalyvaujate${r.manoKiekis > 1 ? ` +${r.manoKiekis - 1}` : ""}</span>`;
       return rungtyniuKorteleHtml(r, busena);

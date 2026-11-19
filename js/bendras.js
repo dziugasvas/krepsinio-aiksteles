@@ -205,7 +205,7 @@ function miniatiuraHtml(aikstele, klase = "miniatiura") {
 
 function rungtyniuKorteleHtml(r, mygtukas = "") {
   const org = r.organizatorius === "jus" ? `${r.organizatoriusVardas} (jūs)` : gautiZaideja(r.organizatorius).vardas;
-  const laikas = r.vyksta ? "Vyksta dabar" : r.pradziaPoMin < 60 ? `Po ${r.pradziaPoMin} min.` : formatuotiLaika(r.pradzia).replace(" ", " · ");
+  const laikas = r.vyksta ? "Vyksta dabar" : r.pradziaPoMin > 0 && r.pradziaPoMin < 60 ? `Po ${r.pradziaPoMin} min.` : formatuotiLaika(r.pradzia).replace(" ", " · ");
   return `
     <a class="kortele rungtyniu-kortele" href="rungtynes.html?id=${r.id}">
       <div class="kortele-virsus">
@@ -272,6 +272,21 @@ function daugiskaita(n, vienas, keli, daug) {
   if (v === 1 && d !== 11) return `${n} ${vienas}`;
   if (v >= 2 && (d < 10 || d > 20)) return `${n} ${keli}`;
   return `${n} ${daug}`;
+}
+
+function patikimumas(z) {
+  const viso = z.suzaista + z.praleista;
+  return viso ? Math.round((z.suzaista / viso) * 100) : 100;
+}
+
+function patikimumoZyma(z) {
+  const p = patikimumas(z);
+  const klase = p >= 90 ? "zalia" : p >= 75 ? "geltona" : "raudona";
+  return `<span class="zyma ${klase}" title="Atvyko į ${z.suzaista} iš ${z.suzaista + z.praleista} rungtynių">Patikimumas ${p} %</span>`;
+}
+
+function reitingoZyma(z) {
+  return `<span class="zyma">★ ${String(z.reitingas).replace(".", ",")}</span>`;
 }
 
 function zaidejuTekstas(n) {
@@ -345,7 +360,7 @@ function papildytiRungtynes(r) {
     if (r.pradziaPoMin >= 60) pradzia.setMinutes(Math.round(pradzia.getMinutes() / 15) * 15);
   }
   const aikstele = gautiAikstele(r.aiksteleId);
-  const mano = kiekRegistruota(r.id);
+  const mano = kiekRegistruota(r.id) || (r.jusDalyvavote && gautiNaudotoja() ? 1 : 0);
   const uzimta = r.dalyviai.length + mano;
   return Object.assign({}, r, {
     pradzia: pradzia,
@@ -372,7 +387,7 @@ function formatuotiLaika(data) {
 
 function rungtyniuLaikas(r) {
   if (r.vyksta) return "● Vyksta dabar";
-  if (r.pradziaPoMin < 60) return `Po ${r.pradziaPoMin} min.`;
+  if (r.pradziaPoMin > 0 && r.pradziaPoMin < 60) return `Po ${r.pradziaPoMin} min.`;
   return formatuotiLaika(r.pradzia);
 }
 

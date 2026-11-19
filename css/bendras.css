@@ -350,6 +350,16 @@ a.kortele:active {
   color: var(--oranzine);
 }
 
+.zyma.geltona {
+  background: #fff4dc;
+  color: #9a6400;
+}
+
+.zyma.raudona {
+  background: #ffeceb;
+  color: var(--raudona);
+}
+
 .zyma.zalia {
   background: var(--zalia-sviesi);
   color: var(--zalia);

@@ -62,6 +62,7 @@ function piestiPuslapi() {
     </div>
 
     <h2 class="skyriaus-pavadinimas">Dalyviai (${r.uzimta})</h2>
+    ${r.pasibaigusi && r.manoKiekis > 0 ? `<p class="blankus vertinimo-pastaba">Rungtynės baigėsi – įvertinkite kitus žaidėjus. Vertinimai ir atvykimas lemia žaidėjų reitingą ir patikimumą.</p>` : ""}
     <div class="kortele">${dalyviuSarasas(r)}</div>
 
     <div class="veiksmai">${veiksmuSritis(r)}</div>`;
@@ -80,9 +81,46 @@ function dalyviuSarasas(r) {
 
   for (const id of r.dalyviai) {
     const z = gautiZaideja(id);
-    html += dalyvisHtml(z.vardas.charAt(0), z.vardas, `${z.amzius} m. · ${LYGIAI[z.lygis]} · ${z.pozicija}`, false);
+    const vertinimas = r.pasibaigusi && r.manoKiekis > 0 ? zvaigzduVertinimas(z) : "";
+    html += dalyvisHtml(
+      z.vardas.charAt(0),
+      z.vardas,
+      `${z.amzius} m. · ${LYGIAI[z.lygis]} · ${z.pozicija}<div class="dalyvio-zymos">${reitingoZyma(z)}${patikimumoZyma(z)}</div>${vertinimas}`,
+      false
+    );
   }
   return html;
+}
+
+const ZAIDEJU_VERTINIMU_RAKTAS = "krepsinisVisurZaidejuVertinimai";
+
+function gautiZaidejuVertinimus() {
+  try {
+    return JSON.parse(localStorage.getItem(ZAIDEJU_VERTINIMU_RAKTAS)) || {};
+  } catch (klaida) {
+    return {};
+  }
+}
+
+function zvaigzduVertinimas(z) {
+  const mano = (gautiZaidejuVertinimus()[rungtyniuId] || {})[z.id] || 0;
+  return `
+    <div class="zaidejo-vertinimas" role="group" aria-label="Įvertinkite žaidėją ${z.vardas}">
+      ${[1, 2, 3, 4, 5]
+        .map((n) => `<button class="${n <= mano ? "uzpildyta" : ""}" onclick="ivertintiZaideja('${z.id}', ${n})" aria-label="${n} iš 5">★</button>`)
+        .join("")}
+    </div>`;
+}
+
+function ivertintiZaideja(zaidejoId, n) {
+  const visi = gautiZaidejuVertinimus();
+  visi[rungtyniuId] = visi[rungtyniuId] || {};
+  visi[rungtyniuId][zaidejoId] = n;
+  try {
+    localStorage.setItem(ZAIDEJU_VERTINIMU_RAKTAS, JSON.stringify(visi));
+  } catch (klaida) {}
+  piestiPuslapi();
+  rodytiPranesima(`✓ ${gautiZaideja(zaidejoId).vardas} įvertintas: ${n} iš 5`);
 }
 
 function dalyvisHtml(raide, vardas, detales, jus) {
