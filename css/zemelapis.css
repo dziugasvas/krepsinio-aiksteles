@@ -3,6 +3,8 @@
 }
 
 #zemelapis {
+  position: relative;
+  z-index: 0;
   height: calc(100vh - 60px - var(--navigacijos-aukstis) - 40px - 56px);
   width: 100%;
 }
@@ -81,7 +83,7 @@
   max-width: 464px;
   max-height: 60vh;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 70;
 }
 
 #aiksteles-kortele .kortele {
