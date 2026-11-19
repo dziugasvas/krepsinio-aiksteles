@@ -137,6 +137,29 @@ function atsauktiBuvimaAiksteleje() {
   rasytiSaugykla(d);
 }
 
+function gautiSekamus() {
+  return skaitytiSaugykla().sekami || [];
+}
+
+function perjungtiSekima(zaidejoId) {
+  const d = skaitytiSaugykla();
+  const sekami = d.sekami || [];
+  d.sekami = sekami.includes(zaidejoId) ? sekami.filter((id) => id !== zaidejoId) : sekami.concat(zaidejoId);
+  rasytiSaugykla(d);
+  return d.sekami.includes(zaidejoId);
+}
+
+function gautiPakvietimus() {
+  return skaitytiSaugykla().pakvietimai || {};
+}
+
+function issaugotiPakvietima(rungtyniuId, zaidejoId) {
+  const d = skaitytiSaugykla();
+  d.pakvietimai = d.pakvietimai || {};
+  d.pakvietimai[rungtyniuId] = (d.pakvietimai[rungtyniuId] || []).concat(zaidejoId);
+  rasytiSaugykla(d);
+}
+
 function gautiPranesimuNustatyma() {
   return skaitytiSaugykla().pranesimai !== false;
 }
