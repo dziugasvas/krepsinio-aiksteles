@@ -12,11 +12,58 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 L.control.zoom({ position: "topright" }).addTo(zemelapis);
 
-L.marker([vieta.lat, vieta.lng], {
+const manoZymeklis = L.marker([vieta.lat, vieta.lng], {
   icon: L.divIcon({ className: "", html: '<div class="mano-vieta"></div>', iconSize: [22, 22], iconAnchor: [11, 11] }),
 })
   .addTo(zemelapis)
   .bindTooltip("Jūs esate čia");
+
+let tikslumoRatas = null;
+
+const VietosMygtukas = L.Control.extend({
+  options: { position: "topright" },
+  onAdd: function () {
+    const mygtukas = L.DomUtil.create("button", "rasti-mane");
+    mygtukas.type = "button";
+    mygtukas.title = "Rodyti mano vietą";
+    mygtukas.setAttribute("aria-label", "Rodyti mano vietą");
+    mygtukas.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>';
+    L.DomEvent.disableClickPropagation(mygtukas);
+    L.DomEvent.on(mygtukas, "click", rastiMane);
+    return mygtukas;
+  },
+});
+new VietosMygtukas().addTo(zemelapis);
+
+function rastiMane() {
+  const mygtukas = document.querySelector(".rasti-mane");
+  mygtukas.classList.add("ieskoma");
+  nustatytiVieta().then((v) => {
+    mygtukas.classList.remove("ieskoma");
+    if (!v) {
+      zemelapis.flyTo([vieta.lat, vieta.lng], 15, { duration: 0.8 });
+      rodytiPranesima(`Nepavyko nustatyti jūsų vietos – rodomas jūsų rajonas (${vieta.pavadinimas}).`, { klaida: true });
+      return;
+    }
+    manoZymeklis.setLatLng([v.lat, v.lng]);
+    if (tikslumoRatas) tikslumoRatas.remove();
+    tikslumoRatas = L.circle([v.lat, v.lng], {
+      radius: v.tikslumas,
+      color: "#1e7cf2",
+      weight: 1,
+      fillColor: "#1e7cf2",
+      fillOpacity: 0.1,
+      interactive: false,
+    }).addTo(zemelapis);
+    mygtukas.classList.add("aktyvus");
+    zemelapis.flyTo([v.lat, v.lng], 16, { duration: 0.8 });
+  });
+}
+
+zemelapis.on("dragstart", () => {
+  const mygtukas = document.querySelector(".rasti-mane");
+  if (mygtukas) mygtukas.classList.remove("aktyvus");
+});
 
 const zymekliai = {};
 
