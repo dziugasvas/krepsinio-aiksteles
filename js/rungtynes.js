@@ -83,7 +83,7 @@ function dalyviuSarasas(r) {
 
   for (const id of r.dalyviai) {
     const z = gautiZaideja(id);
-    const vertinimas = r.pasibaigusi && r.manoKiekis > 0 ? zvaigzduVertinimas(z) : "";
+    const vertinimas = r.pasibaigusi && r.manoKiekis > 0 ? zvaigzduVertinimas(z) + neatvykoMygtukas(z) : "";
     html += dalyvisHtml(
       z.vardas.charAt(0),
       z.vardas,
@@ -104,7 +104,28 @@ function gautiZaidejuVertinimus() {
   }
 }
 
+function arNeatvyko(z) {
+  return (gautiNeatvykusius()[rungtyniuId] || []).includes(z.id);
+}
+
+function neatvykoMygtukas(z) {
+  return arNeatvyko(z)
+    ? `<div class="neatvyko-busena">✗ Pažymėjote, kad neatvyko <button onclick="pazymetiNeatvykima('${z.id}')">Atšaukti</button></div>`
+    : `<button class="neatvyko-mygtukas" onclick="pazymetiNeatvykima('${z.id}')">Neatvyko</button>`;
+}
+
+function pazymetiNeatvykima(zaidejoId) {
+  const pazymeta = perjungtiNeatvykima(rungtyniuId, zaidejoId);
+  piestiPuslapi();
+  rodytiPranesima(
+    pazymeta
+      ? `Pažymėta: ${gautiZaideja(zaidejoId).vardas} neatvyko. Praleidimas įskaitomas, kai tai patvirtina keli dalyviai.`
+      : "Žyma „Neatvyko“ pašalinta"
+  );
+}
+
 function zvaigzduVertinimas(z) {
+  if (arNeatvyko(z)) return "";
   const mano = (gautiZaidejuVertinimus()[rungtyniuId] || {})[z.id] || 0;
   return `
     <div class="zaidejo-vertinimas" role="group" aria-label="Įvertinkite žaidėją ${z.vardas}">
@@ -152,6 +173,11 @@ function veiksmuSritis(r) {
       <div class="dalyvaujate-blokas">
         <div class="dalyvaujate">✓ Jūs dalyvaujate${kiti}</div>
         <button class="mygtukas pavojingas platus" onclick="atsaukti()">Atšaukti dalyvavimą</button>
+        <p class="atsaukimo-taisykle">${
+          r.vyksta || r.pradzia - Date.now() < 60 * 60000
+            ? "⚠ Iki pradžios liko mažiau nei 1 val. – atšaukus dabar, sumažės jūsų patikimumas."
+            : "Nemokamai atšaukti galima iki 1 val. prieš pradžią."
+        }</p>
       </div>`;
   }
 
@@ -200,12 +226,17 @@ function prisijungtiPrieRungtyniu() {
 }
 
 function atsaukti() {
+  const r = gautiRungtynes(rungtyniuId);
+  const velyvas = r.vyksta || r.pradzia - Date.now() < 60 * 60000;
+  if (velyvas && !confirm("Iki rungtynių pradžios liko mažiau nei 1 val. Atšaukus dabar, tai bus įskaičiuota kaip praleidimas ir sumažins jūsų patikimumą. Vis tiek atšaukti?")) return;
   const buvo = kiekRegistruota(rungtyniuId);
   atsauktiDalyvavima(rungtyniuId);
+  if (velyvas) pridetiVelyvaAtsaukima(rungtyniuId);
   piestiPuslapi();
-  rodytiPranesima("Dalyvavimas atšauktas", {
+  rodytiPranesima(velyvas ? "Dalyvavimas atšauktas. Vėlyvas atšaukimas sumažino jūsų patikimumą." : "Dalyvavimas atšauktas", {
     mygtukas: "Grąžinti",
     veiksmas: () => {
+      pasalintiVelyvaAtsaukima(rungtyniuId);
       registruotisRungtynems(rungtyniuId, buvo);
       piestiPuslapi();
       rodytiPranesima("✓ Dalyvavimas grąžintas");

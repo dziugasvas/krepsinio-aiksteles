@@ -23,6 +23,14 @@ function piestiProfili() {
         </div>
       </div>
 
+      <div class="kortele patikimumo-kortele">
+        <div>
+          <strong>Jūsų patikimumas</strong>
+          <div class="blankus">Atvykote į ${manoPatikimumas().suzaista} iš ${manoPatikimumas().suzaista + manoPatikimumas().praleista} rungtynių</div>
+        </div>
+        ${patikimumoZyma(manoPatikimumas())}
+      </div>
+
       <h2 class="skyriaus-pavadinimas">Vardas</h2>
       <div class="vardo-eilute">
         <input id="vardo-laukas" type="text" value="${naudotojas.vardas}" maxlength="20" aria-label="Vardas">

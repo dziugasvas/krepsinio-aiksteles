@@ -335,8 +335,8 @@ function dabartinisMiestas() {
   return RAJONAI[gautiRajona()].miestas;
 }
 
-function atstumasKm(aikstele) {
-  const vieta = RAJONAI[gautiRajona()];
+function atstumasKm(aikstele, nuo = RAJONAI[gautiRajona()]) {
+  const vieta = nuo;
   const R = 6371;
   const dLat = ((aikstele.lat - vieta.lat) * Math.PI) / 180;
   const dLng = ((aikstele.lng - vieta.lng) * Math.PI) / 180;
@@ -344,6 +344,22 @@ function atstumasKm(aikstele) {
     Math.sin(dLat / 2) ** 2 +
     Math.cos((vieta.lat * Math.PI) / 180) * Math.cos((aikstele.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function nustatytiVieta() {
+  return new Promise((pavyko) => {
+    if (!navigator.geolocation) return pavyko(null);
+    navigator.geolocation.getCurrentPosition(
+      (p) => pavyko({ lat: p.coords.latitude, lng: p.coords.longitude, tikslumas: p.coords.accuracy }),
+      () => pavyko(null),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  });
+}
+
+function manoPatikimumas() {
+  const suzaista = visosRungtynesSuPasibaigusiomis().filter((r) => r.pasibaigusi && r.manoKiekis > 0).length;
+  return { suzaista: suzaista, praleista: gautiVelyvusAtsaukimus().length };
 }
 
 function formatuotiAtstuma(km) {

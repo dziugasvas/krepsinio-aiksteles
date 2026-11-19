@@ -215,3 +215,39 @@
 .vertinimo-pastaba {
   margin-bottom: 10px;
 }
+
+.neatvyko-mygtukas {
+  margin-top: 6px;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--linija);
+  background: var(--pavirsius);
+  color: var(--tekstas-blankus);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.neatvyko-busena {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c0392b;
+}
+
+.neatvyko-busena button {
+  margin-left: 6px;
+  border: none;
+  background: none;
+  color: var(--oranzine);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.atsaukimo-taisykle {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--tekstas-blankus);
+  text-align: center;
+}

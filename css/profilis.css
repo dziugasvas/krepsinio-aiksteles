@@ -201,3 +201,15 @@
   border: none;
   padding: 4px 0;
 }
+
+.patikimumo-kortele {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.patikimumo-kortele .zyma {
+  white-space: nowrap;
+  flex-shrink: 0;
+}

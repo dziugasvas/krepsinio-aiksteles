@@ -169,10 +169,37 @@ function esuCia() {
     });
     return;
   }
+  const a = gautiAikstele(aiksteleId);
+  rodytiPranesima("Tikriname jūsų buvimo vietą…", { trukme: 10000 });
+  nustatytiVieta().then((vieta) => {
+    if (!vieta) {
+      rodytiPranesima("Nepavyko nustatyti vietos. Leiskite naršyklei naudoti jūsų buvimo vietą.", {
+        klaida: true,
+        mygtukas: "Demo: pažymėti",
+        veiksmas: patvirtintiBuvima,
+        trukme: 8000,
+      });
+      return;
+    }
+    const km = atstumasKm(a, vieta);
+    if (km > 0.3) {
+      rodytiPranesima(`Esate už ${formatuotiAtstuma(km)} nuo aikštelės. Pažymėti galima tik būnant aikštelėje (iki 300 m).`, {
+        klaida: true,
+        mygtukas: "Demo: pažymėti",
+        veiksmas: patvirtintiBuvima,
+        trukme: 8000,
+      });
+      return;
+    }
+    patvirtintiBuvima();
+  });
+}
+
+function patvirtintiBuvima() {
   const buvusi = gautiBuvimaAiksteleje();
   pazymetiAiksteleje(aiksteleId);
   piestiAikstele();
-  rodytiPranesima("✓ Pažymėta: esate šioje aikštelėje", {
+  rodytiPranesima("✓ Pažymėta: esate šioje aikštelėje. Tai patvirtina jūsų atvykimą į rungtynes.", {
     mygtukas: "Atšaukti",
     veiksmas: () => {
       if (buvusi) pazymetiAiksteleje(buvusi);

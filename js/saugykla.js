@@ -137,6 +137,35 @@ function atsauktiBuvimaAiksteleje() {
   rasytiSaugykla(d);
 }
 
+function gautiVelyvusAtsaukimus() {
+  return skaitytiSaugykla().velyviAtsaukimai || [];
+}
+
+function pridetiVelyvaAtsaukima(rungtyniuId) {
+  const d = skaitytiSaugykla();
+  d.velyviAtsaukimai = (d.velyviAtsaukimai || []).filter((id) => id !== rungtyniuId).concat(rungtyniuId);
+  rasytiSaugykla(d);
+}
+
+function pasalintiVelyvaAtsaukima(rungtyniuId) {
+  const d = skaitytiSaugykla();
+  d.velyviAtsaukimai = (d.velyviAtsaukimai || []).filter((id) => id !== rungtyniuId);
+  rasytiSaugykla(d);
+}
+
+function gautiNeatvykusius() {
+  return skaitytiSaugykla().neatvyko || {};
+}
+
+function perjungtiNeatvykima(rungtyniuId, zaidejoId) {
+  const d = skaitytiSaugykla();
+  d.neatvyko = d.neatvyko || {};
+  const sarasas = d.neatvyko[rungtyniuId] || [];
+  d.neatvyko[rungtyniuId] = sarasas.includes(zaidejoId) ? sarasas.filter((id) => id !== zaidejoId) : sarasas.concat(zaidejoId);
+  rasytiSaugykla(d);
+  return d.neatvyko[rungtyniuId].includes(zaidejoId);
+}
+
 function gautiSekamus() {
   return skaitytiSaugykla().sekami || [];
 }
